@@ -16,7 +16,7 @@ export async function getUsers() {
   }
 }
 
-export async function addUser(username: string, email: string, password: string, role: string, warehouseId: number) {
+export async function addUser(username: string, email: string, password: string, role: string, warehouseId: string) {
   try {
     const client = await pool.connect();
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -33,6 +33,7 @@ export async function addUser(username: string, email: string, password: string,
     );
 
     client.release();
+    console.log("User added successfully:", result.rows[0]);
     return result.rows[0];
   } catch (error: any) {
     console.error("Error adding user:", error);

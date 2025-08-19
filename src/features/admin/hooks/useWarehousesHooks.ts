@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
-import { getWarehouse, getWarehouseWorkers } from "../services/warehouseService";
+import {
+  addWarehouse,
+  getWarehouse,
+  getWarehouseWorkers,
+} from "../services/warehouseService";
 
 export function useWarehouseHooks() {
   const [warehouseWorker, setWarehouseWorker] = useState<any[]>([]);
   const [warehouse, setWarehouse] = useState<any[]>([]);
   const [warehouseLoading, setWarehouseLoading] = useState(true);
   const [warehouseError, setWarehouseError] = useState<string | null>(null);
+  const [addWarehouseError, setAddWarehouseError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchWarehouseWorkers();
@@ -38,11 +43,26 @@ export function useWarehouseHooks() {
     }
   };
 
+  const handleAddWarehouse = async (name: string, location: string) => {
+    try {
+      const response = await addWarehouse(name, location);
+      if(response) {
+        fetchWarehouse();
+        fetchWarehouseWorkers();
+      }
+    } catch (error: any) {
+      console.error("Error adding warehouse:", error);
+      setAddWarehouseError(error.message || "Failed to add warehouse");
+    }
+  };
+
   return {
     warehouse,
     warehouseWorker,
     warehouseLoading,
     warehouseError,
+    addWarehouseError,
+    addWarehouse: handleAddWarehouse,
     refetchwarehouse: fetchWarehouseWorkers,
   };
 }

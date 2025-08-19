@@ -1,10 +1,12 @@
-"use server"
+"use server";
 import pool from "@/lib/db";
 
 export async function getWarehouse() {
   try {
     const client = await pool.connect();
-    const result = await client.query(`SELECT warehouse, location FROM warehouse`);
+    const result = await client.query(
+      `SELECT warehouse, location FROM warehouse`
+    );
     client.release();
     return result.rows;
   } catch (error: any) {
@@ -16,7 +18,8 @@ export async function getWarehouse() {
 export async function getWarehouseWorkers() {
   try {
     const client = await pool.connect();
-    const result = await client.query(`SELECT w.id, w.warehouse, w.location, COUNT(wl.user_id) AS workers, w.created_at
+    const result =
+      await client.query(`SELECT w.id, w.warehouse, w.location, COUNT(wl.user_id) AS workers, w.created_at
         FROM warehouse w JOIN worker_location wl ON w.id=wl.warehouse_id GROUP BY w.id`);
     client.release();
     return result.rows;

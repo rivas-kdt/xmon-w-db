@@ -31,12 +31,12 @@ const LoginDesktop = () => {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-b from-primary/10 to-background">
       {/* Decorative elements */}
-      <div className="absolute top-0 right-0 w-150 h-150 bg-primary/10 rounded-bl-[100%]" />
+      <div className="absolute top-0 right-0 w-150 h-150 bg-primary/10 -z-10 rounded-bl-[100%]" />
       <div className="absolute bottom-0 left-0 w-150 h-150 bg-primary/5 rounded-tr-[100%]" />
       {/* <div className="absolute top-0 left-0 w-42 h-42 bg-primary/10 -z-10 rounded-br-[100%]" /> */}
       <div className="absolute top-30 left-40 w-76 h-76 bg-primary/15 rounded-[100%]" />
       <div className="absolute top-15 left-100 w-20 h-20 bg-primary/20 rounded-[100%]" />
-      <div className="absolute bottom-0 right-60 w-100 h-100 bg-primary/20 rounded-[100%]" />
+      <div className="absolute bottom-0 right-60 w-100 h-100 bg-primary/50 -z-10 rounded-[100%]" />
 
       <div className="w-full max-w-5xl flex flex-col md:flex-row overflow-hidden rounded-2xl shadow-2xl">
         {/* Left side - Brand/Logo */}
@@ -110,7 +110,11 @@ const LoginDesktop = () => {
               {error && (
                 <p className="text-sm font-medium text-destructive">{error}</p>
               )}
-              <Button type="submit" className="w-full" disabled={loading}>
+              <Button
+                type="submit"
+                className="w-full curosr-pointer"
+                disabled={loading}
+              >
                 {loading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />

@@ -31,7 +31,7 @@ const LoginMobile = () => {
   const t = useTranslations("LoginPage");
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center p-4">
+    <div className="relative min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-b from-primary/10 to-background">
       {/* Top-right controls */}
       <div className="absolute top-4 right-4 z-10 flex gap-4">
         <LocaleSwitcher />
@@ -45,7 +45,7 @@ const LoginMobile = () => {
             <span>X</span>
             <span className="opacity-80">{t("mon")}</span>
           </div>
-          <div className="absolute -top-2 -right-2 bg-primary dark:bg-primary/10 text-background text-xs px-2 py-1 rounded-full font-bold">
+          <div className="absolute -top-2 -right-2 bg-primary text-background text-xs px-2 py-1 rounded-full font-bold">
             KDT
           </div>
         </div>
@@ -138,10 +138,11 @@ const LoginMobile = () => {
       </Card>
 
       {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-full h-64 bg-primary/10 -z-10 rounded-b-[50%]" />
-      <div className="absolute bottom-0 right-0 w-full h-64 bg-primary/5 -z-10 rounded-t-[30%]" />
-      <div className="absolute top-70 right-0 w-64 h-64 bg-primary/20 -z-10 rounded-[100%]" />
-      <div className="absolute top-130 left-10 w-24 h-24 bg-primary/15 -z-10 rounded-[100%]" />
+      <div className="absolute top-0 left-0 w-64 h-64 bg-primary/10 -z-10 rounded-br-[100%]" />
+      <div className="absolute bottom-0 right-0 w-84 h-64 bg-primary/50 -z-10 rounded-tl-[100%]" />
+      <div className="absolute top-70 -right-10 w-64 h-64 bg-primary/20 -z-10 rounded-[100%]" />
+      <div className="absolute top-130 left-0 w-24 h-24 bg-primary/40 -z-10 rounded-[100%]" />
+      {/* <div className="absolute top-15 -right-25 w-44 h-44 bg-primary/20 -z-10 rounded-[100%]" /> */}
     </div>
   );
 };

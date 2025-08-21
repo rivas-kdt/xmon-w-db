@@ -43,7 +43,7 @@ const LoginMobile = () => {
         <div className="relative inline-block">
           <div className="text-7xl font-bold tracking-tighter text-primary">
             <span>X</span>
-            <span className="opacity-80">{t("mon")}</span>
+            <span>{t("mon")}</span>
           </div>
           <div className="absolute -top-2 -right-2 bg-primary text-background text-xs px-2 py-1 rounded-full font-bold">
             KDT
@@ -141,7 +141,7 @@ const LoginMobile = () => {
       <div className="absolute top-0 left-0 w-64 h-64 bg-primary/10 -z-10 rounded-br-[100%]" />
       <div className="absolute bottom-0 right-0 w-84 h-64 bg-primary/50 -z-10 rounded-tl-[100%]" />
       <div className="absolute top-70 -right-10 w-64 h-64 bg-primary/20 -z-10 rounded-[100%]" />
-      <div className="absolute top-130 left-0 w-24 h-24 bg-primary/40 -z-10 rounded-[100%]" />
+      <div className="absolute top-130 -left-5 w-24 h-24 bg-primary/40 -z-10 rounded-[100%]" />
       {/* <div className="absolute top-15 -right-25 w-44 h-44 bg-primary/20 -z-10 rounded-[100%]" /> */}
     </div>
   );

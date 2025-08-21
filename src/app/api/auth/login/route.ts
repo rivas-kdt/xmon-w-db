@@ -1,5 +1,5 @@
-import { encrypt } from "@/lib/cookieHandler";
 import pool from "@/lib/db";
+import { encrypt } from "@/lib/jwt";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 

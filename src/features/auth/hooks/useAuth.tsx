@@ -1,7 +1,9 @@
-import { decrypt, deleteSession, get } from "@/lib/cookieHandler";
+import { deleteSession, get } from "@/lib/cookieHandler";
 import { create } from "@/lib/cookieHandler";
+import { decrypt } from "@/lib/jwt";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { login } from "../services/login";
 
 interface User {
   userId: string;
@@ -52,22 +54,15 @@ export function useAuth() {
     setLoading(true);
     setError("");
     try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setError(data.error);
-        return
+      const response = await login(username, password);
+      if (!response || !response.token) {
+        throw new Error("Login failed, no token received");
       }
-      console.log("Login response:", data);
-      await create(data.token);
-      console.log("Login successful, token:", data.token);
+      await create(response.token);
+      console.log("Login successful, token:", response.token);
       router.push("/");
-    } catch (error) {
-      setError("Something went wrong. Please try again.peke");
+    } catch (error : any) {
+      setError(error.message || "Login failed");
     } finally {
       setLoading(false);
     }

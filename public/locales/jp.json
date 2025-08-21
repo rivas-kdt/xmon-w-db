@@ -280,9 +280,24 @@
     "location": "場所"
   },
   "addUser": {
-    "usernameError": "Username is required in JP",
-    "emailError": "Email is required in JP",
-    "passwordError": "Password is incorrect in JP"
+    "allFieldsRequired": "すべてのフィールドは必須です",
+    "emailInvalid": "無効なメールアドレス",
+    "userExists": "ユーザーはすでに存在します",
+    "fallbackError": "ユーザーの追加中にエラーが発生しました。もう一度お試しください。"
+  },
+  "addWarehouse": {
+    "errorRequired": "倉庫名と所在地は必須です",
+    "errorExists": "倉庫はすでに存在します",
+    "fallbackError": "倉庫の追加中にエラーが発生しました。もう一度お試しください。"
+  },
+  "addRecipient": {
+    "emailError": "メールアドレスは必須です",
+    "fallbackError": "受信者の追加中にエラーが発生しました。もう一度お試しください。"
+  },
+  "loginFunction": {
+    "userNotFound": "ユーザーが見つかりません",
+    "incorrectPassword": "パスワードが間違っています",
+    "fallbackError": "ログイン中にエラーが発生しました。もう一度お試しください。"
   }
 }
  

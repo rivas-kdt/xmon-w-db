@@ -1,32 +1,34 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
+// import { useUserHooks } from "@/features/admin/hooks/useUsersHooks";
+import { useWarehouseHooks } from "@/features/admin/hooks/useWarehousesHooks";
+import { useShipHooks } from "@/features/ship/hooks/shipHooks";
 
 export default function Home() {
-  const handleAddUser = async () => {
-    const response = await fetch("/api/addUser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: "admin",
-        email: "admin@gmail.com",
-        password: "admin123",
-        role: "admin",
-      }),
-    })
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error(errorData.error);
-      return;
-    }
-    const data = await response.json();
-    console.log("User added successfully:", data);
-    alert("User added successfully");
+  // const { addUser, addUserError } = useUserHooks();
+  // const { addWarehouse, addWarehouseError } = useWarehouseHooks();
+  if (typeof window !== "undefined") {
+    // Access sessionStorage here
+    sessionStorage.setItem(
+      "warehouseId",
+      "6939e940-7c6f-48b3-8393-964623175c24"
+    );
   }
+  const { shipParts, error, stockedParts } = useShipHooks();
+  // console.log(addWarehouseError);'
+  console.log("Stocked Parts:", stockedParts);
+
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <Button className=" bg-amber-500" size={'sm'} variant={'default'} onClick={handleAddUser}>Add User</Button>
+      <Button
+        className=" bg-amber-500"
+        size={"sm"}
+        variant={"default"}
+        onClick={() => shipParts("01578560005430", 400)}
+      >
+        Add Warehouse
+      </Button>
+      {error && <div className="text-red-500">{error}</div>}
     </div>
   );
 }

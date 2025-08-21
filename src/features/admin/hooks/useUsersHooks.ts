@@ -1,11 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
-import { addUser, getUsers } from "../services/userService";
+import { getUsers } from "../services/getUser";
+import { addUser } from "../services/addUser";
 
 export function useUserHooks() {
   const [users, setUsers] = useState<any[]>([]);
   const [userLoading, setUserLoading] = useState(true);
   const [userError, setuserError] = useState<string | null>(null);
+  const [addUserError, setAddUserError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchUsers();
@@ -29,7 +31,7 @@ export function useUserHooks() {
     email: string,
     password: string,
     role: string,
-    warehouseId: number
+    warehouseId: string
   ) => {
     try {
       const response = await addUser(
@@ -41,11 +43,11 @@ export function useUserHooks() {
       );
       if (response) {
         setUsers(response);
-        fetchUsers(); 
+        fetchUsers();
       }
     } catch (error: any) {
       console.error("Error adding user:", error);
-      setuserError(error.message || "Failed to add user");
+      setAddUserError(error.message || "Failed to add user");
     }
   };
 
@@ -53,6 +55,7 @@ export function useUserHooks() {
     users,
     userLoading,
     userError,
+    addUserError,
     addUser: handleAddUser,
     refetchuser: fetchUsers,
   };

@@ -278,8 +278,23 @@
     "location": "Location"
   },
   "addUser": {
-    "usernameError": "Username is required",
+    "allFieldsRequired": "All fields are required",
+    "emailInvalid": "Email is invalid",
+    "userExists": "User already exists",
+    "fallbackError": "An error occurred while adding the user. Please try again."
+  },
+  "addWarehouse": {
+    "errorRequired": "Warehouse name and location are required",
+    "errorExists": "Warehouse already exists",
+    "fallbackError": "An error occurred while adding the warehouse. Please try again."
+  },
+  "addRecipient": {
     "emailError": "Email is required",
-    "passwordError": "Password is incorrect"
+    "fallbackError": "An error occurred while adding the recipient. Please try again."
+  },
+  "loginFunction": {
+    "userNotFound": "User not found",
+    "incorrectPassword": "Incorrect password",
+    "fallbackError": "An error occurred while logging in. Please try again."
   }
 }

@@ -18,6 +18,7 @@ import LocaleSwitcher from "@/components/localeSwitcher";
 import { useTranslations } from "next-intl";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useRouter } from "next/navigation";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const LoginMobile = () => {
   const { login, error, loading } = useAuth();
@@ -30,25 +31,29 @@ const LoginMobile = () => {
   const t = useTranslations("LoginPage");
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="relative min-h-screen flex flex-col items-center justify-center p-4">
+      {/* Top-right controls */}
       <div className="absolute top-4 right-4 z-10 flex gap-4">
         <LocaleSwitcher />
-        {/* <ThemeToggle /> */}
+        <ThemeToggle />
       </div>
-      <div className="mt-14 mb-8 text-center">
+
+      {/* Logo */}
+      <div className="mt-14 mb-8 text-center relative z-10">
         <div className="relative inline-block">
           <div className="text-7xl font-bold tracking-tighter text-primary">
             <span>X</span>
             <span className="opacity-80">{t("mon")}</span>
           </div>
-          <div className="absolute -top-2 -right-2 bg-primary text-background text-xs px-2 py-1 rounded-full font-bold">
+          <div className="absolute -top-2 -right-2 bg-primary dark:bg-primary/10 text-background text-xs px-2 py-1 rounded-full font-bold">
             KDT
           </div>
         </div>
         <p className="mt-2 text-muted-foreground">{t("p1")}</p>
       </div>
 
-      <Card className="w-full max-w-sm border-0 shadow-lg">
+      {/* Login Card */}
+      <Card className="relative z-10 w-full max-w-sm border-0 shadow-lg">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
             {t("welcome")}
@@ -135,6 +140,8 @@ const LoginMobile = () => {
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-full h-64 bg-primary/10 -z-10 rounded-b-[50%]" />
       <div className="absolute bottom-0 right-0 w-full h-64 bg-primary/5 -z-10 rounded-t-[30%]" />
+      <div className="absolute top-70 right-0 w-64 h-64 bg-primary/20 -z-10 rounded-[100%]" />
+      <div className="absolute top-130 left-10 w-24 h-24 bg-primary/15 -z-10 rounded-[100%]" />
     </div>
   );
 };

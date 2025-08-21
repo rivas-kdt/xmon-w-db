@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import { addUser, getUsers } from "../services/userService";
+import { getUsers } from "../services/getUser";
+import { addUser } from "../services/addUser";
 
 export function useUserHooks() {
   const [users, setUsers] = useState<any[]>([]);

@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
-import {
-  addWarehouse,
-  getWarehouse,
-  getWarehouseWorkers,
-} from "../services/warehouseService";
+import { getWarehouseWorkers } from "../services/getWarehouseWorker";
+import { getWarehouse } from "../services/getWarehouse";
+import { addWarehouse } from "../services/addWarehouse";
 
 export function useWarehouseHooks() {
   const [warehouseWorker, setWarehouseWorker] = useState<any[]>([]);

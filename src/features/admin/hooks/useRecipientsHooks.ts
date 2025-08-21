@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { addRecipient, getRecipients } from "../services/recipientService";
+import { getRecipients } from "../services/getRecipients";
+import { addRecipient } from "../services/addRecipient";
 
 export function useRecipientHooks() {
   const [recipients, setRecipients] = useState<any[]>([]);

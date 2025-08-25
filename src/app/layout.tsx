@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { NextIntlClientProvider } from "next-intl";
+import { Toaster } from "react-hot-toast";
 import { getLocale } from "next-intl/server";
 
 const geistSans = Geist({
@@ -32,7 +33,8 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
       >
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>{children}
+            <Toaster position="top-center" /></NextIntlClientProvider>
       </body>
     </html>
   );

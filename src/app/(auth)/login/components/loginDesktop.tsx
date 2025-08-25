@@ -1,5 +1,6 @@
 "use client";
 import LocaleSwitcher from "@/components/localeSwitcher";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -28,7 +29,15 @@ const LoginDesktop = () => {
   const t = useTranslations("LoginPage");
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-8">
+    <main className="min-h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-b from-primary/10 to-background">
+      {/* Decorative elements */}
+      <div className="absolute top-0 right-0 w-150 h-150 bg-primary/60 -z-10 rounded-bl-[100%]" />
+      {/* <div className="absolute top-0 left-0 w-42 h-42 bg-primary/10 -z-10 rounded-br-[100%]" /> */}
+      <div className="absolute top-15 left-100 w-20 h-20 bg-primary/50 rounded-[100%]" />
+      <div className="absolute top-30 left-40 w-76 h-76 bg-primary/40 rounded-[100%]" />
+      <div className="absolute bottom-0 right-60 w-100 h-100 bg-primary/70 -z-10 rounded-[100%]" />
+      <div className="absolute bottom-0 left-0 w-150 h-150 bg-primary/10 rounded-tr-[100%]" />
+
       <div className="w-full max-w-5xl flex flex-col md:flex-row overflow-hidden rounded-2xl shadow-2xl">
         {/* Left side - Brand/Logo */}
         <div className="w-full md:w-1/2 bg-primary dark:text-background p-12 flex flex-col items-center justify-center">
@@ -53,7 +62,7 @@ const LoginDesktop = () => {
           <CardHeader className="space-y-1 pt-12 relative">
             <div className="absolute top-4 right-4 flex gap-2">
               <LocaleSwitcher />
-              {/* <ThemeToggle /> */}
+              <ThemeToggle />
             </div>
             <CardTitle className="text-3xl font-bold">{t("welcome")}</CardTitle>
             <CardDescription>{t("desc")}</CardDescription>
@@ -101,7 +110,11 @@ const LoginDesktop = () => {
               {error && (
                 <p className="text-sm font-medium text-destructive">{error}</p>
               )}
-              <Button type="submit" className="w-full" disabled={loading}>
+              <Button
+                type="submit"
+                className="w-full curosr-pointer text-white"
+                disabled={loading}
+              >
                 {loading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />

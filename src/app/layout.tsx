@@ -4,6 +4,9 @@ import "./globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { Toaster } from "react-hot-toast";
 import { getLocale } from "next-intl/server";
+import { ThemeProvider } from "@/lib/themeProvider";
+import { Toaster } from "react-hot-toast";
+import Header from "@/components/header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,16 +28,20 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
   const locale = await getLocale();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
       >
-        <NextIntlClientProvider>{children}
-            <Toaster position="top-center" /></NextIntlClientProvider>
+        <ThemeProvider attribute="class">
+          <NextIntlClientProvider>
+            <Header />
+            {children}
+            <Toaster position="top-center" />
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

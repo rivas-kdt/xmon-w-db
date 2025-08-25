@@ -116,8 +116,12 @@ export default function Header() {
                   <div className="p-4">
                     <div className="flex flex-col gap-4 pb-4">
                       <button
-                        onClick={() => router.push("/dashboard")}
-                        className="flex items-center gap-2"
+                        onClick={() => router.push("/test")}
+                        className={`flex items-center gap-2 ${
+                          pathname === "/test"
+                            ? "underline decoration-2 underline-offset-4 font-medium"
+                            : ""
+                        }`}
                       >
                         <div className="p-2 border border-muted rounded-full">
                           <Home className="h-[1.2rem] w-[1.2rem]" />
@@ -130,7 +134,11 @@ export default function Header() {
                           setMenuLoading(true);
                           router.push("/transactions");
                         }}
-                        className="flex items-center gap-2"
+                        className={`flex items-center gap-2 ${
+                          pathname === "/transactions"
+                            ? "underline decoration-2 underline-offset-4 font-medium"
+                            : ""
+                        }`}
                       >
                         <div className="p-2 border border-muted rounded-full">
                           <Package className="h-[1.2rem] w-[1.2rem]" />

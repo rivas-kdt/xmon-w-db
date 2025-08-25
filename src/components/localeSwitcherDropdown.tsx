@@ -2,16 +2,15 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { useTransition } from "react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { ChevronDown } from "lucide-react";
 import { LanguageIcon } from "@heroicons/react/24/solid";
-import { setUserLocale } from "@/services/locale"; // same helper as in LocaleSwitcherSelect
+import { setUserLocale } from "@/services/locale";
 import { Locale } from "@/i18n/config";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./ui/accordion";
 
 export default function LocaleSwitcherDropdown() {
   const t = useTranslations("LocaleSwitcher");
@@ -31,31 +30,36 @@ export default function LocaleSwitcherDropdown() {
   }
 
   return (
-    <div className="flex items-center justify-between gap-2">
-      <div className="flex items-center gap-2">
-        <div className="p-2 border border-muted bg-muted rounded-full">
-          <LanguageIcon className="h-[1.2rem] w-[1.2rem]" />
-        </div>
-        <span>{items.find((i) => i.value === locale)?.label}</span>
-      </div>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button disabled={isPending} className="flex items-center">
-            <ChevronDown className="h-4 w-4" />
-          </button>
-        </DropdownMenuTrigger>
+    <Accordion type="single" collapsible className="w-full">
+      <AccordionItem value="languages" className="border-none">
+        {/* The whole header row is now the trigger */}
+        <AccordionTrigger
+          disabled={isPending}
+          className="flex items-center justify-between gap-2 py-2"
+        >
+          <div className="flex items-center gap-2">
+            <div className="p-2 border border-muted bg-muted rounded-full">
+              <LanguageIcon className="h-[1.2rem] w-[1.2rem]" />
+            </div>
+            <span>{items.find((i) => i.value === locale)?.label}</span>
+          </div>
+        </AccordionTrigger>
 
-        <DropdownMenuContent align="end" className="w-32">
-          {items.map((item) => (
-            <DropdownMenuItem
-              key={item.value}
-              onSelect={() => switchLocale(item.value)}
-            >
-              {item.label}
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+        {/* Sliding dropdown list */}
+        <AccordionContent className="pl-10 pr-4">
+          <div className="flex flex-col rounded-sm border bg-background">
+            {items.map((item) => (
+              <button
+                key={item.value}
+                onClick={() => switchLocale(item.value)}
+                className="px-3 py-2 text-left text-md"
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   );
 }

@@ -2,7 +2,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-
 import {
   Card,
   CardContent,
@@ -13,7 +12,7 @@ import {
 import { Package, Truck, MapPin, Loader2 } from "lucide-react";
 import Link from "next/link";
 // import { get } from "@/actions/cookieHandler";
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 import {
   Select,
   SelectContent,
@@ -47,7 +46,7 @@ type LoadingState = {
 };
 
 const DashboardMobile = () => {
-  const { user } = useAuth();
+  const { user } = useAuth(false);
   const loadingState: LoadingState = {
     loading: true,
     user: user as User | null,
@@ -68,15 +67,15 @@ const DashboardMobile = () => {
   const t = useTranslations("landing-page");
 
   // If user is using desktop, redirect him to /dashboard
-  useEffect(() => {
-    if (isMobile === undefined) return; // wait for detection
+  //   useEffect(() => {
+  //     if (isMobile === undefined) return; // wait for detection
 
-    if (!isMobile) {
-      router.push("/dashboard");
-    } else {
-      setLoading(false);
-    }
-  }, [isMobile, router]);
+  //     if (!isMobile) {
+  //       router.push("/dashboard");
+  //     } else {
+  //       setLoading(false);
+  //     }
+  //   }, [isMobile, router]);
 
   //   useEffect(() => {
   //     if (!typedUser) return; // Prevent running if user is not loaded
@@ -185,31 +184,31 @@ const DashboardMobile = () => {
     }
   };
 
-  useEffect(() => {
-    const storedWarehouseId = sessionStorage.getItem("selectedWarehouseId");
-    if (storedWarehouseId && warehouse.length > 0) {
-      const storedWarehouse = warehouse.find((w) => w.id === storedWarehouseId);
-      if (storedWarehouse) {
-        setSelectedWarehouse(storedWarehouse);
-      }
-    }
-  }, [warehouse]);
+  //   useEffect(() => {
+  //     const storedWarehouseId = sessionStorage.getItem("selectedWarehouseId");
+  //     if (storedWarehouseId && warehouse.length > 0) {
+  //       const storedWarehouse = warehouse.find((w) => w.id === storedWarehouseId);
+  //       if (storedWarehouse) {
+  //         setSelectedWarehouse(storedWarehouse);
+  //       }
+  //     }
+  //   }, [warehouse]);
 
-  useEffect(() => {
-    if (!typedUser) return;
+  //   useEffect(() => {
+  //     if (!typedUser) return;
 
-    const hasJustLoggedIn = sessionStorage.getItem("hasJustLoggedIn");
+  //     const hasJustLoggedIn = sessionStorage.getItem("hasJustLoggedIn");
 
-    if (hasJustLoggedIn === "true") {
-      toast.success(
-        typedUser.role === "admin" ? t("you-are-admin") : t("you-are-worker")
-      );
-      sessionStorage.removeItem("hasJustLoggedIn");
-    }
-  }, [typedUser, t]);
+  //     if (hasJustLoggedIn === "true") {
+  //       toast.success(
+  //         typedUser.role === "admin" ? t("you-are-admin") : t("you-are-worker")
+  //       );
+  //       sessionStorage.removeItem("hasJustLoggedIn");
+  //     }
+  //   }, [typedUser, t]);
 
   return (
-    <div className="flex flex-col w-screen min-h-screen p-4 pt-24 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="flex flex-col w-screen min-h-screen p-4 pt-24 bg-gradient-to-b from-primary/10 to-background">
       <Card className="mb-4 border-0 shadow-md">
         <CardHeader className="pb-2">
           <CardTitle className="text-2xl font-medium">

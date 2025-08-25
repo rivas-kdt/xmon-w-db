@@ -22,7 +22,7 @@ export function ThemeToggle() {
       variant="outline"
       size="icon"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="rounded-full bg-muted hover:bg-muted/50 text-primary hover:text-muted-foreground/50 backdrop-blur-sm border-muted cursor-pointer"
+      className="rounded-full bg-muted hover:bg-muted/50 hover:text-muted-foreground/50 backdrop-blur-sm border-muted cursor-pointer"
       aria-label="Toggle theme"
     >
       <Sun

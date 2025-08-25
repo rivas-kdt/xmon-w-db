@@ -12,7 +12,7 @@ interface User {
   email: string;
 }
 
-export function useAuth() {
+export function useAuth(requireAuth: boolean = true) {
   const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -24,19 +24,19 @@ export function useAuth() {
         const res = await get("jwt");
         if (!res) {
           console.log("No JWT token found");
-          router.push("/login");
+          if (requireAuth) router.push("/login");
           return;
         }
         const sesh = await decrypt(res);
         if (!sesh) {
           console.log("Failed to decrypt session");
-          router.push("/login");
+          if (requireAuth) router.push("/login");
         } else {
           setUser(sesh.user as User);
         }
       } catch (error) {
         console.error("Error getting or decrypting token:", error);
-        router.push("/login");
+        if (requireAuth) router.push("/login");
       } finally {
         setLoading(false);
       }
@@ -61,7 +61,7 @@ export function useAuth() {
       await create(response.token);
       console.log("Login successful, token:", response.token);
       router.push("/");
-    } catch (error : any) {
+    } catch (error: any) {
       setError(error.message || "Login failed");
     } finally {
       setLoading(false);

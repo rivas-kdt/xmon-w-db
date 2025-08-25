@@ -71,7 +71,7 @@ export default function ShippedView() {
     moveSelectedItems,
     removeFromShipping,
     handleInputChange,
-    selectedItems
+    selectedItems,
   } = useShipHooks({
     t,
     setScanning,
@@ -93,7 +93,7 @@ export default function ShippedView() {
 
   return (
     <ScrollArea className="h-screen">
-      <div className="flex flex-col w-screen p-4 pt-20 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+      <div className="flex flex-col w-screen p-4 pt-20  bg-gradient-to-b from-primary/10 to-background">
         {/* Back Button */}
         <Link href="/">
           <Button variant="ghost" size="icon">
@@ -107,9 +107,7 @@ export default function ShippedView() {
           <Card className="mb-4">
             <CardContent className="p-4">
               <QrScanner
-                onScan={(data: string) =>
-                  handleScan(data)
-                }
+                onScan={(data: string) => handleScan(data)}
                 onClose={() => setScanning(false)}
               />
             </CardContent>
@@ -181,10 +179,7 @@ export default function ShippedView() {
           <div className="p-2">
             <Button
               onClick={() => {
-                moveSelectedItems(
-                  stockedParts,
-                  setHighlightedItem
-                );
+                moveSelectedItems(stockedParts, setHighlightedItem);
                 // toggleItemAdded(stockedParts);
               }}
               disabled={!stockedParts.some((item) => item.selected)}
@@ -238,20 +233,14 @@ export default function ShippedView() {
                               ? ""
                               : String(item.ship_quantity)
                           }
-                          onChange={(e) =>
-                            handleInputChange(e, index)
-                          }
+                          onChange={(e) => handleInputChange(e, index)}
                         />
                       </TableCell>
                       <TableCell>
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() =>
-                            removeFromShipping(
-                              item,
-                            )
-                          }
+                          onClick={() => removeFromShipping(item)}
                           className="h-8 w-8 p-0"
                         >
                           <Minus className="h-4 w-4" />

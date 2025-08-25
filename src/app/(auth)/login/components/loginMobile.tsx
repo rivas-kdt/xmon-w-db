@@ -103,7 +103,7 @@ const LoginMobile = () => {
             )}
             <Button
               type="submit"
-              className="w-full bg-primary"
+              className="w-full bg-primary text-white"
               size="lg"
               disabled={loading}
             >
@@ -138,11 +138,11 @@ const LoginMobile = () => {
       </Card>
 
       {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-64 h-64 bg-primary/10 -z-10 rounded-br-[100%]" />
-      <div className="absolute bottom-0 right-0 w-84 h-64 bg-primary/50 -z-10 rounded-tl-[100%]" />
-      <div className="absolute top-70 -right-10 w-64 h-64 bg-primary/20 -z-10 rounded-[100%]" />
-      <div className="absolute top-130 -left-5 w-24 h-24 bg-primary/40 -z-10 rounded-[100%]" />
-      {/* <div className="absolute top-15 -right-25 w-44 h-44 bg-primary/20 -z-10 rounded-[100%]" /> */}
+      <div className="absolute top-0 left-0 w-64 h-64 bg-primary/60 -z-10 rounded-br-[100%]" />
+      <div className="absolute top-56 -right-10 w-24 h-24 bg-primary/30 -z-10 rounded-[100%]" />
+      <div className="absolute top-70 -right-10 w-64 h-64 bg-primary/60 -z-10 rounded-[100%]" />
+      <div className="absolute top-130 -left-5 w-24 h-24 bg-primary/70 -z-10 rounded-[100%]" />
+      <div className="absolute bottom-0 right-0 w-84 h-64 bg-primary/80 -z-10 rounded-tl-[100%]" />
     </div>
   );
 };

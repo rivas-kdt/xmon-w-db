@@ -5,7 +5,6 @@ import { NextIntlClientProvider } from "next-intl";
 import { Toaster } from "react-hot-toast";
 import { getLocale } from "next-intl/server";
 import { ThemeProvider } from "@/lib/themeProvider";
-import { Toaster } from "react-hot-toast";
 import Header from "@/components/header";
 
 const geistSans = Geist({

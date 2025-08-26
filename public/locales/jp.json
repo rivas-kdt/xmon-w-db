@@ -160,10 +160,10 @@
     "success": "成功!",
     "error": "エラー",
     "itemError": "商品の取得中にエラーが発生しました。",
-    "invalidQR": "無効なQRコードです。",
+    "invalidQR": "無効なQRコード形式です。",
     "foundAndAdded": "商品が見つかり、出荷リストに追加されました。",
     "noMatch": "一致するデータが見つかりませんでした。",
-    "scanError": "スキャンエラーが発生しました。",
+    "scanError": "スキャンしたQRコードの処理に失敗しました",
     "noItem": "選択された商品がありません。",
     "itemAdded": "商品が追加されました。",
     "authErr": "認証エラーが発生しました。",
@@ -174,7 +174,12 @@
     "invalidStock": "{lotNo}の在庫が不足しています。",
     "shippingFailed": "{lotNo}の出荷に失敗しました。",
     "failedUpdate": "{lotNo}の在庫更新に失敗しました。",
-    "shipSuccess": "{count}件の商品が正常に出荷されました。"
+    "shipSuccess": "{count}件の商品が正常に出荷されました。",
+    "allItemsShipped": "選択したすべてのアイテムが正常に出荷されました。",
+    "failedToShipParts": "部品の出荷に失敗しました。",
+    "noWarehouseID": "セッションストレージに倉庫IDが見つかりません。",
+    "noStockedForWarehouse": "指定された倉庫に在庫部品が見つかりません。",
+    "failedFetchForWarehouse": "倉庫の在庫部品の取得に失敗しました。"
   },
   "transaction-page": {
     "title": "取引履歴",
@@ -300,4 +305,3 @@
     "fallbackError": "ログイン中にエラーが発生しました。もう一度お試しください。"
   }
 }
- 

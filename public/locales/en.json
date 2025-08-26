@@ -158,10 +158,10 @@
     "success": "Success!",
     "error": "Error",
     "itemError": "Error fetching items",
-    "invalidQR": "Invalid QR Code",
+    "invalidQR": "Invalid QR code format",
     "foundAndAdded": "Item found and added to ship list",
     "noMatch": "No match",
-    "scanError": "Scan Error",
+    "scanError": "Failed to process the scanned QR code",
     "noItem": "No item selected",
     "itemAdded": "Item added",
     "authErr": "Authentication Error",
@@ -172,7 +172,12 @@
     "invalidStock": "Not enough stock for {lotNo}",
     "shippingFailed": "Shipping failed for {lotNo}",
     "failedUpdate": "Inventory update failed for {lotNo}",
-    "shipSuccess": "{count} item/s have been shipped successfully"
+    "shipSuccess": "{count} item/s have been shipped successfully",
+    "allItemsShipped": "All selected items shipped successfully!",
+    "failedToShipParts": "Failed to ship out the parts",
+    "noWarehouseID": "Warehouse ID not found in session storage",
+    "noStockedForWarehouse": "No stocked parts found for the given warehouse",
+    "failedFetchForWarehouse": "Failed to fetch stocked parts"
   },
   "transaction-page": {
     "title": "Transactions",

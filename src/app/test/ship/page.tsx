@@ -28,6 +28,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useShipHooks } from "@/features/ship/hooks/shipHooks";
 import { useShippingActions } from "@/features/ship/hooks/shippingActions";
 import QrScanner from "@/features/ship/components/qr-scanner";
+import toast from "react-hot-toast";
 
 interface WarehouseItem {
   id: string;
@@ -95,7 +96,7 @@ export default function ShippedView() {
     <ScrollArea className="h-screen">
       <div className="flex flex-col w-screen p-4 pt-20  bg-gradient-to-b from-primary/10 to-background">
         {/* Back Button */}
-        <Link href="/">
+        <Link href="/test">
           <Button variant="ghost" size="icon">
             <ArrowLeft className="h-6 w-6 -ml-4" />
           </Button>
@@ -181,6 +182,14 @@ export default function ShippedView() {
               onClick={() => {
                 moveSelectedItems(stockedParts, setHighlightedItem);
                 // toggleItemAdded(stockedParts);
+                stockedParts
+                  .filter((item) => item.selected)
+                  .forEach((item) => {
+                    // Use setTimeout to ensure toast renders after state updates
+                    setTimeout(() => {
+                      toast.success(`${t("itemAdded")}: ${item.lot_no}`);
+                    }, 0);
+                  });
               }}
               disabled={!stockedParts.some((item) => item.selected)}
               className="w-full bg-primary text-md h-[50px]"
@@ -209,7 +218,7 @@ export default function ShippedView() {
                     <TableHead>{t("th2")}</TableHead>
                     <TableHead>{t("th3")}</TableHead>
                     <TableHead>{t("th4")}</TableHead>
-                    <TableHead>Stock</TableHead>
+                    <TableHead>{t("stock")}</TableHead>
                     <TableHead>{t("th5")}</TableHead>
                     <TableHead className="w-[80px]">{t("remove")}</TableHead>
                   </TableRow>
@@ -240,7 +249,12 @@ export default function ShippedView() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => removeFromShipping(item)}
+                          onClick={() => {
+                            removeFromShipping(item);
+                            toast.success(
+                              t("removeItem", { lotNo: item.lot_no })
+                            );
+                          }}
                           className="h-8 w-8 p-0"
                         >
                           <Minus className="h-4 w-4" />

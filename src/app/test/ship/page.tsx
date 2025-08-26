@@ -102,7 +102,6 @@ export default function ShippedView() {
           </Button>
         </Link>
         <h1 className="text-2xl font-medium ml-2 mb-2">{t("ship-items")}</h1>
-
         {/* QR Scanner */}
         {scanning ? (
           <Card className="mb-4">
@@ -122,7 +121,6 @@ export default function ShippedView() {
             {t("b1")}
           </Button>
         )}
-
         {/* Table 1: Stocked Items */}
         <Card className="mb-4">
           <CardHeader className="py-2">
@@ -199,7 +197,6 @@ export default function ShippedView() {
             </Button>
           </div>
         </Card>
-
         {/* Table 2: Items to Ship */}
         <Card className="mb-4">
           <CardHeader className="py-2">
@@ -218,7 +215,8 @@ export default function ShippedView() {
                     <TableHead>{t("th2")}</TableHead>
                     <TableHead>{t("th3")}</TableHead>
                     <TableHead>{t("th4")}</TableHead>
-                    <TableHead>{t("stock")}</TableHead>
+                    <TableHead>{t("stock")}</TableHead> // TODO dapat naguupdate
+                    yung stock after magship
                     <TableHead>{t("th5")}</TableHead>
                     <TableHead className="w-[80px]">{t("remove")}</TableHead>
                   </TableRow>
@@ -268,7 +266,6 @@ export default function ShippedView() {
             )}
           </CardContent>
         </Card>
-
         {/* Ship Button */}
         <Button
           className="w-full py-6 mt-auto bg-primary mb-4 text-md h-[50px]"
@@ -286,6 +283,8 @@ export default function ShippedView() {
             </>
           )}
         </Button>
+        // TODO dapat lahat nang naship mawawala (pag fail *insufficient
+        quantity* stay)
       </div>
     </ScrollArea>
   );

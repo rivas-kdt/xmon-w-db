@@ -26,40 +26,48 @@ export function useShipHooks({
   const handleShipPart = async (selected: any[]) => {
     setLoading(true);
     try {
-      const responses = [];
+      const responses: any[] = [];
+      const failed: string[] = [];
 
       for (const item of selected) {
-        const shipQty = Number(item.ship_quantity); // quantity to ship
+        const shipQty = Number(item.ship_quantity);
 
-        // Validate *before* sending request
+        // Validate before API call
         if (!shipQty || shipQty <= 0) {
           toast.error(t("invalidQuantity", { lotNo: item.lot_no }), {
             duration: 4000,
           });
-          continue;
+          failed.push(item.lot_no);
+          continue; // skip this item
         }
 
         if (shipQty > item.quantity) {
           toast.error(t("invalidStock", { lotNo: item.lot_no }), {
             duration: 4000,
           });
-          continue;
+          failed.push(item.lot_no);
+          continue; // skip this item
         }
 
         try {
-          // Now safe to call the API
+          // Ship valid item
           const response = await shipParts(item.lot_no, shipQty);
           responses.push(response);
         } catch (err: any) {
           console.error("Error shipping item:", err);
-
-          // If server sent a custom message (e.g. "Insufficient inventory quantity"), use it
-          const message = err?.message || t("failedToShipParts");
-          toast.error(`${message} (${item.lot_no})`, { duration: 4000 });
-          continue; // don’t break the loop, keep shipping others
+          toast.error(err?.message || t("failedToShipParts"));
+          failed.push(item.lot_no);
+          continue; // skip this failed item
         }
       }
 
+      // If only one item was selected and it failed → stop
+      if (selected.length === 1 && failed.length === 1) {
+        setError(t("failedToShipParts"));
+        return;
+      }
+
+      // Reset state for items that succeeded
       setStockedParts((prev) =>
         prev.map((i) =>
           selected.some((s: any) => s.lot_no === i.lot_no)
@@ -70,7 +78,7 @@ export function useShipHooks({
 
       await fetchStockedParts();
 
-      // Only show success if at least one item shipped
+      // how success toast only if at least one succeeded
       if (responses.length > 0) {
         toast.success(t("allItemsShipped"));
         setMessage(t("allItemsShipped"));
@@ -79,7 +87,7 @@ export function useShipHooks({
       return responses;
     } catch (error: any) {
       console.error("Error in shipping part:", error);
-      setError(error.message || "Failed to ship out the parts");
+      setError(error.message || t("failedToShipParts"));
       toast.error(error.message || t("failedToShipParts"));
     } finally {
       setLoading(false);

@@ -173,7 +173,7 @@
     "shippingFailed": "Shipping failed for {lotNo}",
     "failedUpdate": "Inventory update failed for {lotNo}",
     "shipSuccess": "{count} item/s have been shipped successfully",
-    "allItemsShipped": "All selected items shipped successfully!",
+    "allItemsShipped": "All valid items shipped successfully!",
     "failedToShipParts": "Failed to ship out the parts",
     "noWarehouseID": "Warehouse ID not found in session storage",
     "noStockedForWarehouse": "No stocked parts found for the given warehouse",

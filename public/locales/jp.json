@@ -175,7 +175,7 @@
     "shippingFailed": "{lotNo}の出荷に失敗しました。",
     "failedUpdate": "{lotNo}の在庫更新に失敗しました。",
     "shipSuccess": "{count}件の商品が正常に出荷されました。",
-    "allItemsShipped": "選択したすべてのアイテムが正常に出荷されました。",
+    "allItemsShipped": "有効な品目はすべて正常に出荷されました。",
     "failedToShipParts": "部品の出荷に失敗しました。",
     "noWarehouseID": "セッションストレージに倉庫IDが見つかりません。",
     "noStockedForWarehouse": "指定された倉庫に在庫部品が見つかりません。",

@@ -3,6 +3,7 @@ import { useRecipientHooks } from "@/features/admin/hooks/useRecipientsHooks";
 import { useUserHooks } from "@/features/admin/hooks/useUsersHooks";
 import { useWarehouseHooks } from "@/features/admin/hooks/useWarehousesHooks";
 import DashboardDesktop from "@/features/landing/components/landingDesktop";
+import { useStockActions } from "@/features/stock/hooks/useStockHooks";
 
 export default function Landing() {
   const { users } = useUserHooks();

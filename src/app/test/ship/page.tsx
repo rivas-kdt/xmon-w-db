@@ -211,6 +211,8 @@ export default function ShippedView() {
               <Table>
                 <TableHeader>
                   <TableRow className="whitespace-nowrap">
+                    {" "}
+                    //TODO try na di mawala yung table head pag nag scroll down
                     <TableHead>{t("th1")}</TableHead>
                     <TableHead>{t("th2")}</TableHead>
                     <TableHead>{t("th3")}</TableHead>

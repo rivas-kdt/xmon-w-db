@@ -67,20 +67,47 @@ export function useShipHooks({
         return;
       }
 
-      // Reset state for items that succeeded
+      // Remove successfully shipped items from selected list
+      const succeededLotNos = selected
+        .filter((s) => !failed.includes(s.lot_no))
+        .map((s) => s.lot_no);
+
+      // Update stockedParts (unselect + reset + adjust quantity)
       setStockedParts((prev) =>
-        prev.map((i) =>
-          selected.some((s: any) => s.lot_no === i.lot_no)
-            ? { ...i, selected: false, added: false, ship_quantity: 0 }
-            : i
-        )
+        prev
+          .map((i) => {
+            if (succeededLotNos.includes(i.lot_no)) {
+              const shippedItem = selected.find((s) => s.lot_no === i.lot_no);
+              const newQty =
+                i.quantity - Number(shippedItem?.ship_quantity || 0);
+              return {
+                ...i,
+                quantity: Math.max(newQty, 0),
+                selected: false,
+                added: false,
+                ship_quantity: 0,
+              };
+            }
+            return i;
+          })
+          // Optional: if quantity is 0, remove it entirely
+          .filter((i) => i.quantity > 0)
       );
 
+      setSelectedItems((prev) =>
+        prev.filter((item) => !succeededLotNos.includes(item.lot_no))
+      );
+
+      // Refetch latest stocked parts (to ensure sync with DB)
       await fetchStockedParts();
 
       // how success toast only if at least one succeeded
       if (responses.length > 0) {
-        toast.success(t("allItemsShipped"));
+        toast.success(
+          responses.length === selected.length
+            ? t("allItemsShipped")
+            : t("someItemsShipped", { count: responses.length })
+        );
         setMessage(t("allItemsShipped"));
       }
 

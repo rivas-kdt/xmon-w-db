@@ -126,7 +126,7 @@ export default function ShippedView() {
           <CardHeader className="py-2">
             <CardTitle className="text-lg">{t("ship-title1")}</CardTitle>
           </CardHeader>
-          <CardContent className="p-2 overflow-auto max-h-[30vh]">
+          <CardContent className="overflow-auto max-h-[30vh]">
             {fetching ? (
               <div className="flex justify-center items-center py-4">
                 <Loader2 className="h-6 w-6 animate-spin text-primary mr-2" />
@@ -140,7 +140,31 @@ export default function ShippedView() {
               <Table>
                 <TableHeader>
                   <TableRow className="whitespace-nowrap">
-                    <TableHead className="w-[50px]">{t("select")}</TableHead>
+                    <TableHead className="w-[50px]">
+                      <Checkbox
+                        checked={
+                          stockedParts.length > 0 &&
+                          stockedParts
+                            .filter((item) => item.quantity > 0 && !item.added)
+                            .every((item) => item.selected)
+                        }
+                        onCheckedChange={(checked) => {
+                          const visibleItems = stockedParts.filter(
+                            (item) => item.quantity > 0 && !item.added
+                          );
+
+                          const selectAll = !visibleItems.every(
+                            (item) => item.selected
+                          );
+
+                          visibleItems.forEach((item) => {
+                            if (item.selected !== selectAll) {
+                              toggleItemSelection(item);
+                            }
+                          });
+                        }}
+                      />
+                    </TableHead>
                     <TableHead>{t("th1")}</TableHead>
                     <TableHead>{t("th2")}</TableHead>
                     <TableHead>{t("th3")}</TableHead>
@@ -209,16 +233,17 @@ export default function ShippedView() {
               </div>
             ) : (
               <Table>
-                <TableHeader>
+                <TableHeader className="sticky top-0 z-10 bg-background shadow-sm">
                   <TableRow className="whitespace-nowrap">
                     {" "}
-                    //TODO try na di mawala yung table head pag nag scroll down
+                    {/* //TODO try na di mawala yung table head pag nag scroll down */}
                     <TableHead>{t("th1")}</TableHead>
                     <TableHead>{t("th2")}</TableHead>
                     <TableHead>{t("th3")}</TableHead>
                     <TableHead>{t("th4")}</TableHead>
-                    <TableHead>{t("stock")}</TableHead> // TODO dapat naguupdate
-                    yung stock after magship
+                    <TableHead>{t("stock")}</TableHead>
+                    {/* // TODO dapat naguupdate
+                    yung stock after magship */}
                     <TableHead>{t("th5")}</TableHead>
                     <TableHead className="w-[80px]">{t("remove")}</TableHead>
                   </TableRow>
@@ -226,12 +251,22 @@ export default function ShippedView() {
                 <TableBody className="whitespace-nowrap">
                   {selectedItems.map((item, index) => (
                     <TableRow key={item.lot_no}>
-                      <TableCell>{item.lot_no}</TableCell>
-                      <TableCell>{item.product_code}</TableCell>
-                      <TableCell>{item.stock_no}</TableCell>
-                      <TableCell>{item.description}</TableCell>
-                      <TableCell>{item.quantity}</TableCell>
-                      <TableCell>
+                      <TableCell className="whitespace-nowrap">
+                        {item.lot_no}
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap">
+                        {item.product_code}
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap">
+                        {item.stock_no}
+                      </TableCell>
+                      <TableCell className="max-w-[250px] whitespace-normal text-start">
+                        {item.description}
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap text-center">
+                        {item.quantity}
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap">
                         <Input
                           type="number"
                           min="1"
@@ -245,7 +280,7 @@ export default function ShippedView() {
                           onChange={(e) => handleInputChange(e, index)}
                         />
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="whitespace-nowrap text-center">
                         <Button
                           variant="ghost"
                           size="sm"
@@ -285,8 +320,8 @@ export default function ShippedView() {
             </>
           )}
         </Button>
-        // TODO dapat lahat nang naship mawawala (pag fail *insufficient
-        quantity* stay)
+        {/* // TODO dapat lahat nang naship mawawala (pag fail *insufficient
+        quantity* stay) */}
       </div>
     </ScrollArea>
   );

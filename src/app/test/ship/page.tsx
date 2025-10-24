@@ -275,7 +275,7 @@ export default function ShippedView() {
                       <TableCell className="whitespace-nowrap">
                         {item.stock_no}
                       </TableCell>
-                      <TableCell className="max-w-[250px] whitespace-normal text-start">
+                      <TableCell className="min-w-[250px] whitespace-normal text-start">
                         {item.description}
                       </TableCell>
                       <TableCell className="whitespace-nowrap text-center">
@@ -308,7 +308,7 @@ export default function ShippedView() {
                               }
                             );
                           }}
-                          className="sticky right-0 z-10 bg-background h-8 w-8 p-0"
+                          className="h-8 w-8 p-0"
                         >
                           <Minus className="h-4 w-4" />
                           <span className="sr-only">{t("remove")}</span>

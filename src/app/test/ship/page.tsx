@@ -29,6 +29,7 @@ import { useShipHooks } from "@/features/ship/hooks/shipHooks";
 import { useShippingActions } from "@/features/ship/hooks/shippingActions";
 import QrScanner from "@/features/ship/components/qr-scanner";
 import toast from "react-hot-toast";
+import { useTheme } from "next-themes";
 
 interface WarehouseItem {
   id: string;
@@ -48,6 +49,7 @@ export default function ShippedView() {
   const [highlightedItem, setHighlightedItem] = useState<string | null>(null);
   const isMobile = useIsMobile();
   const t = useTranslations("stock/ship");
+  const { theme } = useTheme();
 
   // If user is using desktop, redirect him to /dashboard
   useEffect(() => {
@@ -140,8 +142,15 @@ export default function ShippedView() {
               <Table>
                 <TableHeader>
                   <TableRow className="whitespace-nowrap">
-                    <TableHead className="w-[50px]">
+                    <TableHead
+                      className="sticky left-0 z-20 w-[50px]"
+                      style={{
+                        backgroundColor:
+                          theme === "dark" ? "#131D34" : "#ffffff",
+                      }}
+                    >
                       <Checkbox
+                        className="mr-2"
                         checked={
                           stockedParts.length > 0 &&
                           stockedParts
@@ -182,7 +191,13 @@ export default function ShippedView() {
                           highlightedItem === item.lot_no ? "bg-primary/10" : ""
                         }
                       >
-                        <TableCell>
+                        <TableCell
+                          className="sticky left-0 z-10"
+                          style={{
+                            backgroundColor:
+                              theme === "dark" ? "#131D34" : "#ffffff",
+                          }}
+                        >
                           <Checkbox
                             checked={item.selected}
                             onCheckedChange={() => toggleItemSelection(item)}
@@ -235,15 +250,12 @@ export default function ShippedView() {
               <Table>
                 <TableHeader className="sticky top-0 z-10 bg-background shadow-sm">
                   <TableRow className="whitespace-nowrap">
-                    {" "}
                     {/* //TODO try na di mawala yung table head pag nag scroll down */}
                     <TableHead>{t("th1")}</TableHead>
                     <TableHead>{t("th2")}</TableHead>
                     <TableHead>{t("th3")}</TableHead>
                     <TableHead>{t("th4")}</TableHead>
                     <TableHead>{t("stock")}</TableHead>
-                    {/* // TODO dapat naguupdate
-                    yung stock after magship */}
                     <TableHead>{t("th5")}</TableHead>
                     <TableHead className="w-[80px]">{t("remove")}</TableHead>
                   </TableRow>
@@ -290,7 +302,7 @@ export default function ShippedView() {
                               t("removeItem", { lotNo: item.lot_no })
                             );
                           }}
-                          className="h-8 w-8 p-0"
+                          className="sticky right-0 z-10 bg-background h-8 w-8 p-0"
                         >
                           <Minus className="h-4 w-4" />
                           <span className="sr-only">{t("remove")}</span>
@@ -320,8 +332,6 @@ export default function ShippedView() {
             </>
           )}
         </Button>
-        {/* // TODO dapat lahat nang naship mawawala (pag fail *insufficient
-        quantity* stay) */}
       </div>
     </ScrollArea>
   );

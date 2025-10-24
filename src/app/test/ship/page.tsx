@@ -149,7 +149,8 @@ export default function ShippedView() {
                           theme === "dark" ? "#131D34" : "#ffffff",
                       }}
                     >
-                      <Checkbox
+                      {t("select")}
+                      {/* <Checkbox
                         className="mr-2"
                         checked={
                           stockedParts.length > 0 &&
@@ -172,7 +173,7 @@ export default function ShippedView() {
                             }
                           });
                         }}
-                      />
+                      /> */}
                     </TableHead>
                     <TableHead>{t("th1")}</TableHead>
                     <TableHead>{t("th2")}</TableHead>
@@ -192,7 +193,7 @@ export default function ShippedView() {
                         }
                       >
                         <TableCell
-                          className="sticky left-0 z-10"
+                          className="sticky left-0 z-10 pl-0 flex items-center justify-center"
                           style={{
                             backgroundColor:
                               theme === "dark" ? "#131D34" : "#ffffff",
@@ -224,7 +225,9 @@ export default function ShippedView() {
                   .forEach((item) => {
                     // Use setTimeout to ensure toast renders after state updates
                     setTimeout(() => {
-                      toast.success(`${t("itemAdded")}: ${item.lot_no}`);
+                      toast.success(`${t("itemAdded")}: ${item.lot_no}`, {
+                        duration: 2000,
+                      });
                     }, 0);
                   });
               }}
@@ -299,7 +302,10 @@ export default function ShippedView() {
                           onClick={() => {
                             removeFromShipping(item);
                             toast.success(
-                              t("removeItem", { lotNo: item.lot_no })
+                              t("removeItem", { lotNo: item.lot_no }),
+                              {
+                                duration: 2000,
+                              }
                             );
                           }}
                           className="sticky right-0 z-10 bg-background h-8 w-8 p-0"

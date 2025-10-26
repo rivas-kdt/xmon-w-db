@@ -139,80 +139,107 @@ export default function ShippedView() {
                 <p>{t("no-items-warehouse")}</p>
               </div>
             ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow className="whitespace-nowrap">
-                    <TableHead
-                      className="sticky left-0 z-20 w-[50px]"
-                      style={{
-                        backgroundColor:
-                          theme === "dark" ? "#131D34" : "#ffffff",
-                      }}
-                    >
-                      {t("select")}
-                      {/* <Checkbox
-                        className="mr-2"
-                        checked={
-                          stockedParts.length > 0 &&
-                          stockedParts
-                            .filter((item) => item.quantity > 0 && !item.added)
-                            .every((item) => item.selected)
-                        }
-                        onCheckedChange={(checked) => {
-                          const visibleItems = stockedParts.filter(
-                            (item) => item.quantity > 0 && !item.added
-                          );
-
-                          const selectAll = !visibleItems.every(
-                            (item) => item.selected
-                          );
-
-                          visibleItems.forEach((item) => {
-                            if (item.selected !== selectAll) {
-                              toggleItemSelection(item);
-                            }
-                          });
+              <div className="relative max-h-[500px] overflow-auto">
+                <Table
+                  className="w-full min-w-[800px]"
+                  // style={{
+                  //   maxHeight: "500px",
+                  //   overflowY: "auto", // force vertical scroll
+                  //   display: "block", // required so sticky works inside
+                  // }}
+                >
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead
+                        className="sticky left-0 top-0 z-30"
+                        style={{
+                          backgroundColor:
+                            theme === "dark" ? "#131D34" : "#ffffff",
                         }}
-                      /> */}
-                    </TableHead>
-                    <TableHead>{t("th1")}</TableHead>
-                    <TableHead>{t("th2")}</TableHead>
-                    <TableHead>{t("th3")}</TableHead>
-                    <TableHead>{t("th4")}</TableHead>
-                    <TableHead>{t("th5")}</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody className="whitespace-nowrap">
-                  {stockedParts
-                    .filter((item) => item.quantity > 0 && !item.added)
-                    .map((item) => (
-                      <TableRow
-                        key={item.lot_no}
-                        className={
-                          highlightedItem === item.lot_no ? "bg-primary/10" : ""
-                        }
                       >
-                        <TableCell
-                          className="sticky left-0 z-10 pl-0 flex items-center justify-center"
-                          style={{
-                            backgroundColor:
-                              theme === "dark" ? "#131D34" : "#ffffff",
-                          }}
+                        {t("select")}
+                      </TableHead>
+                      <TableHead
+                        className="sticky top-0 z-20"
+                        style={{
+                          backgroundColor:
+                            theme === "dark" ? "#131D34" : "#ffffff",
+                        }}
+                      >
+                        {t("th1")}
+                      </TableHead>
+                      <TableHead
+                        className="sticky top-0 z-20"
+                        style={{
+                          backgroundColor:
+                            theme === "dark" ? "#131D34" : "#ffffff",
+                        }}
+                      >
+                        {t("th2")}
+                      </TableHead>
+                      <TableHead
+                        className="sticky top-0 z-20"
+                        style={{
+                          backgroundColor:
+                            theme === "dark" ? "#131D34" : "#ffffff",
+                        }}
+                      >
+                        {t("th3")}
+                      </TableHead>
+                      <TableHead
+                        className="sticky top-0 z-20"
+                        style={{
+                          backgroundColor:
+                            theme === "dark" ? "#131D34" : "#ffffff",
+                        }}
+                      >
+                        {t("th4")}
+                      </TableHead>
+                      <TableHead
+                        className="sticky top-0 z-20"
+                        style={{
+                          backgroundColor:
+                            theme === "dark" ? "#131D34" : "#ffffff",
+                        }}
+                      >
+                        {t("th5")}
+                      </TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody className="whitespace-nowrap">
+                    {stockedParts
+                      .filter((item) => item.quantity > 0 && !item.added)
+                      .map((item) => (
+                        <TableRow
+                          key={item.lot_no}
+                          className={
+                            highlightedItem === item.lot_no
+                              ? "bg-primary/10"
+                              : ""
+                          }
                         >
-                          <Checkbox
-                            checked={item.selected}
-                            onCheckedChange={() => toggleItemSelection(item)}
-                          />
-                        </TableCell>
-                        <TableCell>{item.lot_no}</TableCell>
-                        <TableCell>{item.product_code}</TableCell>
-                        <TableCell>{item.stock_no}</TableCell>
-                        <TableCell>{item.description}</TableCell>
-                        <TableCell>{item.quantity}</TableCell>
-                      </TableRow>
-                    ))}
-                </TableBody>
-              </Table>
+                          <TableCell
+                            className="sticky left-0 z-10 pl-0 flex items-center justify-center"
+                            style={{
+                              backgroundColor:
+                                theme === "dark" ? "#131D34" : "#ffffff",
+                            }}
+                          >
+                            <Checkbox
+                              checked={item.selected}
+                              onCheckedChange={() => toggleItemSelection(item)}
+                            />
+                          </TableCell>
+                          <TableCell>{item.lot_no}</TableCell>
+                          <TableCell>{item.product_code}</TableCell>
+                          <TableCell>{item.stock_no}</TableCell>
+                          <TableCell>{item.description}</TableCell>
+                          <TableCell>{item.quantity}</TableCell>
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              </div>
             )}
           </CardContent>
           <div className="p-2">

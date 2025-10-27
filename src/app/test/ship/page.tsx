@@ -266,7 +266,7 @@ export default function ShippedView() {
           <CardHeader className="py-2">
             <CardTitle className="text-lg">{t("ship-title2")}</CardTitle>
           </CardHeader>
-          <CardContent className="py-2 overflow-hidden">
+          <CardContent className="overflow-hidden">
             {selectedItems.length === 0 ? (
               <div className="text-center py-4 text-muted-foreground">
                 <p>{t("no-added-items")}</p>
@@ -277,6 +277,7 @@ export default function ShippedView() {
                   <TableRow className="whitespace-nowrap">
                     {/* //TODO try na di mawala yung table head pag nag scroll down */}
                     <TableHead
+                      className="py-0"
                       style={{
                         backgroundColor:
                           theme === "dark" ? "#131D34" : "#ffffff",

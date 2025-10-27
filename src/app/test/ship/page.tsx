@@ -266,7 +266,7 @@ export default function ShippedView() {
           <CardHeader className="py-2">
             <CardTitle className="text-lg">{t("ship-title2")}</CardTitle>
           </CardHeader>
-          <CardContent className="p-2 overflow-y-auto max-h-[18vh]">
+          <CardContent className="py-2 overflow-hidden">
             {selectedItems.length === 0 ? (
               <div className="text-center py-4 text-muted-foreground">
                 <p>{t("no-added-items")}</p>

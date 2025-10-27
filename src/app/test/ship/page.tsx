@@ -272,118 +272,124 @@ export default function ShippedView() {
                 <p>{t("no-added-items")}</p>
               </div>
             ) : (
-              <div className="relative max-h-[500px] overflow-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow className="whitespace-nowrap">
-                      {/* //TODO try na di mawala yung table head pag nag scroll down */}
-                      <TableHead
-                        style={{
-                          backgroundColor:
-                            theme === "dark" ? "#131D34" : "#ffffff",
-                        }}
-                      >
-                        {t("th1")}
-                      </TableHead>
-                      <TableHead
-                        style={{
-                          backgroundColor:
-                            theme === "dark" ? "#131D34" : "#ffffff",
-                        }}
-                      >
-                        {t("th2")}
-                      </TableHead>
-                      <TableHead
-                        style={{
-                          backgroundColor:
-                            theme === "dark" ? "#131D34" : "#ffffff",
-                        }}
-                      >
-                        {t("th3")}
-                      </TableHead>
-                      <TableHead
-                        style={{
-                          backgroundColor:
-                            theme === "dark" ? "#131D34" : "#ffffff",
-                        }}
-                      >
-                        {t("th4")}
-                      </TableHead>
-                      <TableHead
-                        style={{
-                          backgroundColor:
-                            theme === "dark" ? "#131D34" : "#ffffff",
-                        }}
-                      >
-                        {t("stock")}
-                      </TableHead>
-                      <TableHead
-                        style={{
-                          backgroundColor:
-                            theme === "dark" ? "#131D34" : "#ffffff",
-                        }}
-                      >
-                        {t("th5")}
-                      </TableHead>
-                      <TableHead className="w-[80px]">{t("remove")}</TableHead>
+              <Table>
+                <TableHeader>
+                  <TableRow className="whitespace-nowrap">
+                    {/* //TODO try na di mawala yung table head pag nag scroll down */}
+                    <TableHead
+                      style={{
+                        backgroundColor:
+                          theme === "dark" ? "#131D34" : "#ffffff",
+                      }}
+                    >
+                      {t("th1")}
+                    </TableHead>
+                    <TableHead
+                      style={{
+                        backgroundColor:
+                          theme === "dark" ? "#131D34" : "#ffffff",
+                      }}
+                    >
+                      {t("th2")}
+                    </TableHead>
+                    <TableHead
+                      style={{
+                        backgroundColor:
+                          theme === "dark" ? "#131D34" : "#ffffff",
+                      }}
+                    >
+                      {t("th3")}
+                    </TableHead>
+                    <TableHead
+                      style={{
+                        backgroundColor:
+                          theme === "dark" ? "#131D34" : "#ffffff",
+                      }}
+                    >
+                      {t("th4")}
+                    </TableHead>
+                    <TableHead
+                      style={{
+                        backgroundColor:
+                          theme === "dark" ? "#131D34" : "#ffffff",
+                      }}
+                    >
+                      {t("stock")}
+                    </TableHead>
+                    <TableHead
+                      style={{
+                        backgroundColor:
+                          theme === "dark" ? "#131D34" : "#ffffff",
+                      }}
+                    >
+                      {t("th5")}
+                    </TableHead>
+                    <TableHead
+                      className="w-[80px]"
+                      style={{
+                        backgroundColor:
+                          theme === "dark" ? "#131D34" : "#ffffff",
+                      }}
+                    >
+                      {t("remove")}
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody className="whitespace-nowrap">
+                  {selectedItems.map((item, index) => (
+                    <TableRow key={item.lot_no}>
+                      <TableCell className="whitespace-nowrap">
+                        {item.lot_no}
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap">
+                        {item.product_code}
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap">
+                        {item.stock_no}
+                      </TableCell>
+                      <TableCell className="min-w-[250px] whitespace-normal text-start">
+                        {item.description}
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap text-center">
+                        {item.quantity}
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap">
+                        <Input
+                          type="number"
+                          min="1"
+                          max={item.quantity}
+                          className="w-20 p-1 border rounded-md"
+                          value={
+                            item.ship_quantity === ""
+                              ? ""
+                              : String(item.ship_quantity)
+                          }
+                          onChange={(e) => handleInputChange(e, index)}
+                        />
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap text-center">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => {
+                            removeFromShipping(item);
+                            toast.success(
+                              t("removeItem", { lotNo: item.lot_no }),
+                              {
+                                duration: 2000,
+                              }
+                            );
+                          }}
+                          className="h-8 w-8 p-0"
+                        >
+                          <Minus className="h-4 w-4" />
+                          <span className="sr-only">{t("remove")}</span>
+                        </Button>
+                      </TableCell>
                     </TableRow>
-                  </TableHeader>
-                  <TableBody className="whitespace-nowrap">
-                    {selectedItems.map((item, index) => (
-                      <TableRow key={item.lot_no}>
-                        <TableCell className="whitespace-nowrap">
-                          {item.lot_no}
-                        </TableCell>
-                        <TableCell className="whitespace-nowrap">
-                          {item.product_code}
-                        </TableCell>
-                        <TableCell className="whitespace-nowrap">
-                          {item.stock_no}
-                        </TableCell>
-                        <TableCell className="min-w-[250px] whitespace-normal text-start">
-                          {item.description}
-                        </TableCell>
-                        <TableCell className="whitespace-nowrap text-center">
-                          {item.quantity}
-                        </TableCell>
-                        <TableCell className="whitespace-nowrap">
-                          <Input
-                            type="number"
-                            min="1"
-                            max={item.quantity}
-                            className="w-20 p-1 border rounded-md"
-                            value={
-                              item.ship_quantity === ""
-                                ? ""
-                                : String(item.ship_quantity)
-                            }
-                            onChange={(e) => handleInputChange(e, index)}
-                          />
-                        </TableCell>
-                        <TableCell className="whitespace-nowrap text-center">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => {
-                              removeFromShipping(item);
-                              toast.success(
-                                t("removeItem", { lotNo: item.lot_no }),
-                                {
-                                  duration: 2000,
-                                }
-                              );
-                            }}
-                            className="h-8 w-8 p-0"
-                          >
-                            <Minus className="h-4 w-4" />
-                            <span className="sr-only">{t("remove")}</span>
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
+                  ))}
+                </TableBody>
+              </Table>
             )}
           </CardContent>
         </Card>

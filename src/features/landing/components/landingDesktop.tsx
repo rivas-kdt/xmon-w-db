@@ -44,16 +44,10 @@ import { useIsMobile } from "@/hooks/useMobile";
 import { useWarehouseHooks } from "../hooks/useWarehouse";
 
 const DashboardDesktop = () => {
-  const {
-    stockedThisMonth,
-    stockedPercentageChange,
-    stockedLoading,
-  } = useStockHooks();
-  const {
-    shippedThisMonth,
-    shippedPercentageChange,
-    shippedLoading,
-  } = useShipHooks();
+  const { stockedThisMonth, stockedPercentageChange, stockedLoading } =
+    useStockHooks();
+  const { shippedThisMonth, shippedPercentageChange, shippedLoading } =
+    useShipHooks();
   const {
     transactionLoading,
     monthly,
@@ -62,7 +56,7 @@ const DashboardDesktop = () => {
     refetchRecentShipped,
     refetchRecentStocked,
   } = useTransactions();
-  const { warehouseInventory, warehouseLoading  } = useWarehouseHooks();
+  const { warehouseInventory, warehouseLoading } = useWarehouseHooks();
   const t = useTranslations("DashboardPage");
   const isMobile = useIsMobile();
   const { theme } = useTheme();
@@ -80,7 +74,7 @@ const DashboardDesktop = () => {
   } satisfies ChartConfig;
 
   return (
-    <main className=" p-4 space-y-2 flex flex-col">
+    <main className=" p-4 space-y-2 flex flex-col bg-gradient-to-b from-primary/10 to-background">
       <div className=" grid grid-cols-1 lg:grid-cols-3 gap-2">
         <Card>
           <CardHeader>

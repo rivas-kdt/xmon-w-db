@@ -33,18 +33,18 @@ export default function LocaleSwitcherSelect({
         <Select.Trigger
           aria-label={label}
           className={clsx(
-            "rounded-full p-2 transition-colors border hover:bg-muted/50 bg-muted text-primary cursor-pointer",
+            "rounded-full p-2 transition-colors border hover:bg-muted/50 bg-muted cursor-pointer",
             isPending && "pointer-events-none opacity-60"
           )}
         >
           <Select.Icon>
-            <LanguageIcon className="h-[22px] w-[22px] transition-colors group-hover:text-muted-foreground/50" />
+            <LanguageIcon className="h-[18px] w-[18px] transition-colors group-hover:text-muted-foreground/50" />
           </Select.Icon>
         </Select.Trigger>
         <Select.Portal>
           <Select.Content
             align="end"
-            className="min-w-[8rem] overflow-hidden rounded-sm bg-background text-foreground py-1 shadow-md border"
+            className="min-w-[8rem] overflow-hidden rounded-sm bg-background text-foreground py-1 shadow-md border z-20"
             position="popper"
           >
             <Select.Viewport>

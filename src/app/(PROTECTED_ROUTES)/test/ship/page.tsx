@@ -28,6 +28,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useShipHooks } from "@/features/ship/hooks/shipHooks";
 import { useShippingActions } from "@/features/ship/hooks/shippingActions";
 import QrScanner from "@/features/ship/components/qr-scanner";
+import toast from "react-hot-toast";
 
 interface WarehouseItem {
   id: string;
@@ -71,7 +72,7 @@ export default function ShippedView() {
     moveSelectedItems,
     removeFromShipping,
     handleInputChange,
-    selectedItems
+    selectedItems,
   } = useShipHooks({
     t,
     setScanning,
@@ -93,23 +94,20 @@ export default function ShippedView() {
 
   return (
     <ScrollArea className="h-screen">
-      <div className="flex flex-col w-screen p-4 pt-20 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+      <div className="flex flex-col w-screen p-4 pt-20  bg-gradient-to-b from-primary/10 to-background">
         {/* Back Button */}
-        <Link href="/">
+        <Link href="/test">
           <Button variant="ghost" size="icon">
             <ArrowLeft className="h-6 w-6 -ml-4" />
           </Button>
         </Link>
         <h1 className="text-2xl font-medium ml-2 mb-2">{t("ship-items")}</h1>
-
         {/* QR Scanner */}
         {scanning ? (
           <Card className="mb-4">
             <CardContent className="p-4">
               <QrScanner
-                onScan={(data: string) =>
-                  handleScan(data)
-                }
+                onScan={(data: string) => handleScan(data)}
                 onClose={() => setScanning(false)}
               />
             </CardContent>
@@ -123,13 +121,12 @@ export default function ShippedView() {
             {t("b1")}
           </Button>
         )}
-
         {/* Table 1: Stocked Items */}
         <Card className="mb-4">
           <CardHeader className="py-2">
             <CardTitle className="text-lg">{t("ship-title1")}</CardTitle>
           </CardHeader>
-          <CardContent className="p-2 overflow-auto max-h-[30vh]">
+          <CardContent className="overflow-auto max-h-[30vh]">
             {fetching ? (
               <div className="flex justify-center items-center py-4">
                 <Loader2 className="h-6 w-6 animate-spin text-primary mr-2" />
@@ -143,7 +140,31 @@ export default function ShippedView() {
               <Table>
                 <TableHeader>
                   <TableRow className="whitespace-nowrap">
-                    <TableHead className="w-[50px]">{t("select")}</TableHead>
+                    <TableHead className="w-[50px]">
+                      <Checkbox
+                        checked={
+                          stockedParts.length > 0 &&
+                          stockedParts
+                            .filter((item) => item.quantity > 0 && !item.added)
+                            .every((item) => item.selected)
+                        }
+                        onCheckedChange={(checked) => {
+                          const visibleItems = stockedParts.filter(
+                            (item) => item.quantity > 0 && !item.added
+                          );
+
+                          const selectAll = !visibleItems.every(
+                            (item) => item.selected
+                          );
+
+                          visibleItems.forEach((item) => {
+                            if (item.selected !== selectAll) {
+                              toggleItemSelection(item);
+                            }
+                          });
+                        }}
+                      />
+                    </TableHead>
                     <TableHead>{t("th1")}</TableHead>
                     <TableHead>{t("th2")}</TableHead>
                     <TableHead>{t("th3")}</TableHead>
@@ -181,11 +202,16 @@ export default function ShippedView() {
           <div className="p-2">
             <Button
               onClick={() => {
-                moveSelectedItems(
-                  stockedParts,
-                  setHighlightedItem
-                );
+                moveSelectedItems(stockedParts, setHighlightedItem);
                 // toggleItemAdded(stockedParts);
+                stockedParts
+                  .filter((item) => item.selected)
+                  .forEach((item) => {
+                    // Use setTimeout to ensure toast renders after state updates
+                    setTimeout(() => {
+                      toast.success(`${t("itemAdded")}: ${item.lot_no}`);
+                    }, 0);
+                  });
               }}
               disabled={!stockedParts.some((item) => item.selected)}
               className="w-full bg-primary text-md h-[50px]"
@@ -195,7 +221,6 @@ export default function ShippedView() {
             </Button>
           </div>
         </Card>
-
         {/* Table 2: Items to Ship */}
         <Card className="mb-4">
           <CardHeader className="py-2">
@@ -208,13 +233,17 @@ export default function ShippedView() {
               </div>
             ) : (
               <Table>
-                <TableHeader>
+                <TableHeader className="sticky top-0 z-10 bg-background shadow-sm">
                   <TableRow className="whitespace-nowrap">
+                    {" "}
+                    {/* //TODO try na di mawala yung table head pag nag scroll down */}
                     <TableHead>{t("th1")}</TableHead>
                     <TableHead>{t("th2")}</TableHead>
                     <TableHead>{t("th3")}</TableHead>
                     <TableHead>{t("th4")}</TableHead>
-                    <TableHead>Stock</TableHead>
+                    <TableHead>{t("stock")}</TableHead>
+                    {/* // TODO dapat naguupdate
+                    yung stock after magship */}
                     <TableHead>{t("th5")}</TableHead>
                     <TableHead className="w-[80px]">{t("remove")}</TableHead>
                   </TableRow>
@@ -222,12 +251,22 @@ export default function ShippedView() {
                 <TableBody className="whitespace-nowrap">
                   {selectedItems.map((item, index) => (
                     <TableRow key={item.lot_no}>
-                      <TableCell>{item.lot_no}</TableCell>
-                      <TableCell>{item.product_code}</TableCell>
-                      <TableCell>{item.stock_no}</TableCell>
-                      <TableCell>{item.description}</TableCell>
-                      <TableCell>{item.quantity}</TableCell>
-                      <TableCell>
+                      <TableCell className="whitespace-nowrap">
+                        {item.lot_no}
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap">
+                        {item.product_code}
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap">
+                        {item.stock_no}
+                      </TableCell>
+                      <TableCell className="max-w-[250px] whitespace-normal text-start">
+                        {item.description}
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap text-center">
+                        {item.quantity}
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap">
                         <Input
                           type="number"
                           min="1"
@@ -238,20 +277,19 @@ export default function ShippedView() {
                               ? ""
                               : String(item.ship_quantity)
                           }
-                          onChange={(e) =>
-                            handleInputChange(e, index)
-                          }
+                          onChange={(e) => handleInputChange(e, index)}
                         />
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="whitespace-nowrap text-center">
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() =>
-                            removeFromShipping(
-                              item,
-                            )
-                          }
+                          onClick={() => {
+                            removeFromShipping(item);
+                            toast.success(
+                              t("removeItem", { lotNo: item.lot_no })
+                            );
+                          }}
                           className="h-8 w-8 p-0"
                         >
                           <Minus className="h-4 w-4" />
@@ -265,7 +303,6 @@ export default function ShippedView() {
             )}
           </CardContent>
         </Card>
-
         {/* Ship Button */}
         <Button
           className="w-full py-6 mt-auto bg-primary mb-4 text-md h-[50px]"
@@ -283,6 +320,8 @@ export default function ShippedView() {
             </>
           )}
         </Button>
+        {/* // TODO dapat lahat nang naship mawawala (pag fail *insufficient
+        quantity* stay) */}
       </div>
     </ScrollArea>
   );

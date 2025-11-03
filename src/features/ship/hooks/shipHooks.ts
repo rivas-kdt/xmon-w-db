@@ -17,7 +17,7 @@ export function useShipHooks({
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [fetching, setFetching] = useState<boolean>(false);
-  const [ selectedItems, setSelectedItems ] = useState<any[]>([]);
+  const [selectedItems, setSelectedItems] = useState<any[]>([]);
 
   useEffect(() => {
     fetchStockedParts();
@@ -26,29 +26,96 @@ export function useShipHooks({
   const handleShipPart = async (selected: any[]) => {
     setLoading(true);
     try {
-      const responses = [];
+      const responses: any[] = [];
+      const failed: string[] = [];
 
       for (const item of selected) {
-        const response = await shipParts(item.lot_no, item.ship_quantity);
-        responses.push(response);
+        const shipQty = Number(item.ship_quantity);
+
+        // Validate before API call
+        if (!shipQty || shipQty <= 0) {
+          toast.error(t("invalidQuantity", { lotNo: item.lot_no }), {
+            duration: 4000,
+          });
+          failed.push(item.lot_no);
+          continue; // skip this item
+        }
+
+        if (shipQty > item.quantity) {
+          toast.error(t("invalidStock", { lotNo: item.lot_no }), {
+            duration: 4000,
+          });
+          failed.push(item.lot_no);
+          continue; // skip this item
+        }
+
+        try {
+          // Ship valid item
+          const response = await shipParts(item.lot_no, shipQty);
+          responses.push(response);
+        } catch (err: any) {
+          console.error("Error shipping item:", err);
+          toast.error(err?.message || t("failedToShipParts"));
+          failed.push(item.lot_no);
+          continue; // skip this failed item
+        }
       }
 
+      // If only one item was selected and it failed → stop
+      if (selected.length === 1 && failed.length === 1) {
+        setError(t("failedToShipParts"));
+        return;
+      }
+
+      // Remove successfully shipped items from selected list
+      const succeededLotNos = selected
+        .filter((s) => !failed.includes(s.lot_no))
+        .map((s) => s.lot_no);
+
+      // Update stockedParts (unselect + reset + adjust quantity)
       setStockedParts((prev) =>
-        prev.map((i) =>
-          selected.some((s: any) => s.lot_no === i.lot_no)
-            ? { ...i, selected: false, added: false, ship_quantity: 0 }
-            : i
-        )
+        prev
+          .map((i) => {
+            if (succeededLotNos.includes(i.lot_no)) {
+              const shippedItem = selected.find((s) => s.lot_no === i.lot_no);
+              const newQty =
+                i.quantity - Number(shippedItem?.ship_quantity || 0);
+              return {
+                ...i,
+                quantity: Math.max(newQty, 0),
+                selected: false,
+                added: false,
+                ship_quantity: 0,
+              };
+            }
+            return i;
+          })
+          // Optional: if quantity is 0, remove it entirely
+          .filter((i) => i.quantity > 0)
       );
 
-      fetchStockedParts();
-      toast.success("All selected items shipped successfully!");
-      setMessage("All selected items shipped successfully!");
+      setSelectedItems((prev) =>
+        prev.filter((item) => !succeededLotNos.includes(item.lot_no))
+      );
+
+      // Refetch latest stocked parts (to ensure sync with DB)
+      await fetchStockedParts();
+
+      // how success toast only if at least one succeeded
+      if (responses.length > 0) {
+        toast.success(
+          responses.length === selected.length
+            ? t("allItemsShipped")
+            : t("someItemsShipped", { count: responses.length })
+        );
+        setMessage(t("allItemsShipped"));
+      }
+
       return responses;
     } catch (error: any) {
       console.error("Error in shipping part:", error);
-      setError(error.message || "Failed to ship out the parts");
-      toast.error(error.message || "Failed to ship out the parts");
+      setError(error.message || t("failedToShipParts"));
+      toast.error(error.message || t("failedToShipParts"));
     } finally {
       setLoading(false);
     }
@@ -59,12 +126,12 @@ export function useShipHooks({
     try {
       const warehouseId = sessionStorage.getItem("warehouseId");
       if (!warehouseId) {
-        toast.error("Warehouse ID not found in session storage");
+        toast.error(t("noWarehouseID"));
         throw new Error("Warehouse ID not found in session storage");
       }
       const response = await getStockedParts(warehouseId);
       if (!response || response.length === 0) {
-        toast.error("No stocked parts found for the given warehouse");
+        toast.error(t("noStockedForWarehouse"));
         throw new Error("No stocked parts found for the given warehouse");
       }
       const formattedResponse = response.map((part: any) => ({
@@ -75,7 +142,7 @@ export function useShipHooks({
       }));
       setStockedParts(formattedResponse);
     } catch (error: any) {
-      toast.error(error.message || "Failed to fetch stocked parts");
+      toast.error(error.message || t("failedFetchForWarehouse"));
       setError(error.message || "Failed to fetch stocked parts");
     } finally {
       setFetching(false);
@@ -101,16 +168,14 @@ export function useShipHooks({
   //   );
   // };
 
-  const handleScan = (
-    data: any,
-  ) => {
+  const handleScan = (data: any) => {
     if (!data) return;
     setScanning(false);
 
     try {
       const values = data.split(",");
       if (values.length < 6) {
-        toast.error("Invalid QR code format");
+        toast.error(t("invalidQR"));
         return;
       }
       const scannedLotNo = values[5];
@@ -124,6 +189,8 @@ export function useShipHooks({
           const matchedItem = updatedStockedItems[index];
           updatedStockedItems[index] = { ...matchedItem, selected: true };
           setHighlightedItem(matchedItem.lot_no);
+          console.log(matchedItem);
+          toast.success(t("foundAndAdded"));
 
           setSelectedItems((prevSelected: any) => {
             const alreadyAdded = prevSelected.some(
@@ -135,19 +202,17 @@ export function useShipHooks({
 
           return updatedStockedItems;
         } else {
+          toast.error(t("noMatch"));
           return prevStockedItems;
         }
       });
     } catch (error) {
       console.error("Error processing QR code:", error);
-      toast.error("Failed to process the scanned QR code");
+      toast.error(t("scanError"));
     }
   };
 
-  const moveSelectedItems = (
-    stockedItems: any,
-    setHighlightedItem: any
-  ) => {
+  const moveSelectedItems = (stockedItems: any, setHighlightedItem: any) => {
     const itemsToMove = stockedItems.filter((item: any) => item.selected);
     if (itemsToMove.length === 0) {
       return;
@@ -157,16 +222,14 @@ export function useShipHooks({
     setHighlightedItem(null);
   };
 
-  const removeFromShipping = (
-    item: any,
-  ) => {
+  const removeFromShipping = (item: any) => {
     setSelectedItems((prev: any) =>
       prev.filter((i: any) => i.lot_no !== item.lot_no)
     );
     setStockedParts((prev: any) => [...prev, { ...item, selected: false }]);
   };
 
-  const handleInputChange = (e: any, index: any,) => {
+  const handleInputChange = (e: any, index: any) => {
     let inputValue = e.target.value;
     if (inputValue === "") {
       setSelectedItems((prevItems: any) =>
@@ -199,6 +262,6 @@ export function useShipHooks({
     moveSelectedItems,
     removeFromShipping,
     handleInputChange,
-    selectedItems
+    selectedItems,
   };
 }

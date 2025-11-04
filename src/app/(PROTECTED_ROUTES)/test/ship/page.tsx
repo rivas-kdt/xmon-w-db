@@ -100,7 +100,7 @@ export default function ShippedView() {
         {/* Back Button */}
         <Link href="/test">
           <Button variant="ghost" size="icon">
-            <ArrowLeft className="h-6 w-6 -ml-4" />
+            <ArrowLeft className="h-6 w-6" />
           </Button>
         </Link>
         <h1 className="text-2xl font-medium ml-2 mb-2">{t("ship-items")}</h1>

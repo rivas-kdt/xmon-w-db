@@ -211,7 +211,7 @@ export default function StockView() {
         </Button>
       )}
       {receipt && (
-        <Card className="mb-4 relative">
+        <Card className="my-4 relative">
           <CardContent className="p-4 flex items-start justify-between">
             <Dialog>
               <DialogTrigger asChild>

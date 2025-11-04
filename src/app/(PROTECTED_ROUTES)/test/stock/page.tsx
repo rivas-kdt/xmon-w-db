@@ -148,7 +148,7 @@ export default function StockView() {
       ) : (
         <Button
           onClick={() => setScanning(true)}
-          className="bg-primary text-md h-[50px] mb-4"
+          className="bg-primary text-md w-full h-[50px] mb-4"
         >
           <Camera style={{ width: "20px", height: "20px" }} />
           {t("b1")}
@@ -261,9 +261,10 @@ export default function StockView() {
       <Button
         // onClick={handleStockItems}
         // disabled={loading || scannedItems.length === 0 || !receipt}
-        className="w-full py-6 mt-auto bg-primary mb-4"
+        className="w-full h-[50px] py-6 mt-auto bg-primary mb-4 text-md"
       >
         {/* {loading ? t("processing") : t("stock")} */}
+        {t("stock")}
       </Button>
     </div>
   );

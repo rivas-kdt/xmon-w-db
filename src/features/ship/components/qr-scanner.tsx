@@ -125,7 +125,7 @@ export default function QrScanner({ onScan, onClose }: QrScannerProps) {
         className="absolute top-0 right-0 z-10"
         onClick={handleClose}
       >
-        <X className="h-6 w-6" />
+        <X className="h-6 w-6 text-white" />
       </Button>
 
       <div className="flex flex-col items-center">

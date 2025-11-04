@@ -27,7 +27,7 @@ import { useTranslations } from "next-intl";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useShipHooks } from "@/features/ship/hooks/shipHooks";
 import { useShippingActions } from "@/features/ship/hooks/shippingActions";
-import QrScanner from "@/features/ship/components/qr-scanner";
+import QrScanner from "@/components/qr-scanner";
 import toast from "react-hot-toast";
 import { useTheme } from "next-themes";
 
@@ -99,7 +99,11 @@ export default function ShippedView() {
       <div className="flex flex-col w-screen p-4 pt-20  bg-gradient-to-b from-primary/10 to-background">
         {/* Back Button */}
         <Link href="/test">
-          <Button variant="ghost" size="icon">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="active:bg-primary transition"
+          >
             <ArrowLeft className="h-6 w-6" />
           </Button>
         </Link>

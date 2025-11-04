@@ -296,7 +296,7 @@ const DashboardMobile = () => {
           className="py-8 flex items-center justify-center gap-2 rounded-xl shadow-md bg-primary w-full"
           onClick={() => {
             setLoading(true);
-            router.push("/stock");
+            router.push("/test/stock");
           }}
           disabled={loading}
         >

@@ -44,8 +44,8 @@ export type Warehouse = {
 
 const AdminPage = () => {
   const { users, userLoading } = useUserHooks();
-  const { warehouseWorker, warehouseLoading } = useWarehouseHooks()
-  const { recipients, recipientLoading } = useRecipientHooks()
+  const { warehouseWorker, warehouseLoading } = useWarehouseHooks();
+  const { recipients, recipientLoading } = useRecipientHooks();
   const [selectedUser, setSelectedUser] = useState<Users | null>(null);
   const [selectedWarehouse, setSelectedWarehouse] = useState<Warehouse | null>(
     null

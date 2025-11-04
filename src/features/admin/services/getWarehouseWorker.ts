@@ -6,7 +6,7 @@ export async function getWarehouseWorkers() {
     const client = await pool.connect();
     const result =
       await client.query(`SELECT w.id, w.warehouse, w.location, COUNT(wl.user_id) AS workers, w.created_at
-        FROM warehouse w JOIN worker_location wl ON w.id=wl.warehouse_id GROUP BY w.id`);
+        FROM warehouse w LEFT JOIN worker_location wl ON w.id=wl.warehouse_id GROUP BY w.id`);
     client.release();
     return result.rows;
   } catch (error: any) {

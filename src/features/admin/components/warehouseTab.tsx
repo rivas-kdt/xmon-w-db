@@ -1,6 +1,12 @@
 "use client";
 import React, { useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -34,6 +40,7 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useWarehouseHooks } from "../hooks/useWarehousesHooks";
+import { AddWarehouseForm } from "./add-warehouse-form";
 
 interface Warehouse {
   warehouse: string;
@@ -44,21 +51,21 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   loading: boolean;
-  fetchWarehouseData: ()=>void
+  fetchWarehouseData: () => void;
 }
 
 export function WarehouseTab<TData, TValue>({
   columns,
   data,
   loading,
-  fetchWarehouseData
+  fetchWarehouseData,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
   const [globalFilter, setGlobalFilter] = React.useState("");
-  const { warehouse } = useWarehouseHooks()
+  const { warehouse } = useWarehouseHooks();
   const [addWarehouseOpen, setAddWarehouseOpen] = React.useState(false);
   const t = useTranslations("Tabs");
   console.log("Warehouse Data:", warehouse);
@@ -239,6 +246,7 @@ export function WarehouseTab<TData, TValue>({
         onOpenChange={setAddWarehouseOpen}
         onWarehouseAdded={fetchWarehouseData}
       /> */}
+      {/* uncomment this ^^^ when add-warehouse-form is fixed */}
     </>
   );
 }

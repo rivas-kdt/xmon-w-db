@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import { getLocale } from "next-intl/server";
 import { ThemeProvider } from "@/lib/themeProvider";
 import Header from "@/components/header";
+import { SessionProvider } from "@/features/auth/hooks/sessionProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,8 +37,7 @@ export default async function RootLayout({
       >
         <ThemeProvider attribute="class">
           <NextIntlClientProvider>
-            <Header />
-            {children}
+            <SessionProvider>{children}</SessionProvider>
             <Toaster position="top-center" />
           </NextIntlClientProvider>
         </ThemeProvider>

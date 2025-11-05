@@ -145,6 +145,7 @@ main {
     height: 320px;
     position: relative;
     transform-style: preserve-3d;
+    scale: 2;
   }
 
   @media (max-width: 480px) {
@@ -205,7 +206,8 @@ main {
 
   .loader .ground div:before,
   .loader .ground div:after {
-    --rx: 90deg;
+    content: none;
+    /* --rx: 90deg;
     --ry: 0deg;
     --x: 44px;
     --y: 162px;
@@ -219,7 +221,7 @@ main {
     transform: rotateX(var(--rx)) rotateY(var(--ry))
       translate(var(--x), var(--y)) translateZ(var(--z));
     -webkit-animation: ground-shine var(--duration) linear forwards infinite;
-    animation: ground-shine var(--duration) linear forwards infinite;
+    animation: ground-shine var(--duration) linear forwards infinite; */
   }
 
   .loader .ground div:after {

@@ -10,7 +10,8 @@ export async function addWarehouse(warehouseName: string, location: string) {
 
     if (!warehouseName || !location) {
       const errorMessage = t("errorRequired");
-      throw new Error(errorMessage);
+      return { success: false, error: errorMessage };
+      // throw new Error(errorMessage);
     }
     const existingWarehouse = await client.query(
       `SELECT * FROM warehouse WHERE warehouse = $1`,
@@ -18,17 +19,22 @@ export async function addWarehouse(warehouseName: string, location: string) {
     );
     if (existingWarehouse.rows.length > 0) {
       const errorMessage = t("errorExists");
-      throw new Error(errorMessage);
+      return { success: false, error: errorMessage };
+      // throw new Error(errorMessage);
     }
-    const result = await client.query(
+
+    await client.query(
       `INSERT INTO warehouse (warehouse, location) VALUES ($1, $2) RETURNING *`,
       [warehouseName, location]
     );
 
     client.release();
-    return result.rows[0];
+
+    return { success: true, message: "Warehouse added successfully" };
+    // return result.rows[0];
   } catch (error: any) {
     const fallbackError = t("fallbackError");
-    throw new Error(error.message || fallbackError);
+    return { success: false, error: error.message || fallbackError };
+    // throw new Error(error.message || fallbackError);
   }
 }

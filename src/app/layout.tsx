@@ -38,7 +38,7 @@ export default async function RootLayout({
         <ThemeProvider attribute="class">
           <NextIntlClientProvider>
             <SessionProvider>{children}</SessionProvider>
-            <Toaster position="top-center" />
+            <Toaster position="top-right" />
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

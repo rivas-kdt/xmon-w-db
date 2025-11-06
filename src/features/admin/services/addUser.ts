@@ -15,7 +15,11 @@ export async function addUser(
   try {
     const client = await pool.connect();
 
-    if (!username || !email || !password || !role || !warehouseId) {
+    if (!email) {
+      throw new Error("Email is required");
+    }
+
+    if (!username || !email || !password || !role) {
       const errorMessage = t("allFieldsRequired");
       throw new Error(errorMessage);
     }

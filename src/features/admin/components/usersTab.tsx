@@ -40,6 +40,7 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useWarehouseHooks } from "../hooks/useWarehousesHooks";
+import { AddUserForm } from "./add-user-form";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -235,11 +236,11 @@ export function UserTab<TData, TValue>({
         </CardFooter>
       </Card>
 
-      {/* <AddUserForm
+      <AddUserForm
         open={addUserOpen}
         onOpenChange={setAddUserOpen}
         onUserAdded={fetchUsersData}
-      /> */}
+      />
     </>
   );
 }

@@ -20,8 +20,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
-import { supabase } from "@/lib/supabaseClient"; //TODO Change this
+// import { supabase } from "@/lib/supabaseClient"; //TODO Change this
 import { useTranslations } from "next-intl";
+import { getWarehouse } from "../services/getWarehouse";
+import { addUser } from "../services/addUser";
+import toast from "react-hot-toast";
 
 interface AddUserFormProps {
   open: boolean;
@@ -29,7 +32,11 @@ interface AddUserFormProps {
   onUserAdded?: () => void;
 }
 
-export function AddUserForm({ open, onOpenChange, onUserAdded }: AddUserFormProps) {
+export function AddUserForm({
+  open,
+  onOpenChange,
+  onUserAdded,
+}: AddUserFormProps) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,7 +45,7 @@ export function AddUserForm({ open, onOpenChange, onUserAdded }: AddUserFormProp
   const [warehouses, setWarehouses] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [fetchingWarehouses, setFetchingWarehouses] = useState(false);
-  const t = useTranslations('addNewUser')
+  const t = useTranslations("addNewUser");
 
   useEffect(() => {
     if (open) {
@@ -46,16 +53,28 @@ export function AddUserForm({ open, onOpenChange, onUserAdded }: AddUserFormProp
     }
   }, [open]);
 
+  // const fetchWarehouses = async () => {
+  //   setFetchingWarehouses(true);
+  //   try {
+  //     const { data, error } = await supabase
+  //       .from("warehouse")
+  //       .select("id, warehouse, location")
+  //       .order("warehouse", { ascending: true });
+
+  //     if (error) throw error;
+  //     setWarehouses(data || []);
+  //   } catch (error) {
+  //     console.error("Error fetching warehouses:", error);
+  //   } finally {
+  //     setFetchingWarehouses(false);
+  //   }
+  // };
+
   const fetchWarehouses = async () => {
     setFetchingWarehouses(true);
     try {
-      const { data, error } = await supabase
-        .from("warehouse")
-        .select("id, warehouse, location")
-        .order("warehouse", { ascending: true });
-
-      if (error) throw error;
-      setWarehouses(data || []);
+      const response = await getWarehouse();
+      setWarehouses(response);
     } catch (error) {
       console.error("Error fetching warehouses:", error);
     } finally {
@@ -68,28 +87,18 @@ export function AddUserForm({ open, onOpenChange, onUserAdded }: AddUserFormProp
     setLoading(true);
 
     try {
-      const payload = {
-        username: username,
-        email: email,
-        password: password,
-        role: role,
-        warehouseId: warehouseId,
-      };
-
-      const result = await fetch("/api/v2/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (result.ok) {
-        if (onUserAdded) onUserAdded();
-        resetForm();
-        onOpenChange(false);
-      } else {
-      }
+      const result = await addUser(
+        username,
+        email,
+        password,
+        role,
+        warehouseId
+      );
+      setTimeout(() => {
+        toast.success(`User added successfully: ${result}`);
+      }, 0);
+      resetForm();
+      onOpenChange(false);
     } catch (error) {
       console.error("Error adding user:", error);
     } finally {
@@ -109,16 +118,14 @@ export function AddUserForm({ open, onOpenChange, onUserAdded }: AddUserFormProp
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className=" text-amber-400">{t('header')}</DialogTitle>
-          <DialogDescription>
-            {t('description')}
-          </DialogDescription>
+          <DialogTitle className=" text-amber-400">{t("header")}</DialogTitle>
+          <DialogDescription>{t("description")}</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="username" className="text-right">
-                {t('username')}
+                {t("username")}
               </Label>
               <Input
                 id="username"
@@ -130,7 +137,7 @@ export function AddUserForm({ open, onOpenChange, onUserAdded }: AddUserFormProp
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="email" className="text-right">
-                {t('email')}
+                {t("email")}
               </Label>
               <Input
                 id="email"
@@ -143,7 +150,7 @@ export function AddUserForm({ open, onOpenChange, onUserAdded }: AddUserFormProp
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="password" className="text-right">
-                {t('password')}
+                {t("password")}
               </Label>
               <Input
                 id="password"
@@ -156,7 +163,7 @@ export function AddUserForm({ open, onOpenChange, onUserAdded }: AddUserFormProp
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="role" className="text-right">
-                {t('role')}
+                {t("role")}
               </Label>
               <Select value={role} onValueChange={setRole} required>
                 <SelectTrigger id="role" className="col-span-3">
@@ -171,7 +178,7 @@ export function AddUserForm({ open, onOpenChange, onUserAdded }: AddUserFormProp
             {role === "worker" && (
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="warehouse" className="text-right">
-                  {t('warehouses')}
+                  {t("warehouses")}
                 </Label>
                 <Select
                   value={warehouseId}
@@ -185,7 +192,7 @@ export function AddUserForm({ open, onOpenChange, onUserAdded }: AddUserFormProp
                     {fetchingWarehouses ? (
                       <div className="flex items-center justify-center p-2">
                         <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                        <span>{t('loadingState')}</span>
+                        <span>{t("loadingState")}</span>
                       </div>
                     ) : (
                       warehouses.map((warehouse) => (
@@ -208,10 +215,10 @@ export function AddUserForm({ open, onOpenChange, onUserAdded }: AddUserFormProp
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {t('addingState')}
+                  {t("addingState")}
                 </>
               ) : (
-                t('button')
+                t("button")
               )}
             </Button>
           </DialogFooter>

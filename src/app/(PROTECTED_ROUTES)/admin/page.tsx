@@ -213,13 +213,13 @@ const AdminPage = () => {
       </Tabs>
 
       {/* Shared Dialogs */}
-      {/* <EditUserDialog
+      <EditUserDialog
         open={editUserOpen}
         onOpenChange={setEditUserOpen}
         user={selectedUser}
         locations={[]}
       />
-      <EditWarehouseDialog
+      {/* <EditWarehouseDialog
         open={editWarehouseOpen}
         onOpenChange={setEditWarehouseOpen}
         warehouse={selectedWarehouse}

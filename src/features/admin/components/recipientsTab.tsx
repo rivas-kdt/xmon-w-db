@@ -1,6 +1,12 @@
 "use client";
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -26,6 +32,7 @@ import { Button } from "@/components/ui/button";
 // import { AddRecipientForm } from "./add-recipient-form";
 import { useTranslations } from "next-intl";
 import { Skeleton } from "@/components/ui/skeleton";
+import { AddRecipientForm } from "./add-recipient-form";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -195,10 +202,10 @@ export function RecipientsTab<TData, TValue>({
         </CardFooter>
       </Card>
 
-      {/* <AddRecipientForm
+      <AddRecipientForm
         open={addRecipientOpen}
         onOpenChange={setAddRecipientOpen}
-      /> */}
+      />
     </>
   );
 }

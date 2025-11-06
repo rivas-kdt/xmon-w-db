@@ -6,18 +6,28 @@ export async function addRecipient(email: string) {
   const t = await getTranslations("addRecipient");
   try {
     const client = await pool.connect();
+
     if (!email) {
       const errorMessage = t("errorRequired");
-      throw new Error(errorMessage);
+      return { success: false, error: errorMessage };
     }
-    const result = await client.query(
+
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      const errorMessage = "Email is invalid";
+      return { success: false, error: errorMessage };
+      // throw new Error(errorMessage);
+    }
+
+    await client.query(
       `INSERT INTO recipients (email) VALUES ($1) RETURNING *`,
       [email]
     );
+
     client.release();
-    return result.rows[0];
+    return { success: true, message: "Recipient added successfully" };
   } catch (error: any) {
     const fallbackError = t("fallbackError");
-    throw new Error(error.message || fallbackError);
+    // throw new Error(error.message || fallbackError);
+    return { success: false, error: error.message || fallbackError };
   }
 }

@@ -5,7 +5,7 @@ export async function getWarehouse() {
   try {
     const client = await pool.connect();
     const result = await client.query(
-      `SELECT warehouse, location FROM warehouse`
+      `SELECT id, warehouse, location FROM warehouse`
     );
     client.release();
     return result.rows;

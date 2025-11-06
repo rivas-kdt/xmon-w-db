@@ -241,11 +241,11 @@ export function WarehouseTab<TData, TValue>({
           </div>
         </CardFooter>
       </Card>
-      {/* <AddWarehouseForm
+      <AddWarehouseForm
         open={addWarehouseOpen}
         onOpenChange={setAddWarehouseOpen}
         onWarehouseAdded={fetchWarehouseData}
-      /> */}
+      />
       {/* uncomment this ^^^ when add-warehouse-form is fixed */}
     </>
   );

@@ -207,6 +207,8 @@ const DashboardMobile = () => {
   //     }
   //   }, [typedUser, t]);
 
+  console.log(user);
+
   return (
     <div className="flex flex-col w-screen min-h-screen p-4 pt-24 bg-gradient-to-b from-primary/10 to-background">
       <Card className="mb-4 border-0 shadow-md">
@@ -215,7 +217,7 @@ const DashboardMobile = () => {
             {t("welcome-message")}
           </CardTitle>
           <CardDescription className="text-xl font-medium text-primary">
-            {typedUser?.username || t("guest")}
+            {user?.username || t("guest")}
           </CardDescription>
         </CardHeader>
         <CardContent>

@@ -50,13 +50,13 @@ export default function StockView() {
   const [receipt, setReceipt] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // const {
-  //   loading,
-  //   handleScan,
-  // } = useStockHooks({
-  //   t,
-  //   setScanning,
-  // });
+  //   const {
+  //     stockedLoading,
+  //     // handleScan,
+  //   } = useStockHooks({
+  //     // t,
+  //     // setScanning,
+  //   });
 
   const handleScan = (data: string) => {
     if (data) {
@@ -224,7 +224,7 @@ export default function StockView() {
 
               <DialogContent className="max-w-[90vw] max-h-[90vh] p-0 flex items-center justify-center">
                 <VisuallyHidden>
-                  <DialogTitle></DialogTitle>
+                  <DialogTitle>View</DialogTitle>
                 </VisuallyHidden>
 
                 <TransformWrapper
@@ -260,10 +260,10 @@ export default function StockView() {
       {/* Stock Items Button */}
       <Button
         // onClick={handleStockItems}
-        // disabled={loading || scannedItems.length === 0 || !receipt}
+        // disabled={stockedLoading || scannedItems.length === 0 || !receipt}
         className="w-full h-[50px] py-6 mt-auto bg-primary mb-4 text-md"
       >
-        {/* {loading ? t("processing") : t("stock")} */}
+        {/* {stockedLoading ? t("processing") : t("stock")} */}
         {t("stock")}
       </Button>
     </div>

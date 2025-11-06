@@ -138,11 +138,11 @@ const LoginMobile = () => {
       </Card>
 
       {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-64 h-64 bg-primary/60 -z-10 rounded-br-[100%]" />
-      <div className="absolute top-56 -right-10 w-24 h-24 bg-primary/30 -z-10 rounded-[100%]" />
-      <div className="absolute top-70 -right-10 w-64 h-64 bg-primary/60 -z-10 rounded-[100%]" />
-      <div className="absolute top-130 -left-5 w-24 h-24 bg-primary/70 -z-10 rounded-[100%]" />
-      <div className="absolute bottom-0 right-0 w-84 h-64 bg-primary/80 -z-10 rounded-tl-[100%]" />
+      <div className="absolute top-0 left-0 w-64 h-64 bg-primary/60 -z-10" />
+      <div className="absolute top-56 -right-10 w-24 h-24 bg-primary/30 -z-10" />
+      <div className="absolute top-70 -right-10 w-64 h-64 bg-primary/60 -z-10" />
+      <div className="absolute top-115 -left-5 w-30 h-30 bg-primary/70 -z-10" />
+      <div className="absolute bottom-0 right-0 w-84 h-64 bg-primary/80 -z-10" />
     </div>
   );
 };

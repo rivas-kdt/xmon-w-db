@@ -97,6 +97,7 @@
     "next": "次へ",
     "warehouses": "倉庫",
     "users": "ユーザー",
+    "users2": "ユーザー",
     "userMgt": "ユーザー管理",
     "addUser": "ユーザーの追加",
     "allWh": "すべての倉庫",
@@ -105,7 +106,8 @@
     "transactionHistory": "入出庫履歴",
     "allStatus": "すべてのステータス",
     "stocked": "在庫あり",
-    "shipped": "発送済み"
+    "shipped": "発送済み",
+    "noResults": "データがありません"
   },
   "landing-page": {
     "welcome-message": "ようこそ",

@@ -95,6 +95,7 @@
     "next": "Next",
     "warehouses": "warehouses",
     "users": "Users",
+    "users2": "users",
     "userMgt": "User Management",
     "addUser": "Add User",
     "allWh": "All Warehouse",
@@ -103,7 +104,8 @@
     "allStatus": "All Status",
     "transactionHistory": "Transaction History",
     "stocked": "Stocked",
-    "shipped": "Shipped"
+    "shipped": "Shipped",
+    "noResults": "No results"
   },
   "landing-page": {
     "welcome-message": "Welcome",

@@ -1,3 +1,5 @@
+"use client";
+import React, { useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -5,6 +7,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import {
   type ColumnDef,
   flexRender,
@@ -16,11 +26,6 @@ import {
   getFilteredRowModel,
   type ColumnFiltersState,
 } from "@tanstack/react-table";
-import { Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import React from "react";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -29,14 +34,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
+import { Skeleton } from "@/components/ui/skeleton";
+
+interface Warehouse {
+  warehouse: string;
+}
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -44,7 +49,7 @@ interface DataTableProps<TData, TValue> {
   loading: boolean;
 }
 
-export function TransactionTable<TData, TValue>({
+export function InventoryTable<TData, TValue>({
   columns,
   data,
   loading,
@@ -54,7 +59,27 @@ export function TransactionTable<TData, TValue>({
     []
   );
   const [globalFilter, setGlobalFilter] = React.useState("");
+  const [warehouses, setWarehouses] = React.useState<Warehouse[]>([]);
   const t = useTranslations("Tabs");
+
+  useEffect(() => {
+    const getWarehouses = async () => {
+      const response = await fetch("/api/v2/warehouse");
+      const wh = await response.json();
+      setWarehouses(wh);
+    };
+    getWarehouses();
+  }, []);
+
+  const uniqueLocations = React.useMemo(() => {
+    const locations = new Set<string>();
+    warehouses?.forEach((item) => {
+      if (item.warehouse) {
+        locations.add(item.warehouse);
+      }
+    });
+    return Array.from(locations);
+  }, [warehouses]);
 
   const table = useReactTable({
     data,
@@ -74,11 +99,11 @@ export function TransactionTable<TData, TValue>({
     },
   });
 
-  const handleStatusChange = (value: string) => {
+  const handleLocationChange = (value: string) => {
     if (value === "all") {
-      table.getColumn("status")?.setFilterValue(undefined);
+      table.getColumn("warehouse")?.setFilterValue(undefined);
     } else {
-      table.getColumn("status")?.setFilterValue(value);
+      table.getColumn("warehouse")?.setFilterValue(value);
     }
   };
 
@@ -87,9 +112,7 @@ export function TransactionTable<TData, TValue>({
       <Card className=" flex flex-col h-full p-2">
         <CardHeader className="mb-0 w-full">
           <div className="flex justify-between items-center">
-            <CardTitle className="text-primary pt-8">
-              {t("transactionHistory")}
-            </CardTitle>
+            <CardTitle className="text-primary pt-8">{t("partsInv")}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className=" flex-1">
@@ -105,14 +128,17 @@ export function TransactionTable<TData, TValue>({
                 />
               </div>
               <div className="w-full sm:w-[200px]">
-                <Select onValueChange={handleStatusChange} defaultValue="all">
+                <Select onValueChange={handleLocationChange} defaultValue="all">
                   <SelectTrigger>
                     <SelectValue placeholder="Filter by location" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">{t("allStatus")}</SelectItem>
-                    <SelectItem value="Stocked">{t("stocked")}</SelectItem>
-                    <SelectItem value="Shipped">{t("shipped")}</SelectItem>
+                    <SelectItem value="all">{t("allWh")}</SelectItem>
+                    {uniqueLocations.map((location) => (
+                      <SelectItem key={location} value={location}>
+                        {location}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -175,10 +201,10 @@ export function TransactionTable<TData, TValue>({
           </div>
         </CardContent>
         <CardFooter>
-          <div className=" w-full flex items-center justify-end space-x-2 py-4">
+          <div className="w-full flex items-center justify-end space-x-2 py-4">
             <div className="flex-1 text-sm text-muted-foreground">
               {table.getPaginationRowModel().rows.length} of {data.length}{" "}
-              {t("transactions")}
+              {t("parts")}
             </div>
             <Button
               variant="outline"

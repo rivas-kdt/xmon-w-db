@@ -104,6 +104,7 @@
     "partsInv": "在庫部品",
     "parts": "部品",
     "transactionHistory": "入出庫履歴",
+    "transactions": "取引",
     "allStatus": "すべてのステータス",
     "stocked": "在庫あり",
     "shipped": "発送済み",

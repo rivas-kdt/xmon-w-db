@@ -103,6 +103,7 @@
     "parts": "parts",
     "allStatus": "All Status",
     "transactionHistory": "Transaction History",
+    "transactions": "transactions",
     "stocked": "Stocked",
     "shipped": "Shipped",
     "noResults": "No results"

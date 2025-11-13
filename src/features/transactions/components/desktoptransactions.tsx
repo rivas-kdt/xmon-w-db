@@ -119,7 +119,7 @@ const TransactionDesktop = () => {
   ];
 
   return (
-    <main className="p-4">
+    <main className="p-4 flex flex-col bg-gradient-to-b from-primary/10 to-background">
       <div className="  h-full w-full flex items-center">
         <TransactionTable
           columns={InventoryColumns}

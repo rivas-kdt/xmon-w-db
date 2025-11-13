@@ -104,7 +104,7 @@ const TransactionMobile = () => {
           value={searchQuery}
           onChange={handleInputChange}
           className="mb-4 mt-2 p-2 border border-gray-300 rounded-lg shadow-sm w-full"
-          placeholder="Search by Lot No..."
+          placeholder={t("searchby")}
         />
       )}
 
@@ -138,9 +138,9 @@ const TransactionMobile = () => {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>{t("th1")}</TableHead>
-                        <TableHead>{t("th2")}</TableHead>
-                        <TableHead>{t("th3")}</TableHead>
+                        <TableHead>{t("lotNo")}</TableHead>
+                        <TableHead>{t("quantity")}</TableHead>
+                        <TableHead>{t("status")}</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>

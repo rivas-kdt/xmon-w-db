@@ -23,7 +23,9 @@ import {
   LabelList,
   Line,
   LineChart,
+  ResponsiveContainer,
   XAxis,
+  YAxis,
 } from "recharts";
 import {
   ChartConfig,
@@ -43,6 +45,12 @@ import { useShipHooks } from "../hooks/useShipHooks";
 import { useIsMobile } from "@/hooks/useMobile";
 import { useWarehouseHooks } from "../hooks/useWarehouse";
 
+interface MonthlyData {
+  month_name: string;
+  stocked: number;
+  shipped: number;
+}
+
 const DashboardDesktop = () => {
   const { stockedThisMonth, stockedPercentageChange, stockedLoading } =
     useStockHooks();
@@ -55,7 +63,9 @@ const DashboardDesktop = () => {
     recentStocked,
     refetchRecentShipped,
     refetchRecentStocked,
+    recentShippedError,
   } = useTransactions();
+  console.log(transactionLoading, monthly, recentShipped);
   const { warehouseInventory, warehouseLoading } = useWarehouseHooks();
   const t = useTranslations("DashboardPage");
   const isMobile = useIsMobile();
@@ -72,6 +82,14 @@ const DashboardDesktop = () => {
       color: "hsl(var(--chart-2))",
     },
   } satisfies ChartConfig;
+
+  const maxStocked = Math.max(
+    ...(monthly?.map((d: MonthlyData) => d.stocked) ?? [0])
+  );
+  const maxShipped = Math.max(
+    ...(monthly?.map((d: MonthlyData) => d.shipped) ?? [0])
+  );
+  const maxY = Math.max(maxStocked, maxShipped) * 1.05;
 
   return (
     <main className=" p-4 space-y-2 flex flex-col bg-gradient-to-b from-primary/10 to-background">
@@ -176,13 +194,40 @@ const DashboardDesktop = () => {
                       {warehouseInventory.map((entry, index) => (
                         <Cell
                           key={`cell-${index}`}
-                          fill={`var(--color-chart-${(index % 4) + 1})`}
+                          fill={`var(--chart-${(index % 5) + 1})`}
                         />
                       ))}
                       <LabelList
+                        dataKey="stocked"
                         position="insideTop"
-                        className="fill-background font-bold"
                         fontSize={12}
+                        content={(props) => {
+                          const { x, y, width, height, value } = props;
+
+                          const barHeight = Number(height); // ensure it's a number
+
+                          if (
+                            !x ||
+                            !y ||
+                            !width ||
+                            isNaN(barHeight) ||
+                            barHeight < 20
+                          )
+                            return null;
+
+                          return (
+                            <text
+                              x={Number(x) + Number(width) / 2}
+                              y={Number(y) + 12} // adjust vertical position
+                              fill="background"
+                              textAnchor="middle"
+                              fontSize={12}
+                              fontWeight="bold"
+                            >
+                              {value}
+                            </text>
+                          );
+                        }}
                       />
                     </Bar>
                   </BarChart>
@@ -200,41 +245,48 @@ const DashboardDesktop = () => {
                   config={chartConfig}
                   className=" h-[100%] w-full"
                 >
-                  <LineChart
-                    accessibilityLayer
-                    data={monthly}
-                    margin={{
-                      left: 12,
-                      right: 12,
-                    }}
-                  >
-                    <CartesianGrid vertical={false} />
-                    <XAxis
-                      dataKey="month"
-                      tickLine={false}
-                      axisLine={false}
-                      tickMargin={8}
-                      tickFormatter={(value) => value.slice(0, 3)}
-                    />
-                    <ChartTooltip
-                      cursor={false}
-                      content={<ChartTooltipContent />}
-                    />
-                    <Line
-                      dataKey="stocked"
-                      type="monotone"
-                      stroke="var(--color-chart-1)"
-                      strokeWidth={2}
-                      dot={false}
-                    />
-                    <Line
-                      dataKey="shipped"
-                      type="monotone"
-                      stroke="var(--color-chart-2)"
-                      strokeWidth={2}
-                      dot={false}
-                    />
-                  </LineChart>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart
+                      accessibilityLayer
+                      data={monthly ?? []}
+                      margin={{ top: 20, right: 12, left: 12 }}
+                    >
+                      <CartesianGrid vertical={false} />
+                      <XAxis
+                        dataKey="month_name"
+                        tickLine={false}
+                        axisLine={false}
+                        tickMargin={8}
+                        tickFormatter={(value) => value.slice(0, 3)}
+                        domain={[0, maxY]}
+                      />
+                      <YAxis
+                        type="number"
+                        tickLine={false}
+                        axisLine={false}
+                        domain={[0, maxY]}
+                        hide
+                      />
+                      <ChartTooltip
+                        cursor={false}
+                        content={<ChartTooltipContent />}
+                      />
+                      <Line
+                        dataKey="stocked"
+                        type="monotone"
+                        stroke="var(--color-chart-1)"
+                        strokeWidth={2}
+                        dot={false}
+                      />
+                      <Line
+                        dataKey="shipped"
+                        type="monotone"
+                        stroke="var(--color-chart-2)"
+                        strokeWidth={2}
+                        dot={false}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
                 </ChartContainer>
               </CardContent>
             </Card>

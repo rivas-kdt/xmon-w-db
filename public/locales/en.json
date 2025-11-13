@@ -184,15 +184,16 @@
     "ship-tab": "Shipped",
     "stock-tab": "Stocked",
     "date": "Date",
-    "th1": "Lot No",
-    "th2": "Quantity",
-    "th3": "Status",
+    "lotNo": "Lot No",
+    "quantity": "Quantity",
+    "status": "Status",
     "loading-page": "Loading...",
     "select-wh": "Select a warehouse first",
     "warehouse": "Warehouse",
     "no-warehouse": "Unknown Warehouse",
     "no-transactions": "No transactions found",
-    "error-transactions": "Error fetching transactions"
+    "error-transactions": "Error fetching transactions",
+    "searchby": "Search by Lot No..."
   },
   "email-history": {
     "title": "Email History",

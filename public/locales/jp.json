@@ -186,15 +186,16 @@
     "ship-tab": "出庫済み",
     "stock-tab": "入庫済み",
     "date": "日付",
-    "th1": "ロット番号",
-    "th2": "数量",
-    "th3": "ステータス",
+    "lotNo": "ロット番号",
+    "quantity": "数量",
+    "status": "ステータス",
     "loading-page": "読み込み中...",
     "select-wh": "最初に倉庫を選択してください",
     "warehouse": "倉庫",
     "no-warehouse": "不明な倉庫",
     "no-transactions": "取引が見つかりません",
-    "error-transactions": "取引データの取得中にエラーが発生しました。"
+    "error-transactions": "取引データの取得中にエラーが発生しました。",
+    "searchby": "ロット番号で検索..."
   },
   "email-history": {
     "title": "メール履歴",

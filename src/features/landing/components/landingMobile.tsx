@@ -25,6 +25,7 @@ import { useIsMobile } from "@/hooks/useMobile";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import Loader from "@/components/ui/loader";
 
 interface Warehouse {
   id: string;
@@ -225,7 +226,7 @@ const DashboardMobile = () => {
             {isAdmin ? (
               <>
                 <label className="flex text-md font-medium">
-                  {t("select-1")}
+                  {t("selectWarehouse")}
                 </label>
                 <Select
                   value={selectedWarehouse?.id}
@@ -259,7 +260,7 @@ const DashboardMobile = () => {
               <div className="bg-muted/50 p-3 rounded-md">
                 <p className="text-sm font-medium">{t("assigned")}</p>
                 <p className="text-base font-semibold">
-                  {selectedWarehouse?.warehouse || t("error1")}
+                  {selectedWarehouse?.warehouse || t("errorXAssign")}
                 </p>
               </div>
             )}
@@ -272,7 +273,7 @@ const DashboardMobile = () => {
                     <div className="flex items-center p-2 border rounded-md bg-muted/30 h-[50px]">
                       <MapPin className="h-4 w-4 mr-2" />
                       <span className="text-sm">
-                        {selectedWarehouse?.location || t("error2")}
+                        {selectedWarehouse?.location || t("errorLocX")}
                       </span>
                     </div>
                   </div>
@@ -285,7 +286,7 @@ const DashboardMobile = () => {
                     <div className="flex items-center p-2 border rounded-md bg-muted/30">
                       <MapPin className="h-4 w-4 mr-2" />
                       <span className="text-sm">
-                        {selectedLocation || t("error2")}
+                        {selectedLocation || t("errorLocX")}
                       </span>
                     </div>
                   </div>
@@ -307,7 +308,7 @@ const DashboardMobile = () => {
           ) : (
             <>
               <Package style={{ width: "25px", height: "25px" }} />
-              <span className="text-lg">{t("b1")}</span>
+              <span className="text-lg">{t("stockItem")}</span>
             </>
           )}
         </Button>
@@ -325,7 +326,7 @@ const DashboardMobile = () => {
           ) : (
             <>
               <Truck style={{ width: "25px", height: "25px" }} />
-              <span className="text-lg">{t("b2")}</span>
+              <span className="text-lg">{t("shipItem")}</span>
             </>
           )}
         </Button>
@@ -337,7 +338,7 @@ const DashboardMobile = () => {
 
       {loading && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 dark:bg-black/80">
-          <Loader2 className="w-10 h-10 text-primary animate-spin" />
+          <Loader />
         </div>
       )}
     </div>

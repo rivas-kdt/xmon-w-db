@@ -43,8 +43,9 @@ export type Warehouse = {
 } | null;
 
 const AdminPage = () => {
-  const { users, userLoading } = useUserHooks();
-  const { warehouseWorker, warehouseLoading } = useWarehouseHooks();
+  const { users, userLoading, refetchuser } = useUserHooks();
+  const { warehouseWorker, warehouseLoading, refetchwarehouse } =
+    useWarehouseHooks();
   const { recipients, recipientLoading } = useRecipientHooks();
   const [selectedUser, setSelectedUser] = useState<Users | null>(null);
   const [selectedWarehouse, setSelectedWarehouse] = useState<Warehouse | null>(
@@ -117,6 +118,7 @@ const AdminPage = () => {
       cell: ({ row, table }) => {
         const recipient = row.original;
         const onActiveChange = table.options.meta?.onActiveChange;
+        // const onActiveChange = (table.options.meta as any).onActiveChange;
         return (
           <Switch
             checked={recipient.isActive}
@@ -180,7 +182,7 @@ const AdminPage = () => {
   ];
 
   return (
-    <main className="p-4 gap-2">
+    <main className="p-4 gap-2 bg-gradient-to-b from-primary/10 to-background">
       <Tabs defaultValue="users" className="space-y-1">
         <TabsList>
           <TabsTrigger value="users">{t("users")}</TabsTrigger>
@@ -192,7 +194,7 @@ const AdminPage = () => {
             columns={userColumns}
             data={users}
             loading={userLoading}
-            // fetchUsersData={fetchUsersData}
+            fetchUsersData={refetchuser}
           />
         </TabsContent>
         <TabsContent value="email-recipients" className="space-y-2">
@@ -207,7 +209,7 @@ const AdminPage = () => {
             columns={warehouseColumns}
             data={warehouseWorker}
             loading={warehouseLoading}
-            // fetchWarehouseData={fetchWarehouseData}
+            fetchWarehouseData={refetchwarehouse}
           />
         </TabsContent>
       </Tabs>

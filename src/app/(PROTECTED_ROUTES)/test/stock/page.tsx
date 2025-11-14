@@ -151,7 +151,7 @@ export default function StockView() {
           className="bg-primary text-md w-full h-[50px] mb-4"
         >
           <Camera style={{ width: "20px", height: "20px" }} />
-          {t("b1")}
+          {t("scanqr")}
         </Button>
       )}
 
@@ -160,11 +160,11 @@ export default function StockView() {
         <Table className="w-full m-w-[800px]">
           <TableHeader>
             <TableRow>
-              <TableHead>{t("th1")}</TableHead>
-              <TableHead>{t("th2")}</TableHead>
-              <TableHead>{t("th3")}</TableHead>
-              <TableHead>{t("th4")}</TableHead>
-              <TableHead>{t("th5")}</TableHead>
+              <TableHead>{t("lotNo")}</TableHead>
+              <TableHead>{t("prodNo")}</TableHead>
+              <TableHead>{t("stockNo")}</TableHead>
+              <TableHead>{t("desc")}</TableHead>
+              <TableHead>{t("quantity")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -207,7 +207,7 @@ export default function StockView() {
           className="bg-primary mb-4 mt-4 text-md h-[50px] w-full"
         >
           <Upload className="h-5 w-5 mr-2" />
-          {t("b2")}
+          {t("upload")}
         </Button>
       )}
       {receipt && (

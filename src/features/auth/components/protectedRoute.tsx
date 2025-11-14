@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useSession } from "../hooks/sessionProvider";
 import { useTheme } from "next-themes";
+import Loader from "@/components/ui/loader";
 
 export default function ProtectedRoute({
   children,
@@ -23,22 +24,23 @@ export default function ProtectedRoute({
 
   if (loading)
     return (
-      <div
-        className={`flex items-center justify-center w-full h-screen bg-background transition-colors duration-300 ${
-          theme === "dark" ? "bg-[#0f1729]" : "bg-[#f8fafc]"
-        }`}
-      >
-        <div className="loader">
-          {[...Array(8)].map((_, i) => (
-            <div key={i} className={`box box${i}`}>
-              <div></div>
-            </div>
-          ))}
-          <div className="ground">
-            <div></div>
-          </div>
-        </div>
-      </div>
+      <Loader />
+      // <div
+      //   className={`flex items-center justify-center w-full h-screen bg-background transition-colors duration-300 ${
+      //     theme === "dark" ? "bg-[#0f1729]" : "bg-[#f8fafc]"
+      //   }`}
+      // >
+      //   <div className="loader">
+      //     {[...Array(8)].map((_, i) => (
+      //       <div key={i} className={`box box${i}`}>
+      //         <div></div>
+      //       </div>
+      //     ))}
+      //     <div className="ground">
+      //       <div></div>
+      //     </div>
+      //   </div>
+      // </div>
     );
 
   if (!user) return null;

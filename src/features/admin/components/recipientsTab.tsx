@@ -152,7 +152,7 @@ export function RecipientsTab<TData, TValue>({
                         data-state={row.getIsSelected() && "selected"}
                       >
                         {row.getVisibleCells().map((cell) => (
-                          <TableCell key={cell.id} className="px-4">
+                          <TableCell key={cell.id} className="px-2">
                             {flexRender(
                               cell.column.columnDef.cell,
                               cell.getContext()
@@ -167,7 +167,7 @@ export function RecipientsTab<TData, TValue>({
                         colSpan={columns.length}
                         className="h-24 text-center"
                       >
-                        No results.
+                        {t("noResults")}.
                       </TableCell>
                     </TableRow>
                   )}
@@ -179,8 +179,8 @@ export function RecipientsTab<TData, TValue>({
         <CardFooter>
           <div className=" w-full flex items-center justify-end space-x-2 py-4">
             <div className="flex-1 text-sm text-muted-foreground">
-              {table.getFilteredRowModel().rows.length} of {data.length}{" "}
-              recipients
+              {table.getPaginationRowModel().rows.length} of {data.length}{" "}
+              {t("recipients")}
             </div>
             <Button
               variant="outline"
@@ -188,7 +188,7 @@ export function RecipientsTab<TData, TValue>({
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
             >
-              Previous
+              {t("prev")}
             </Button>
             <Button
               variant="outline"
@@ -196,7 +196,7 @@ export function RecipientsTab<TData, TValue>({
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
             >
-              Next
+              {t("next")}
             </Button>
           </div>
         </CardFooter>

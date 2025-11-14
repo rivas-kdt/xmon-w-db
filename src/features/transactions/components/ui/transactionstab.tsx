@@ -1,20 +1,10 @@
-"use client";
-import React, { useEffect } from "react";
 import {
   Card,
   CardContent,
+  CardFooter,
   CardHeader,
   CardTitle,
-  CardFooter,
 } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import {
   type ColumnDef,
   flexRender,
@@ -26,6 +16,11 @@ import {
   getFilteredRowModel,
   type ColumnFiltersState,
 } from "@tanstack/react-table";
+import { Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import React from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -34,55 +29,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Search, UserPlus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-// import { AddUserForm } from "./add-user-form";
-import { useTranslations } from "next-intl";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useWarehouseHooks } from "../hooks/useWarehousesHooks";
-import { AddUserForm } from "./add-user-form";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   loading: boolean;
-  fetchUsersData: () => void;
 }
 
-export function UserTab<TData, TValue>({
+export function TransactionTable<TData, TValue>({
   columns,
   data,
   loading,
-  fetchUsersData,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
-  const { warehouse } = useWarehouseHooks();
   const [globalFilter, setGlobalFilter] = React.useState("");
-  const [addUserOpen, setAddUserOpen] = React.useState(false);
   const t = useTranslations("Tabs");
-
-  // useEffect(() => {
-  //   const getWarehouses = async () => {
-  //     const response = await fetch("/api/v2/warehouse");
-  //     const wh = await response.json();
-  //     console.log(wh);
-  //     setWarehouses(wh);
-  //   };
-  //   getWarehouses();
-  // }, []);
-
-  const uniqueLocations = React.useMemo(() => {
-    const locations = new Set<string>();
-    warehouse?.forEach((item) => {
-      if (item.warehouse) {
-        locations.add(item.warehouse);
-      }
-    });
-    return Array.from(locations);
-  }, [warehouse]);
 
   const table = useReactTable({
     data,
@@ -102,31 +74,25 @@ export function UserTab<TData, TValue>({
     },
   });
 
-  const handleLocationChange = (value: string) => {
+  const handleStatusChange = (value: string) => {
     if (value === "all") {
-      table.getColumn("warehouse")?.setFilterValue(undefined);
+      table.getColumn("status")?.setFilterValue(undefined);
     } else {
-      table.getColumn("warehouse")?.setFilterValue(value);
+      table.getColumn("status")?.setFilterValue(value);
     }
   };
 
   return (
-    <>
-      <Card>
-        <CardHeader className="mb-0 pb-2">
+    <div className=" h-full w-full">
+      <Card className=" flex flex-col h-full p-2">
+        <CardHeader className="mb-0 w-full">
           <div className="flex justify-between items-center">
-            <CardTitle className="text-primary">{t("userMgt")}</CardTitle>
-            <Button
-              onClick={() => setAddUserOpen(true)}
-              variant="outline"
-              className="flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/50"
-            >
-              <UserPlus className="h-4 w-4" />
-              {t("addUser")}
-            </Button>
+            <CardTitle className="text-primary pt-8">
+              {t("transactionHistory")}
+            </CardTitle>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className=" flex-1">
           <div className="flex flex-col sm:flex-row gap-4 mb-2">
             <div className="flex-1 flex gap-4">
               <div className="relative w-[400px]">
@@ -139,17 +105,14 @@ export function UserTab<TData, TValue>({
                 />
               </div>
               <div className="w-full sm:w-[200px]">
-                <Select onValueChange={handleLocationChange} defaultValue="all">
+                <Select onValueChange={handleStatusChange} defaultValue="all">
                   <SelectTrigger>
                     <SelectValue placeholder="Filter by location" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">{t("allWh")}</SelectItem>
-                    {uniqueLocations.map((location) => (
-                      <SelectItem key={location} value={location}>
-                        {location}
-                      </SelectItem>
-                    ))}
+                    <SelectItem value="all">{t("allStatus")}</SelectItem>
+                    <SelectItem value="Stocked">{t("stocked")}</SelectItem>
+                    <SelectItem value="Shipped">{t("shipped")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -187,7 +150,7 @@ export function UserTab<TData, TValue>({
                         data-state={row.getIsSelected() && "selected"}
                       >
                         {row.getVisibleCells().map((cell) => (
-                          <TableCell key={cell.id} className="px-2">
+                          <TableCell key={cell.id} className="px-4">
                             {flexRender(
                               cell.column.columnDef.cell,
                               cell.getContext()
@@ -215,7 +178,7 @@ export function UserTab<TData, TValue>({
           <div className=" w-full flex items-center justify-end space-x-2 py-4">
             <div className="flex-1 text-sm text-muted-foreground">
               {table.getPaginationRowModel().rows.length} of {data.length}{" "}
-              {t("users2")}
+              {t("transactions")}
             </div>
             <Button
               variant="outline"
@@ -236,12 +199,6 @@ export function UserTab<TData, TValue>({
           </div>
         </CardFooter>
       </Card>
-
-      <AddUserForm
-        open={addUserOpen}
-        onOpenChange={setAddUserOpen}
-        onUserAdded={fetchUsersData}
-      />
-    </>
+    </div>
   );
 }

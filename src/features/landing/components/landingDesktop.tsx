@@ -90,6 +90,7 @@ const DashboardDesktop = () => {
     ...(monthly?.map((d: MonthlyData) => d.shipped) ?? [0])
   );
   const maxY = Math.max(maxStocked, maxShipped) * 1.05;
+  // console.log(monthly?.map((m) => m.month_name));
 
   return (
     <main className=" p-4 space-y-2 flex flex-col bg-gradient-to-b from-primary/10 to-background">
@@ -205,21 +206,30 @@ const DashboardDesktop = () => {
                           const { x, y, width, height, value } = props;
 
                           const barHeight = Number(height); // ensure it's a number
+                          const barWidth = Number(width);
+                          const posX = Number(x) + barWidth / 2;
+                          // Determine Y position
+                          // If bar is too short, render above; else inside
+                          const isAbove = barHeight < 20;
+                          const posY = isAbove ? Number(y) - 4 : Number(y) + 12;
 
-                          if (
-                            !x ||
-                            !y ||
-                            !width ||
-                            isNaN(barHeight) ||
-                            barHeight < 20
-                          )
-                            return null;
+                          // if (
+                          //   !x ||
+                          //   !y ||
+                          //   !width ||
+                          //   isNaN(barHeight) ||
+                          //   barHeight < 20
+                          // )
+                          //   return null;
 
                           return (
                             <text
-                              x={Number(x) + Number(width) / 2}
-                              y={Number(y) + 12} // adjust vertical position
-                              fill="background"
+                              x={posX}
+                              y={posY}
+                              //  fill="background"
+                              fill={
+                                isAbove ? "var(--foreground)" : "background"
+                              }
                               textAnchor="middle"
                               fontSize={12}
                               fontWeight="bold"
@@ -249,7 +259,7 @@ const DashboardDesktop = () => {
                     <LineChart
                       accessibilityLayer
                       data={monthly ?? []}
-                      margin={{ top: 20, right: 12, left: 12 }}
+                      margin={{ right: 12, left: 14 }}
                     >
                       <CartesianGrid vertical={false} />
                       <XAxis
@@ -257,7 +267,12 @@ const DashboardDesktop = () => {
                         tickLine={false}
                         axisLine={false}
                         tickMargin={8}
-                        tickFormatter={(value) => value.slice(0, 3)}
+                        tickFormatter={(value) => {
+                          const translated = t(`months.${value}`, {
+                            fallback: value,
+                          });
+                          return translated.slice(0, 3);
+                        }}
                         domain={[0, maxY]}
                       />
                       <YAxis

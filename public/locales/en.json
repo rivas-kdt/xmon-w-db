@@ -19,7 +19,22 @@
     "date": "Date",
     "admin": "Admin",
     "stocked": "Stocked Parts",
-    "shipped": "Shipped Parts"
+    "shipped": "Shipped Parts",
+
+    "months": {
+      "JANUARY  ": "Jan",
+      "FEBRUARY ": "Feb",
+      "MARCH    ": "Mar",
+      "APRIL    ": "Apr",
+      "MAY      ": "May",
+      "JUNE     ": "Jun",
+      "JULY     ": "Jul",
+      "August   ": "Aug",
+      "SEPTEMBER": "Sep",
+      "OCTOBER  ": "Oct",
+      "NOVEMBER ": "Nov",
+      "DECEMBER ": "Dec"
+    }
   },
   "LocaleSwitcher": {
     "jp": "日本語",

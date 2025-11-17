@@ -178,9 +178,9 @@ export default function StockView() {
                   <Input
                     type="number"
                     value={isNaN(item.quantity) ? 0 : item.quantity}
-                    //   onChange={(e) =>
-                    //     handleQuantityChange(item.id, e.target.value)
-                    //   }
+                    onChange={(e) =>
+                      handleQuantityChange(item.id, e.target.value)
+                    }
                     className="w-20 p-1 border rounded-md"
                     placeholder="0"
                     min="1"

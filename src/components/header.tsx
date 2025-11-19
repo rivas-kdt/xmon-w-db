@@ -119,11 +119,17 @@ export default function Header() {
                         onClick={() => router.push("/test")}
                         className={`flex items-center gap-2 ${
                           pathname === "/test"
-                            ? "underline decoration-2 underline-offset-4 font-medium"
+                            ? "text-primary border-primary decoration-2 underline-offset-4 font-medium"
                             : ""
                         }`}
                       >
-                        <div className="p-2 border border-muted rounded-full">
+                        <div
+                          className={`p-2 border rounded-full ${
+                            pathname === "/test"
+                              ? "border-primary"
+                              : "border-muted"
+                          }`}
+                        >
                           <Home className="h-[1.2rem] w-[1.2rem]" />
                         </div>
                         {t("home")}
@@ -136,11 +142,17 @@ export default function Header() {
                         }}
                         className={`flex items-center gap-2 ${
                           pathname === "/transactions"
-                            ? "underline decoration-2 underline-offset-4 font-medium"
+                            ? "text-primary border-primary decoration-2 underline-offset-4 font-medium"
                             : ""
                         }`}
                       >
-                        <div className="p-2 border border-muted rounded-full">
+                        <div
+                          className={`p-2 border rounded-full ${
+                            pathname === "/transactions"
+                              ? "border-primary"
+                              : "border-muted"
+                          }`}
+                        >
                           <Package className="h-[1.2rem] w-[1.2rem]" />
                         </div>
                         {t("transaction")}

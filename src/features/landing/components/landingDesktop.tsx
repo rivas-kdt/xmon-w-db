@@ -166,7 +166,11 @@ const DashboardDesktop = () => {
                   config={chartConfig}
                   className=" h-[100%] w-full"
                 >
-                  <BarChart accessibilityLayer data={warehouseInventory}>
+                  <BarChart
+                    accessibilityLayer
+                    data={warehouseInventory}
+                    margin={{ bottom: 22 }}
+                  >
                     <CartesianGrid vertical={false} />
                     <XAxis
                       dataKey="warehouse"
@@ -259,7 +263,7 @@ const DashboardDesktop = () => {
                     <LineChart
                       accessibilityLayer
                       data={monthly ?? []}
-                      margin={{ right: 12, left: 14 }}
+                      margin={{ right: 12, left: 14, bottom: 20 }}
                     >
                       <CartesianGrid vertical={false} />
                       <XAxis

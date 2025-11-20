@@ -12,16 +12,10 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { addWarehouse } from "@/actions/dbActions"; //TODO Change this
+import { addWarehouse } from "@/features/admin/services/addWarehouse"; //TODO Change this
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-
-interface AddWarehouseFormProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onSuccess?: () => void;
-  onWarehouseAdded?: () => void;
-}
+import { AddWarehouseFormProps } from "@/types/warehouse";
 
 export function AddWarehouseForm({
   open,
@@ -32,18 +26,20 @@ export function AddWarehouseForm({
   const [warehouse, setWarehouse] = useState("");
   const [location, setLocation] = useState("");
   const [loading, setLoading] = useState(false);
-  const t = useTranslations('addNewWarehouse')
+  const t = useTranslations("addNewWarehouse");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const formData = new FormData();
-      formData.append("warehouse", warehouse);
-      formData.append("location", location);
+      // const formData = new FormData();
+      // formData.append("warehouse", warehouse);
+      // formData.append("location", location);
 
-      const result = await addWarehouse(formData);
+      // const result = await addWarehouse(formData);
+
+      const result = await addWarehouse(warehouse, location);
 
       if (result.success) {
         if (onWarehouseAdded) onWarehouseAdded();
@@ -68,16 +64,14 @@ export function AddWarehouseForm({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px] bg-background">
         <DialogHeader>
-          <DialogTitle>{t('header')}</DialogTitle>
-          <DialogDescription>
-            {t('description')}
-          </DialogDescription>
+          <DialogTitle>{t("header")}</DialogTitle>
+          <DialogDescription>{t("description")}</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="warehouse" className="text-right">
-                {t('warehouseName')}
+                {t("warehouseName")}
               </Label>
               <Input
                 id="warehouse"
@@ -89,7 +83,7 @@ export function AddWarehouseForm({
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="location" className="text-right">
-                {t('location')}
+                {t("location")}
               </Label>
               <Input
                 id="location"
@@ -105,10 +99,10 @@ export function AddWarehouseForm({
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {t('addingState')}
+                  {t("addingState")}
                 </>
               ) : (
-                t('button')
+                t("button")
               )}
             </Button>
           </DialogFooter>

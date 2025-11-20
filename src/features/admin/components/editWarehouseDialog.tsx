@@ -12,16 +12,9 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type { Warehouse } from "@/app/admin/page";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-
-interface EditWarehouseDialogProps {
-  warehouse: Warehouse;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onSuccess?: () => void;
-}
+import { EditWarehouseDialogProps, Warehouse } from "@/types/warehouse";
 
 export function EditWarehouseDialog({
   warehouse,
@@ -35,7 +28,7 @@ export function EditWarehouseDialog({
   });
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const t = useTranslations('editWarehouse')
+  const t = useTranslations("editWarehouse");
 
   useEffect(() => {
     if (warehouse) {
@@ -96,15 +89,13 @@ export function EditWarehouseDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px] z-50">
         <DialogHeader>
-          <DialogTitle>{t('header')}</DialogTitle>
-          <DialogDescription>
-            {t('description')}
-          </DialogDescription>
+          <DialogTitle>{t("header")}</DialogTitle>
+          <DialogDescription>{t("description")}</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="warehouse" className="text-right">
-              {t('warehouseName')}
+              {t("warehouseName")}
             </Label>
             <Input
               id="warehouse"
@@ -115,7 +106,7 @@ export function EditWarehouseDialog({
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="location" className="text-right">
-              {t('location')}
+              {t("location")}
             </Label>
             <Input
               id="location"
@@ -132,7 +123,7 @@ export function EditWarehouseDialog({
             disabled={isLoading}
             className="bg-amber-400 hover:bg-amber-400/75 text-black"
           >
-            {isLoading ? t('addingState') : t('button')}
+            {isLoading ? t("addingState") : t("button")}
           </Button>
         </DialogFooter>
       </DialogContent>

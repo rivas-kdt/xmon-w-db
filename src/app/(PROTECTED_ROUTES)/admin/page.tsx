@@ -17,31 +17,6 @@ import { useUserHooks } from "@/features/admin/hooks/useUsersHooks";
 import { useWarehouseHooks } from "@/features/admin/hooks/useWarehousesHooks";
 import { useRecipientHooks } from "@/features/admin/hooks/useRecipientsHooks";
 
-export type Users = {
-  id: string;
-  username: string;
-  email: string;
-  role: string;
-  location: string | null;
-  warehouse: string | null;
-  createdAt: string;
-} | null;
-
-export type Recipients = {
-  id: string;
-  email: string;
-  isActive: boolean;
-  created_at: string;
-};
-
-export type Warehouse = {
-  id: string;
-  warehouse: string;
-  location: string;
-  workers: number;
-  created_at: string | number | Date;
-} | null;
-
 const AdminPage = () => {
   const { users, userLoading, refetchuser } = useUserHooks();
   const { warehouseWorker, warehouseLoading, refetchwarehouse } =
@@ -117,8 +92,8 @@ const AdminPage = () => {
       header: t("status"),
       cell: ({ row, table }) => {
         const recipient = row.original;
-        const onActiveChange = table.options.meta?.onActiveChange;
-        // const onActiveChange = (table.options.meta as any).onActiveChange;
+        // const onActiveChange = table.options.meta?.onActiveChange;
+        const onActiveChange = (table.options.meta as any).onActiveChange;
         return (
           <Switch
             checked={recipient.isActive}

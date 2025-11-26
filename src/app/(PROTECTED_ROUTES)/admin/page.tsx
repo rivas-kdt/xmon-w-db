@@ -16,6 +16,9 @@ import { RecipientsTab } from "@/features/admin/components/recipientsTab";
 import { useUserHooks } from "@/features/admin/hooks/useUsersHooks";
 import { useWarehouseHooks } from "@/features/admin/hooks/useWarehousesHooks";
 import { useRecipientHooks } from "@/features/admin/hooks/useRecipientsHooks";
+import { Users } from "@/types/users";
+import { Warehouse } from "@/types/warehouse";
+import { Recipients } from "@/types/recipients";
 
 const AdminPage = () => {
   const { users, userLoading, refetchuser } = useUserHooks();

@@ -115,18 +115,18 @@ export default function EmailHistory() {
       });
 
       if (res.status === 204) {
-        toast.error("No data available to send.");
+        toast.error(t("noDataToSend"));
       } else if (!res.ok) {
         const errorData = await res.json();
         toast.error(
-          `Failed to send email: ${errorData?.error || "Unknown error"}`
+          t("failedSend", { error: errorData?.error || t("unknownError") })
         );
       } else {
-        toast.success("Email sent successfully!");
+        toast.success(t("emailSent"));
       }
     } catch (error) {
       console.error("Error sending email:", error);
-      toast.error("An unexpected error occurred while sending the email.");
+      toast.error(t("unexpectedError"));
     } finally {
       setSendingEmail(false);
       fetchHistory();

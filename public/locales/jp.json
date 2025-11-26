@@ -231,7 +231,12 @@
     "return": "戻る",
     "sending": "メール送信中…",
     "sendEmail": "メールを送信する",
-    "error": "エラー"
+    "error": "エラー",
+    "noDataToSend": "送信可能なデータがありません",
+    "failedSend": "メールの送信に失敗しました: {{error}}",
+    "unknownError": "不明なエラー",
+    "emailSent": "メールが正常に送信されました",
+    "unexpectedError": "メール送信中に予期しないエラーが発生しました"
   },
   "confirm-email": {
     "mon": "Mon",

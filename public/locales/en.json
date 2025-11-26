@@ -226,7 +226,15 @@
     "full-list": "Full list",
     "email-id": "Email ID",
     "loading-page": "Loading...",
-    "return": "Return"
+    "return": "Return",
+    "sending": "Sending Email...",
+    "sendEmail": "Send Email",
+    "error": "Error",
+    "noDataToSend": "No data available to send",
+    "failedSend": "Failed to send email: {{error}}",
+    "unknownError": "Unknown error",
+    "emailSent": "Email sent successfully",
+    "unexpectedError": "An unexpected error occurred while sending the email"
   },
   "confirm-email": {
     "mon": "Mon",

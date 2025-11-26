@@ -230,6 +230,7 @@
     "sending": "Sending Email...",
     "sendEmail": "Send Email",
     "error": "Error",
+    "failedFetch": "Failed to fetch data",
     "noDataToSend": "No data available to send",
     "failedSend": "Failed to send email: {{error}}",
     "unknownError": "Unknown error",

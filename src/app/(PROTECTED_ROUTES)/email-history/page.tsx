@@ -59,7 +59,7 @@ export default function EmailHistory() {
     try {
       const res = await fetch("/api/v2/email/history");
       if (!res.ok) {
-        throw new Error("Failed to fetch data");
+        throw new Error(t("failedFetch"));
       }
       const data: EmailTransaction[] = await res.json();
       console.log("Fetched Email History:", data);

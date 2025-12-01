@@ -19,7 +19,22 @@
     "date": "Date",
     "admin": "Admin",
     "stocked": "Stocked Parts",
-    "shipped": "Shipped Parts"
+    "shipped": "Shipped Parts",
+
+    "months": {
+      "JANUARY  ": "Jan",
+      "FEBRUARY ": "Feb",
+      "MARCH    ": "Mar",
+      "APRIL    ": "Apr",
+      "MAY      ": "May",
+      "JUNE     ": "Jun",
+      "JULY     ": "Jul",
+      "AUGUST   ": "Aug",
+      "SEPTEMBER": "Sep",
+      "OCTOBER  ": "Oct",
+      "NOVEMBER ": "Nov",
+      "DECEMBER ": "Dec"
+    }
   },
   "LocaleSwitcher": {
     "jp": "日本語",
@@ -200,18 +215,27 @@
   },
   "email-history": {
     "title": "Email History",
-    "error1": "No history found",
-    "error2": "No transactions found",
-    "th1": "Lot No",
-    "th2": "Product Code",
-    "th3": "Stock No",
-    "th4": "Description",
-    "th5": "Status",
-    "th6": "Quantity",
+    "noHistory": "No history found",
+    "noTransaction": "No transactions found",
+    "lotNo": "Lot No",
+    "prodCode": "Product Code",
+    "stockNo": "Stock No",
+    "desc": "Description",
+    "stat": "Status",
+    "quantity": "Quantity",
     "full-list": "Full list",
     "email-id": "Email ID",
     "loading-page": "Loading...",
-    "return": "Return"
+    "return": "Return",
+    "sending": "Sending Email...",
+    "sendEmail": "Send Email",
+    "error": "Error",
+    "failedFetch": "Failed to fetch data",
+    "noDataToSend": "No data available to send",
+    "failedSend": "Failed to send email: {{error}}",
+    "unknownError": "Unknown error",
+    "emailSent": "Email sent successfully",
+    "unexpectedError": "An unexpected error occurred while sending the email"
   },
   "confirm-email": {
     "mon": "Mon",

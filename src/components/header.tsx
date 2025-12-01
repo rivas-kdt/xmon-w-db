@@ -119,11 +119,17 @@ export default function Header() {
                         onClick={() => router.push("/test")}
                         className={`flex items-center gap-2 ${
                           pathname === "/test"
-                            ? "underline decoration-2 underline-offset-4 font-medium"
+                            ? "text-primary border-primary decoration-2 underline-offset-4 font-medium"
                             : ""
                         }`}
                       >
-                        <div className="p-2 border border-muted rounded-full">
+                        <div
+                          className={`p-2 border rounded-full ${
+                            pathname === "/test"
+                              ? "border-primary"
+                              : "border-muted"
+                          }`}
+                        >
                           <Home className="h-[1.2rem] w-[1.2rem]" />
                         </div>
                         {t("home")}
@@ -136,11 +142,17 @@ export default function Header() {
                         }}
                         className={`flex items-center gap-2 ${
                           pathname === "/transactions"
-                            ? "underline decoration-2 underline-offset-4 font-medium"
+                            ? "text-primary border-primary decoration-2 underline-offset-4 font-medium"
                             : ""
                         }`}
                       >
-                        <div className="p-2 border border-muted rounded-full">
+                        <div
+                          className={`p-2 border rounded-full ${
+                            pathname === "/transactions"
+                              ? "border-primary"
+                              : "border-muted"
+                          }`}
+                        >
                           <Package className="h-[1.2rem] w-[1.2rem]" />
                         </div>
                         {t("transaction")}
@@ -216,47 +228,30 @@ export default function Header() {
           </div>
         </div>
         <nav className="flex items-center space-x-4 lg:space-x-6">
-          <Link
-            href="/admin"
-            className={`${
-              pathname === "/admin" ? "" : "text-muted-foreground"
-            } font-medium transition-colors hover:text-primary`}
-          >
-            {t("admin")}
-          </Link>
-          <Link
-            href="/dashboard"
-            className={`${
-              pathname === "/dashboard" ? "" : "text-muted-foreground"
-            } font-medium transition-colors hover:text-primary`}
-          >
-            {t("dashboard")}
-          </Link>
-          <Link
-            href="/inventory"
-            className={`${
-              pathname === "/inventory" ? "" : "text-muted-foreground"
-            } font-medium transition-colors hover:text-primary`}
-          >
-            {t("inventory")}
-          </Link>
-          <Link
-            href="/transactions"
-            className={`${
-              pathname === "/transactions" ? "" : "text-muted-foreground"
-            } font-medium transition-colors hover:text-primary`}
-          >
-            {t("transaction")}
-          </Link>
-          <Link
-            href="/email-history"
-            className={`${
-              pathname === "/email-history" ? "" : "text-muted-foreground"
-            } font-medium transition-colors hover:text-primary`}
-          >
-            {t("email-history")}
-          </Link>
+          {[
+            { href: "/admin", label: t("admin") },
+            { href: "/dashboard", label: t("dashboard") },
+            { href: "/inventory", label: t("inventory") },
+            { href: "/transactions", label: t("transaction") },
+            { href: "/email-history", label: t("email-history") },
+          ].map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`font-medium transition-colors hover:text-primary ${
+                  isActive
+                    ? "text-primary border-b-2 border-primary"
+                    : "text-muted-foreground"
+                }`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
+
         <div className=" flex-1 flex justify-end gap-2">
           <LocaleSwitcher />
           <ThemeToggle />

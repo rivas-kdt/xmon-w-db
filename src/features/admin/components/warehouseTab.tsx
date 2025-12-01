@@ -42,11 +42,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useWarehouseHooks } from "../hooks/useWarehousesHooks";
 import { AddWarehouseForm } from "./add-warehouse-form";
 
-interface Warehouse {
-  warehouse: string;
-  location: string;
-}
-
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];

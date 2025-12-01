@@ -41,9 +41,11 @@ export function AddWarehouseForm({
     setLoading(true);
 
     try {
-      const formData = new FormData();
-      formData.append("warehouse", warehouse);
-      formData.append("location", location);
+      // const formData = new FormData();
+      // formData.append("warehouse", warehouse);
+      // formData.append("location", location);
+
+      // const result = await addWarehouse(formData);
 
       const result = await addWarehouse(warehouse, location);
 

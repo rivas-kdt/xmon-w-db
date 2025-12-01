@@ -69,9 +69,9 @@ export function AddUserForm({
   //     setFetchingWarehouses(false);
   //   }
   // };
-
   const fetchWarehouses = async () => {
     setFetchingWarehouses(true);
+
     try {
       const response = await getWarehouse();
       setWarehouses(response);

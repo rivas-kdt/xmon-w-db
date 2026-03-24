@@ -38,6 +38,7 @@ import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useWarehouseHooks } from "@/features/admin/hooks/useWarehousesHooks";
 
 interface Warehouse {
   warehouse: string;
@@ -59,27 +60,28 @@ export function InventoryTable<TData, TValue>({
     []
   );
   const [globalFilter, setGlobalFilter] = React.useState("");
-  const [warehouses, setWarehouses] = React.useState<Warehouse[]>([]);
+  const { warehouse } = useWarehouseHooks();
+  // const [warehouses, setWarehouses] = React.useState<Warehouse[]>([]);
   const t = useTranslations("Tabs");
 
-  useEffect(() => {
-    const getWarehouses = async () => {
-      const response = await fetch("/api/v2/warehouse");
-      const wh = await response.json();
-      setWarehouses(wh);
-    };
-    getWarehouses();
-  }, []);
+  // useEffect(() => {
+  //   const getWarehouses = async () => {
+  //     const response = await fetch("/api/v2/warehouse");
+  //     const wh = await response.json();
+  //     setWarehouses(wh);
+  //   };
+  //   getWarehouses();
+  // }, []);
 
   const uniqueLocations = React.useMemo(() => {
     const locations = new Set<string>();
-    warehouses?.forEach((item) => {
+    warehouse?.forEach((item) => {
       if (item.warehouse) {
         locations.add(item.warehouse);
       }
     });
     return Array.from(locations);
-  }, [warehouses]);
+  }, [warehouse]);
 
   const table = useReactTable({
     data,

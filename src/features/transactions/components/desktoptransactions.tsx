@@ -5,6 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { TransactionTable } from "./ui/transactionstab";
 import { Imagedialog } from "./ui/imgDialog";
+import { useTransactionHooks } from "../hooks/useTransactionHooks";
 
 export type Transaction = {
   lot_no: string;
@@ -23,6 +24,8 @@ const TransactionDesktop = () => {
   const [imgOpen, setImgOpen] = useState(false);
   const [selectedImgUrl, setSelectedImgUrl] = useState<string>();
   const t = useTranslations("Table");
+
+  const { transaction, transactionLoading } = useTransactionHooks();
 
   useEffect(() => {
     setLoading(true);
@@ -123,8 +126,8 @@ const TransactionDesktop = () => {
       <div className="  h-full w-full flex items-center">
         <TransactionTable
           columns={InventoryColumns}
-          data={data}
-          loading={loading}
+          data={transaction}
+          loading={transactionLoading}
         />
       </div>
       <Imagedialog

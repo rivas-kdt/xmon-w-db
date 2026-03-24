@@ -19,9 +19,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { EditUserDialogProps, Users } from "@/types/users";
+import { EditUserDialogProps } from "@/types/users";
+import { useEditUserHooks } from "../hooks/editUserHooks";
 
 export function EditUserDialog({
   user,
@@ -30,69 +30,23 @@ export function EditUserDialog({
   onOpenChange,
   onSuccess,
 }: EditUserDialogProps) {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    role: "",
-    location: "",
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const { formData, handleChange, handleEditUser, isLoading } =
+    useEditUserHooks(user);
+
   const t = useTranslations("editUser");
 
-  useEffect(() => {
-    if (user) {
-      setFormData({
-        username: user.username || "",
-        email: user.email || "",
-        role: user.role || "",
-        location: user.location || "",
-      });
-    }
-  }, [user]);
-
-  const handleChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
   const handleSubmit = async () => {
-    if (!user) return;
-
-    setIsLoading(true);
-    try {
-      const payload = {
-        userId: user.id,
-        username:
-          formData.username !== user.username ? formData.username : undefined,
-        email: formData.email !== user.email ? formData.email : undefined,
-        role: formData.role !== user.role ? formData.role : undefined,
-        location:
-          formData.location !== user.location ? formData.location : undefined,
-      };
-
-      const response = await fetch("/api/v2/users", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      const result = await response.json();
-      if (result.success) {
-        router.refresh();
-        onOpenChange(false);
-        onSuccess?.();
-      } else {
-        console.error("Error updating user:", result.error);
-      }
-    } catch (error) {
-      console.error("Exception in handleSubmit:", error);
-    } finally {
-      setIsLoading(false);
+    const res = await handleEditUser();
+    if (res?.success) {
+      onOpenChange(false);
+      onSuccess?.();
+    } else {
+      console.error("Error updating user:", res?.error);
     }
   };
-
+  console.log("EditUserDialog warehouse:", locations);
+  console.log("EditUserDialog user:", user);
+  console.log("EditUserDialog formData:", formData);
   if (!user) return null;
 
   return (
@@ -140,6 +94,28 @@ export function EditUserDialog({
               <SelectContent>
                 <SelectItem value="admin">{t("admin")}</SelectItem>
                 <SelectItem value="worker">{t("worker")}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="role" className="text-right">
+              Location
+            </Label>
+
+            <Select
+              value={formData.location ?? ""} // ✅ location is warehouse_id
+              onValueChange={(value) => handleChange("location", value)}
+            >
+              <SelectTrigger className="col-span-3" id="location">
+                <SelectValue placeholder="Select Location" />
+              </SelectTrigger>
+
+              <SelectContent>
+                {locations.map((loc) => (
+                  <SelectItem key={loc.id} value={loc.id}>
+                    {loc.warehouse}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>

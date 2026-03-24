@@ -16,7 +16,7 @@ export interface AddUserFormProps {
 
 export interface EditUserDialogProps {
   user: Users;
-  locations: string[];
+  locations: { warehouse: string; id: string }[];
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSuccess?: () => void;

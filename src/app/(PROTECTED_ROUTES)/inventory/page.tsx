@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { InventoryTable } from "@/features/inventory/components/page";
+import { useInventoryHooks } from "@/features/inventory/hooks/useInventoryHooks";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -19,21 +20,9 @@ export type Inventory = {
 } | null;
 
 const InventoryPage = () => {
-  const [data, setData] = useState<Inventory[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
   const t = useTranslations("Table");
 
-  useEffect(() => {
-    setLoading(true);
-    const fetchParts = async () => {
-      const response = await fetch("/api/inventory");
-      const data2 = await response.json();
-      console.log(data2);
-      setData(data2);
-      setLoading(false);
-    };
-    fetchParts();
-  }, []);
+  const { inventory, inventoryLoading } = useInventoryHooks();
 
   const InventoryColumns: ColumnDef<Inventory>[] = [
     {
@@ -89,8 +78,8 @@ const InventoryPage = () => {
       <div className="  h-full w-full flex items-center">
         <InventoryTable
           columns={InventoryColumns}
-          data={data}
-          loading={loading}
+          data={inventory}
+          loading={inventoryLoading}
         />
       </div>
     </main>

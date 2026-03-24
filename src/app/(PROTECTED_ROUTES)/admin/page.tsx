@@ -22,7 +22,7 @@ import { Recipients } from "@/types/recipients";
 
 const AdminPage = () => {
   const { users, userLoading, refetchuser } = useUserHooks();
-  const { warehouseWorker, warehouseLoading, refetchwarehouse } =
+  const { warehouse, warehouseWorker, warehouseLoading, refetchwarehouse } =
     useWarehouseHooks();
   const { recipients, recipientLoading } = useRecipientHooks();
   const [selectedUser, setSelectedUser] = useState<Users | null>(null);
@@ -197,7 +197,8 @@ const AdminPage = () => {
         open={editUserOpen}
         onOpenChange={setEditUserOpen}
         user={selectedUser}
-        locations={[]}
+        locations={warehouse}
+        onSuccess={refetchuser}
       />
       {/* <EditWarehouseDialog
         open={editWarehouseOpen}

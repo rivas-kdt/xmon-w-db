@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getShip } from "../services/getShip";
+import { getStock } from "../services/getStock";
 
 export function useStockHooks() {
   const [stockedThisMonth, setThisMonth] = useState<number | null>(null);
@@ -17,7 +17,7 @@ export function useStockHooks() {
   const fetchStocked = async () => {
     setLoading(true);
     try {
-      const response = await getShip();
+      const response = await getStock();
       setThisMonth(response.this_months_total);
       setLastMonth(response.prev_months_total);
       setPercentageChange(response.percentage_change);

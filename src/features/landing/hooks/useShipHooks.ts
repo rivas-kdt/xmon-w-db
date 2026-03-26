@@ -1,5 +1,5 @@
 import { useState, useEffect, use } from "react";
-import { getStock } from "../services/getStock";
+import { getShip } from "../services/getShip";
 
 export function useShipHooks() {
   const [shippedThisMonth, setThisMonth] = useState<number | null>(null);
@@ -17,7 +17,7 @@ export function useShipHooks() {
   const fetchShipped = async () => {
     setLoading(true);
     try {
-      const response = await getStock();
+      const response = await getShip();
       setThisMonth(response.this_months_total);
       setLastMonth(response.prev_months_total);
       setPercentageChange(response.percentage_change);

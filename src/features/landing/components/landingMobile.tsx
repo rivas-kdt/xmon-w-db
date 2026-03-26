@@ -26,6 +26,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import Loader from "@/components/ui/loader";
+import { useWarehouseHooks } from "@/features/admin/hooks/useWarehousesHooks";
 
 interface Warehouse {
   id: string;
@@ -48,6 +49,8 @@ type LoadingState = {
 
 const DashboardMobile = () => {
   const { user } = useAuth(false);
+  const { warehouse } = useWarehouseHooks()
+  console.log(warehouse)
   const loadingState: LoadingState = {
     loading: true,
     user: user as User | null,
@@ -56,14 +59,15 @@ const DashboardMobile = () => {
   const [loading, setLoading] = useState(false);
   const typedUser: User | null =
     user && typeof user === "object" && "id" in user ? (user as User) : null;
-  const [warehouse, setWarehouse] = useState<Warehouse[]>([]);
+  // const [warehouse, setWarehouse] = useState<Warehouse[]>([]);
   const [selectedWarehouse, setSelectedWarehouse] = useState<Warehouse | null>(
     null
   );
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
   const [loadingWarehouses, setLoadingWarehouses] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const isAdmin = typedUser?.role === "admin";
+  const isAdmin = user?.role === "admin";
+  console.log(isAdmin)
   const isMobile = useIsMobile();
   const t = useTranslations("landing-page");
 

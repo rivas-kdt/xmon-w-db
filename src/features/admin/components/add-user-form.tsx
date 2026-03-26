@@ -35,7 +35,6 @@ interface AddUserFormProps {
 export function AddUserForm({
   open,
   onOpenChange,
-  onUserAdded,
 }: AddUserFormProps) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");

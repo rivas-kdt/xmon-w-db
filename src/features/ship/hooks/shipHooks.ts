@@ -124,7 +124,7 @@ export function useShipHooks({
   const fetchStockedParts = async () => {
     setFetching(true);
     try {
-      const warehouseId = sessionStorage.getItem("warehouseId");
+      const warehouseId = sessionStorage.getItem("selectedWarehouseId");
       if (!warehouseId) {
         toast.error(t("noWarehouseID"));
         throw new Error("Warehouse ID not found in session storage");

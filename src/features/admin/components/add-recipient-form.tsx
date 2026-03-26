@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,10 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-// import { addRecipient } from "@/actions/dbActions" //TODO Change this
-// import { toast } from "@/hooks/use-toast"
-import { Loader2, X } from "lucide-react";
-// import { supabase } from "@/lib/supabaseClient" //TODO Change this
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { addRecipient } from "../services/addRecipient";
 import toast from "react-hot-toast";
@@ -31,17 +28,16 @@ interface Recipient {
 interface AddRecipientFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onRecipientAdded?: () => void;
 }
 
 export function AddRecipientForm({
   open,
   onOpenChange,
+  onRecipientAdded,
 }: AddRecipientFormProps) {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [recipients, setRecipients] = useState<Recipient[]>([]);
-  const [fetchingRecipients, setFetchingRecipients] = useState(false);
-  const [deletingId, setDeletingId] = useState<string | null>(null);
   const t = useTranslations("addNewRecipient");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -54,6 +50,7 @@ export function AddRecipientForm({
       if (result.success && result.message) {
         toast.success(result?.message);
         resetForm();
+        onRecipientAdded?.();
         onOpenChange(false);
       } else if (result.error) {
         toast.error(result.error);
@@ -95,7 +92,11 @@ export function AddRecipientForm({
             </div>
           </div>
           <DialogFooter className="flex justify-end">
-            <Button type="submit" disabled={loading}>
+            <Button
+              type="submit"
+              disabled={loading}
+              className="bg-green-600 hover:bg-green-700 text-white"
+            >
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

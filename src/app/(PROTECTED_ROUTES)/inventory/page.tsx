@@ -1,13 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { InventoryTable } from "@/features/inventory/components/page";
 import { useInventoryHooks } from "@/features/inventory/hooks/useInventoryHooks";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, Edit2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React, { useState } from "react";
-import { useEffect } from "react";
+import { EditInventoryDialog } from "@/features/inventory/components/editInventoryDialog";
 
 export type Inventory = {
   lot_no: string;
@@ -22,7 +23,14 @@ export type Inventory = {
 const InventoryPage = () => {
   const t = useTranslations("Table");
 
-  const { inventory, inventoryLoading } = useInventoryHooks();
+  const { inventory, inventoryLoading, refetchinventory } = useInventoryHooks();
+  const [selectedItem, setSelectedItem] = useState<Inventory>(null);
+  const [editOpen, setEditOpen] = useState(false);
+
+  const handleEdit = (item: Inventory) => {
+    setSelectedItem(item);
+    setEditOpen(true);
+  };
 
   const InventoryColumns: ColumnDef<Inventory>[] = [
     {
@@ -71,17 +79,55 @@ const InventoryPage = () => {
         return <p>{date2}</p>;
       },
     },
+    {
+      id: "actions",
+      header: t("actions") || "Actions",
+      cell: ({ row }) => (
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => handleEdit(row.original)}
+          className="gap-2"
+        >
+          <Edit2 className="h-4 w-4" />
+          {t("edit")}
+        </Button>
+      ),
+    },
   ];
 
   return (
-    <main className="  p-4 gap-2 bg-gradient-to-b from-primary/10 to-background">
-      <div className="  h-full w-full flex items-center">
-        <InventoryTable
-          columns={InventoryColumns}
-          data={inventory}
-          loading={inventoryLoading}
-        />
+    <main className="p-4 gap-2 bg-gradient-to-b from-primary/10 to-background">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold mb-4">{t("inventory") || "Inventory"}</h1>
       </div>
+
+      <div className="h-full w-full flex items-center">
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle>{t("inventoryItems") || "Inventory Items"}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <InventoryTable
+              columns={InventoryColumns}
+              data={inventory}
+              loading={inventoryLoading}
+            />
+          </CardContent>
+        </Card>
+      </div>
+
+      {selectedItem && (
+        <EditInventoryDialog
+          item={selectedItem as any}
+          open={editOpen}
+          onOpenChange={setEditOpen}
+          onSuccess={() => {
+            refetchinventory();
+            setSelectedItem(null);
+          }}
+        />
+      )}
     </main>
   );
 };

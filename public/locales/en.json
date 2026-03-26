@@ -300,7 +300,13 @@
     "admin": "Admin",
     "worker": "Worker",
     "addingState": "Save changes",
-    "loadingState": "Saving..."
+    "loadingState": "Saving...",
+    "location": "Location",
+    "selectLoc": "Select Location",
+    "deleting": "Deleting...",
+    "delete": "Delete",
+    "updating": "Updating...",
+    "update": "Update"
   },
   "editWarehouse": {
     "header": "Edit Warehouse",

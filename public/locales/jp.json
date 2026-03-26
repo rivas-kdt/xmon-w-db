@@ -302,7 +302,13 @@
     "worker": "担当者",
     "button": "変更を保存",
     "addingState": "保存中...",
-    "loadingState": "読み込み中..."
+    "loadingState": "読み込み中...",
+    "location": "所在地",
+    "selectLoc": "所在地を選択してください",
+    "deleting": "削除しています...",
+    "delete": "削除",
+    "updating": "更新しています...",
+    "update": "更新"
   },
   "editWarehouse": {
     "header": "倉庫を編集",

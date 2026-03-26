@@ -119,7 +119,7 @@ export function WarehouseTab<TData, TValue>({
             <Button
               onClick={() => setAddWarehouseOpen(true)}
               variant="outline"
-              className="flex items-center gap-2 bg-primary hover:bg-primary/50 text-primary-foreground"
+              className="flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/50 dark:bg-primary/80 dark:hover:bg-primary/70"
             >
               <Building className="h-4 w-4" />
               {t("addWarehouse")}

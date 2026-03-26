@@ -119,7 +119,7 @@ export function EditUserDialog({
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="location" className="text-right">
-              Location
+              {t("location")}
             </Label>
 
             <Select
@@ -127,7 +127,7 @@ export function EditUserDialog({
               onValueChange={(value) => handleChange("location", value)}
             >
               <SelectTrigger className="col-span-3" id="location">
-                <SelectValue placeholder="Select Location" />
+                <SelectValue placeholder={t("selectLoc")} />
               </SelectTrigger>
 
               <SelectContent>
@@ -151,12 +151,12 @@ export function EditUserDialog({
             {isDeleting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Deleting...
+                {t("deleting")}
               </>
             ) : (
               <>
-                <Trash2 className="mr-2 h-4 w-4" />
-                Delete
+                <Trash2 className="mr-1 h-4 w-4" />
+                {t("delete")}
               </>
             )}
           </Button>
@@ -164,15 +164,16 @@ export function EditUserDialog({
             type="submit"
             onClick={handleSubmit}
             disabled={isLoading || isDeleting}
-            className="bg-blue-600 hover:bg-blue-700"
+            size="sm"
+            className="bg-[#EAB308] text-[#f1f1f1] hover:bg-[#CA8A04]"
           >
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Updating...
+                {t("updating")}
               </>
             ) : (
-              "Update"
+              t("update")
             )}
           </Button>
         </DialogFooter>

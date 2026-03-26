@@ -29,16 +29,16 @@ const LoginDesktop = () => {
   const t = useTranslations("LoginPage");
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-b from-primary/10 to-background">
+    <main className="relative min-h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-b from-primary/10 to-background">
       {/* Decorative elements */}
       <div className="absolute top-0 right-0 w-150 h-150 bg-primary/60 -z-10" />
       {/* <div className="absolute top-0 left-0 w-42 h-42 bg-primary/10 -z-10 rounded-br-[100%]" /> */}
-      <div className="absolute top-15 left-100 w-20 h-20 bg-primary/50" />
-      <div className="absolute top-30 left-40 w-76 h-76 bg-primary/40" />
-      <div className="absolute bottom-0 right-60 w-100 h-82 bg-primary/20" />
-      <div className="absolute bottom-0 left-0 w-150 h-150 bg-primary/10" />
+      <div className="absolute top-8 left-110 w-20 h-20 bg-primary/50" />
+      <div className="absolute top-20 left-40 w-76 h-76 bg-primary/40" />
+      <div className="absolute -bottom-20 right-40 z-0 w-100 h-82 bg-primary/20" />
+      <div className="absolute -bottom-20 left-0 w-150 h-150 bg-primary/10" />
 
-      <div className="w-full max-w-5xl flex flex-col md:flex-row overflow-hidden rounded-2xl shadow-2xl">
+      <div className="relative z-10 w-full max-w-5xl flex flex-col md:flex-row overflow-hidden rounded-2xl shadow-2xl">
         {/* Left side - Brand/Logo */}
         <div className="w-full md:w-1/2 bg-primary dark:text-background p-12 flex flex-col items-center justify-center">
           <div className="mb-8 text-center">

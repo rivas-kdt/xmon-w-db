@@ -32,16 +32,23 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
-      >
-        <ThemeProvider attribute="class">
-          <NextIntlClientProvider>
-            <SessionProvider>{children}</SessionProvider>
-            <Toaster position="top-right" />
-          </NextIntlClientProvider>
-        </ThemeProvider>
-      </body>
+      {/* <head>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+        rel="stylesheet"
+      /> */}
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
+          // className="antialiased bg-background font-sans"
+        >
+          <ThemeProvider attribute="class">
+            <NextIntlClientProvider>
+              <SessionProvider>{children}</SessionProvider>
+              <Toaster position="top-right" />
+            </NextIntlClientProvider>
+          </ThemeProvider>
+        </body>
+      {/* </head> */}
     </html>
   );
 }

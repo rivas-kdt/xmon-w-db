@@ -223,8 +223,8 @@ export default function Header() {
             { href: "/admin", label: t("admin") },
             { href: "/dashboard", label: t("dashboard") },
             { href: "/inventory", label: t("inventory") },
-            { href: "/stock", label: t("stock") || "Stock" },
-            { href: "/shipping", label: t("shipping") || "Shipping" },
+            // { href: "/stock", label: t("stock") || "Stock" },
+            // { href: "/shipping", label: t("shipping") || "Shipping" },
             { href: "/transactions", label: t("transaction") },
             { href: "/email-history", label: t("email-history") },
           ].map((link) => {

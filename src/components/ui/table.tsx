@@ -9,7 +9,6 @@ function Table({ className, ...props }: React.ComponentProps<"table">) {
     <div
       data-slot="table-container"
       className="relative w-full overflow-x-auto"
-      style={{ maxHeight: "30vh", overflowY: "auto" }}
     >
       <table
         data-slot="table"

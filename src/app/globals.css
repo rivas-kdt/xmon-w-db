@@ -3,6 +3,10 @@
 
 :root {
   --radius: 0.5rem;
+
+  /* --font-geist-sans: 'Geist', sans-serif;
+  --font-geist-mono: 'Geist Mono', monospace; */
+
   --background: hsl(210, 40%, 98%);
   --foreground: hsl(222, 47%, 11%);
   --card: hsl(0 0% 100%);
@@ -123,6 +127,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    /* font-family: var(--font-geist-sans); */
   }
   main {
     @apply bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 min-h-[calc(100vh-80px)];

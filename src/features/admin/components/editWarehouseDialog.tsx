@@ -12,9 +12,12 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { EditWarehouseDialogProps, Warehouse } from "@/types/warehouse";
+import { updateWarehouse } from "../services/updateWarehouse";
+import { deleteWarehouse } from "../services/deleteWarehouse";
+import { Loader2, Trash2 } from "lucide-react";
+import toast from "react-hot-toast";
 
 export function EditWarehouseDialog({
   warehouse,
@@ -27,7 +30,7 @@ export function EditWarehouseDialog({
     location: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const [isDeleting, setIsDeleting] = useState(false);
   const t = useTranslations("editWarehouse");
 
   useEffect(() => {
@@ -43,43 +46,40 @@ export function EditWarehouseDialog({
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = async () => {
+  const handleUpdate = async () => {
     if (!warehouse) return;
 
     setIsLoading(true);
     try {
-      const payload = {
-        warehouseID: warehouse.id,
-        warehouse:
-          formData.warehouse !== warehouse.warehouse
-            ? formData.warehouse
-            : undefined,
-        location:
-          formData.location !== warehouse.location
-            ? formData.location
-            : undefined,
-      };
-
-      const response = await fetch("/api/v2/warehouse", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+      await updateWarehouse(warehouse.id, {
+        name: formData.warehouse,
+        location: formData.location,
       });
-
-      const result = await response.json();
-      if (result.success) {
-        router.refresh();
-        onOpenChange(false);
-        onSuccess?.();
-      } else {
-        console.error("Error updating warehouse:", result.error);
-      }
-    } catch (error) {
-      console.error("Exception in handleSubmit:", error);
+      toast.success("Warehouse updated successfully");
+      onOpenChange(false);
+      onSuccess?.();
+    } catch (error: any) {
+      toast.error(error.message || "Failed to update warehouse");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!warehouse) return;
+
+    if (!confirm("Are you sure you want to delete this warehouse?")) return;
+
+    setIsDeleting(true);
+    try {
+      await deleteWarehouse(warehouse.id);
+      toast.success("Warehouse deleted successfully");
+      onOpenChange(false);
+      onSuccess?.();
+    } catch (error: any) {
+      toast.error(error.message || "Failed to delete warehouse");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -116,14 +116,40 @@ export function EditWarehouseDialog({
             />
           </div>
         </div>
-        <DialogFooter>
+        <DialogFooter className="flex gap-2 justify-between">
+          <Button
+            type="button"
+            variant="destructive"
+            onClick={handleDelete}
+            disabled={isDeleting || isLoading}
+            size="sm"
+          >
+            {isDeleting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Deleting...
+              </>
+            ) : (
+              <>
+                <Trash2 className="mr-2 h-4 w-4" />
+                Delete
+              </>
+            )}
+          </Button>
           <Button
             type="submit"
-            onClick={handleSubmit}
-            disabled={isLoading}
-            className="bg-amber-400 hover:bg-amber-400/75 text-black"
+            onClick={handleUpdate}
+            disabled={isLoading || isDeleting}
+            className="bg-blue-600 hover:bg-blue-700"
           >
-            {isLoading ? t("addingState") : t("button")}
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Updating...
+              </>
+            ) : (
+              "Update"
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>

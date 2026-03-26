@@ -32,8 +32,6 @@ const AdminPage = () => {
   const [editUserOpen, setEditUserOpen] = useState(false);
   const [editWarehouseOpen, setEditWarehouseOpen] = useState(false);
 
-  const isMobile = useIsMobile();
-  const router = useRouter();
   const t = useTranslations("Table");
 
   // useEffect(() => {
@@ -200,11 +198,11 @@ const AdminPage = () => {
         locations={warehouse}
         onSuccess={refetchuser}
       />
-      {/* <EditWarehouseDialog
+      <EditWarehouseDialog
         open={editWarehouseOpen}
         onOpenChange={setEditWarehouseOpen}
         warehouse={selectedWarehouse}
-      /> */}
+      />
     </main>
   );
 };

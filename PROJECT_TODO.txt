@@ -1,0 +1,688 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                         XMON APP - MISSING MODULES/HOOKS/SERVICES              ║
+║                          Comprehensive Feature & Implementation TODO          ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+================================================================================
+                          API ROUTES / BACKEND (CRITICAL)
+================================================================================
+
+Authentication & User Management
+  [ ] DELETE /api/auth/logout - Sign out user and clear session
+  [ ] POST /api/auth/forgot-password - Send password reset email
+  [ ] POST /api/auth/reset-password - Reset password with token
+  [ ] PUT /api/auth/change-password - Change password (authenticated)
+  [ ] GET /api/auth/verify-session - Verify current session validity
+  [ ] POST /api/auth/refresh-token - Refresh JWT token
+
+Admin User Management
+  [ ] GET /api/admin/users - List all users (paginated)
+  [ ] PUT /api/admin/users/[id] - Update user details
+  [ ] DELETE /api/admin/users/[id] - Delete user account
+  [ ] POST /api/admin/users/[id]/deactivate - Deactivate user
+  [ ] POST /api/admin/users/[id]/activate - Activate user
+  [ ] PUT /api/admin/users/[id]/role - Change user role/permissions
+  [ ] GET /api/admin/users/search - Search users by name/email
+
+Admin Warehouse Management
+  [ ] POST /api/admin/warehouses - Create warehouse (partially done via addWarehouse.ts)
+  [ ] PUT /api/admin/warehouses/[id] - Update warehouse
+  [ ] DELETE /api/admin/warehouses/[id] - Delete warehouse
+  [ ] GET /api/admin/warehouses - List all warehouses
+  [ ] GET /api/admin/warehouses/[id] - Get warehouse details
+  [ ] POST /api/admin/warehouses/[id]/workers - Assign worker to warehouse
+
+Admin Recipients/Email Management
+  [ ] POST /api/admin/recipients - Create recipient
+  [ ] PUT /api/admin/recipients/[id] - Update recipient
+  [ ] DELETE /api/admin/recipients/[id] - Delete recipient
+  [ ] GET /api/admin/recipients - List all recipients
+  [ ] GET /api/admin/recipients/[id] - Get recipient details
+
+Inventory Management
+  [ ] GET /api/inventory/list - Get all inventory items
+  [ ] GET /api/inventory/[id] - Get specific inventory item
+  [ ] PUT /api/inventory/[id] - Update inventory item
+  [ ] GET /api/inventory/search - Search inventory by SKU/part number
+  [ ] GET /api/inventory/low-stock - Get low stock items
+  [ ] POST /api/inventory/export - Export inventory to CSV/Excel
+
+Stock Management
+  [ ] POST /api/stock/add - Add stock (API endpoint, service exists)
+  [ ] GET /api/stock/history - Get stocking history
+  [ ] PUT /api/stock/[id] - Update stock entry
+  [ ] DELETE /api/stock/[id] - Delete stock entry
+  [ ] GET /api/stock/by-warehouse - Get stock by warehouse
+
+Ship/Shipping Management
+  [ ] POST /api/ship/shipment - Create shipment (service exists)
+  [ ] GET /api/ship/shipments - List all shipments
+  [ ] GET /api/ship/shipments/[id] - Get shipment details
+  [ ] PUT /api/ship/shipments/[id] - Update shipment status
+  [ ] GET /api/ship/history - Get shipping history
+  [ ] DELETE /api/ship/shipments/[id] - Cancel shipment
+
+Transactions
+  [ ] GET /api/transactions/list - List all transactions
+  [ ] GET /api/transactions/[id] - Get transaction details
+  [ ] GET /api/transactions/filter - Filter transactions by date/type/warehouse
+  [ ] GET /api/transactions/export - Export transactions to CSV/Excel
+  [ ] POST /api/transactions/analytics - Get transaction analytics
+
+Email & Notifications
+  [ ] POST /api/email/send-notification - Send email notification
+  [ ] GET /api/email/history - Get email history (partially done)
+  [ ] PUT /api/email/template/[id] - Update email template
+  [ ] POST /api/email/test - Test email sending
+
+Reports & Analytics
+  [ ] GET /api/reports/inventory-summary - Inventory health report
+  [ ] GET /api/reports/sales-summary - Sales/shipping summary
+  [ ] GET /api/reports/warehouse-performance - Warehouse efficiency metrics
+  [ ] GET /api/reports/transaction-analysis - Transaction analysis
+  [ ] GET /api/reports/custom - Generate custom report
+
+General Admin
+  [ ] GET /api/dashboard/metrics - Get dashboard metrics/KPIs
+  [ ] GET /api/settings - Get application settings
+  [ ] PUT /api/settings - Update application settings
+  [ ] GET /api/audit-log - Get audit/activity logs
+
+================================================================================
+                          SERVICES / BUSINESS LOGIC
+================================================================================
+
+Authentication Services
+  [ ] Complete logout service
+  [ ] Forgot password service (email sending)
+  [ ] Password reset validation service
+  [ ] Session validation service
+  [ ] Token refresh service
+  [ ] Change password service
+  [ ] User profile update service
+
+Admin Services
+  [ ] getAllUsers service
+  [ ] updateUser service
+  [ ] deleteUser service
+  [ ] deactivateUser service
+  [ ] searchUsers service
+  [ ] assignWarehouseWorker service
+  [ ] editWarehouse service (missing, UI exists)
+  [ ] deleteWarehouse service
+  [ ] deleteRecipient service
+  [ ] updateRecipient service
+  [ ] getAllRecipients service (exists but may need enhancement)
+
+Inventory Services
+  [ ] searchInventory service
+  [ ] getLowStockItems service
+  [ ] updateInventoryItem service
+  [ ] deleteInventoryItem service
+  [ ] exportInventory service
+  [ ] importInventory service
+
+Stock Services
+  [ ] getStockHistory service
+  [ ] updateStockEntry service
+  [ ] deleteStockEntry service
+  [ ] getStockByWarehouse service
+  [ ] getStockAnalytics service
+
+Ship Services
+  [ ] getShipments service
+  [ ] getShipmentDetails service
+  [ ] updateShipmentStatus service
+  [ ] cancelShipment service
+  [ ] getShippingHistory service
+
+Transaction Services
+  [ ] filterTransactions service
+  [ ] exportTransactions service
+  [ ] getTransactionAnalytics service
+  [ ] calculateTransactionMetrics service
+
+Email Services
+  [ ] sendNotificationEmail service
+  [ ] getEmailHistory service
+  [ ] updateEmailTemplate service
+  [ ] testEmailSending service
+
+Report Services
+  [ ] generateInventoryReport service
+  [ ] generateSalesReport service
+  [ ] generateWarehouseReport service
+  [ ] generateTransactionReport service
+  [ ] generateCustomReport service
+
+Settings/Config Services
+  [ ] getAppSettings service
+  [ ] updateAppSettings service
+  [ ] getAuditLog service
+  [ ] getDashboardMetrics service
+
+================================================================================
+                              CUSTOM HOOKS
+================================================================================
+
+Global/Common Hooks
+  [ ] useNotification - Toast-like notifications (partially exists with react-hot-toast)
+  [ ] useConfirmDialog - Confirmation dialog hook
+  [ ] useLoading - Loading state management
+  [ ] useError - Error state management
+  [ ] useFormValidation - Form validation hook
+  [ ] usePagination - Pagination state hook
+  [ ] useFilter - Filtering state hook
+  [ ] useSearch - Search functionality hook
+  [ ] useLocalStorage - Local storage hook
+  [ ] useAsync - Async data fetching hook
+  [ ] useDebouncedValue - Debounced value hook
+
+Admin Feature Hooks
+  [ ] useDeleteUser - Hook for deleting users
+  [ ] useWarehouseActions - Complete warehouse CRUD operations
+  [ ] useRecipientActions - Complete recipient CRUD operations
+  [ ] useUserSearch - Search/filter users hook
+  [ ] useRoleManagement - Change user roles hook
+  [ ] useBulkOperations - Bulk user operations hook
+
+Inventory Hooks
+  [ ] useInventorySearch - Search inventory items
+  [ ] useInventoryFilters - Filter inventory
+  [ ] useLowStockAlert - Low stock alert hook
+  [ ] useInventoryExport - Export inventory data
+
+Stock Hooks
+  [ ] useStockHistory - Fetch stock history
+  [ ] useStockByWarehouse - Get stock filtered by warehouse
+  [ ] useStockUpdate - Update stock entry
+  [ ] useStockDelete - Delete stock entry
+
+Ship Hooks
+  [ ] useShipmentDetails - Get shipment details
+  [ ] useShipmentStatus - Update shipment status
+  [ ] useShipmentCancel - Cancel shipment
+  [ ] useShippingHistory - Get shipping history
+  [ ] useShipmentTracking - Track shipment status
+
+Transaction Hooks
+  [ ] useTransactionFilter - Filter transactions
+  [ ] useTransactionExport - Export transactions
+  [ ] useTransactionAnalytics - Get transaction analytics
+  [ ] useTransactionSearch - Search transactions
+  [ ] useTransactionDateRange - Date range filtering
+
+Email Hooks
+  [ ] useSendNotification - Send email notification
+  [ ] useEmailHistory - Get email history
+  [ ] useEmailTemplate - Update email templates
+  [ ] useEmailTest - Test email sending
+
+Report Hooks
+  [ ] useGenerateReport - Generate various reports
+  [ ] useReportFilter - Filter report data
+  [ ] useReportExport - Export reports
+
+Settings Hooks
+  [ ] useAppSettings - Get/update app settings
+  [ ] useAuditLog - Fetch audit logs
+  [ ] useDashboardMetrics - Get dashboard metrics
+
+================================================================================
+                        UI COMPONENTS / FORMS / DIALOGS
+================================================================================
+
+Admin Components - Missing
+  [ ] DeleteUserDialog - Confirm and delete user
+  [ ] DeleteWarehouseDialog - Confirm and delete warehouse
+  [ ] DeleteRecipientDialog - Confirm and delete recipient
+  [ ] UserDetailsPanel - View complete user details
+  [ ] WarehouseDetailsPanel - View warehouse details with workers
+  [ ] RecipientDetailsPanel - View recipient details
+  [ ] BulkUserActionsDialog - Bulk operations on users
+  [ ] UserRoleSelector - Change user role/permissions
+  [ ] WarehouseWorkerAssignment - Assign workers to warehouse
+  [ ] ImportUsersDialog - Bulk import users from CSV
+
+Inventory Components - Missing
+  [ ] InventorySearchBar - Search inventory
+  [ ] InventoryFilterPanel - Filter inventory items
+  [ ] InventoryDetailsPanel - Detailed item view
+  [ ] LowStockAlert - Alert for low stock items
+  [ ] ExportInventoryDialog - Export to CSV/Excel
+  [ ] ImportInventoryDialog - Bulk import items
+  [ ] InventoryEditDialog - Edit inventory item
+
+Stock Components - Missing
+  [ ] StockHistoryPanel - View stock history with filters
+  [ ] StockEntryForm - Form to add/edit stock
+  [ ] DeleteStockDialog - Confirm delete stock entry
+  [ ] StockByWarehousePanel - Filter stock by warehouse
+  [ ] StockAnalyticsChart - Visualize stock metrics
+
+Ship Components - Missing
+  [ ] ShipmentDetailsPanel - Detailed shipment view
+  [ ] ShipmentStatusUpdater - Update shipment status
+  [ ] ShipmentCancelDialog - Cancel shipment with reason
+  [ ] ShippingHistoryPanel - View shipping history
+  [ ] ShipmentTracker - Track shipment in real-time
+  [ ] CreateShipmentDialog - Create new shipment
+
+Transaction Components - Missing
+  [ ] TransactionFilterPanel - Filter transactions
+  [ ] TransactionDetailsDialog - View transaction details
+  [ ] ExportTransactionDialog - Export transactions
+  [ ] TransactionAnalyticsChart - Visual analytics
+  [ ] TransactionSearchBar - Search transactions
+  [ ] TransactionDateRangePicker - Date range filter
+
+Email Components - Missing
+  [ ] EmailNotificationForm - Send notification email
+  [ ] EmailHistoryPanel - View email history
+  [ ] EmailTemplateEditor - Edit email templates
+  [ ] EmailTestDialog - Test email sending
+  [ ] StaticEmailTemplates - Pre-built template components
+
+Report Components - Missing
+  [ ] ReportGenerator - Generate reports
+  [ ] ReportViewer - View report results
+  [ ] ReportFilterPanel - Filter report data
+  [ ] ExportReportDialog - Export report
+
+General Components - Missing
+  [ ] ConfirmDialog - Reusable confirmation dialog
+  [ ] LoadingOverlay - Full-page loading state
+  [ ] ErrorBoundary - Error handling component
+  [ ] EmptyState - Empty data state component
+  [ ] PaginationControls - Pagination component
+  [ ] StatusBadge - Status display component
+  [ ] FilterChips - Display active filters
+  [ ] DateRangePicker - Date range selection
+  [ ] SearchBox - Reusable search component
+  [ ] BulkActionToolbar - Toolbar for bulk operations
+
+================================================================================
+                          AUTHENTICATION & SECURITY
+================================================================================
+
+Features to Implement
+  [ ] Logout functionality (UI + API route)
+  [ ] Forgot password flow (UI + API routes + email)
+  [ ] Password reset with token validation
+  [ ] Change password functionality
+  [ ] Session timeout handling
+  [ ] Refresh token implementation
+  [ ] 2FA support (optional but recommended)
+  [ ] Role-based access control (RBAC) - partially exists
+  [ ] Permission-based authorization
+  [ ] Audit logging for security events
+  [ ] Password strength validation
+  [ ] Account lockout after failed attempts
+  [ ] Secure password reset tokens
+
+Services/Hooks
+  [ ] useLogout hook
+  [ ] useForgotPassword hook
+  [ ] useResetPassword hook
+  [ ] useChangePassword hook
+  [ ] useSessionTimeout hook
+  [ ] usePermissions hook
+  [ ] useFeatureAccess hook
+
+================================================================================
+                        BUSINESS/DOMAIN FEATURES
+================================================================================
+
+Dashboard/Metrics
+  [ ] Complete dashboard metrics calculation service
+  [ ] Real-time inventory value tracking
+  [ ] Warehouse capacity visualization
+  [ ] Sales velocity metrics
+  [ ] ROI metrics calculation (email-history exists, may need integration)
+  [ ] Key performance indicators (KPIs)
+  [ ] Alert generation for anomalies
+
+User Management
+  [ ] User profile page completion
+  [ ] User preferences/settings
+  [ ] User activity tracking
+  [ ] User export functionality
+  [ ] Bulk user operations
+
+Warehouse Management
+  [ ] Warehouse capacity tracking
+  [ ] Warehouse analytics
+  [ ] Warehouse transfer functionality
+  [ ] Zone/section management within warehouse
+  [ ] Multi-location inventory sync
+
+Inventory Management
+  [ ] SKU/barcode management
+  [ ] Inventory valuation
+  [ ] Reorder point management
+  [ ] Supplier management
+  [ ] Inventory variance tracking
+  [ ] Expiration date tracking (if applicable)
+
+Stock Management
+  [ ] Stock level optimization
+  [ ] Automatic reorder alerts
+  [ ] Stock transfer between warehouses
+  [ ] Stock reconciliation
+  [ ] Cycle counting support
+
+Shipping/Fulfillment
+  [ ] Order to shipment workflow
+  [ ] Multiple carrier support
+  [ ] Shipment tracking
+  [ ] Return order management
+  [ ] Delivery confirmation
+  [ ] Shipping label generation
+
+Transaction Management
+  [ ] Transaction reconciliation
+  [ ] Transaction approval workflow (if needed)
+  [ ] Transaction reversal functionality
+  [ ] Multi-currency support (if needed)
+  [ ] Tax calculation integration
+
+Notifications & Alerts
+  [ ] Inventory alerts (low stock, overstock)
+  [ ] Shipment status alerts
+  [ ] User action required alerts
+  [ ] Warehouse capacity alerts
+  [ ] System health alerts
+  [ ] Scheduled summary emails
+
+Reports & Analytics
+  [ ] Inventory turnover reports
+  [ ] Sales by product/warehouse
+  [ ] Warehouse utilization reports
+  [ ] Transaction summaries
+  [ ] Financial reports (if applicable)
+  [ ] Custom report builder
+  [ ] Scheduled report generation
+  [ ] Report scheduling & distribution
+
+Data Management
+  [ ] Bulk data import (CSV/Excel)
+  [ ] Bulk data export (CSV/Excel)
+  [ ] Data backup functionality
+  [ ] Data archival
+  [ ] Duplicate detection
+
+================================================================================
+                          VALIDATION & ERROR HANDLING
+================================================================================
+
+Form Validation
+  [ ] Client-side form validation schema
+  [ ] Server-side input validation
+  [ ] Real-time field validation feedback
+  [ ] Cross-field validation (dependent fields)
+  [ ] Custom validation rules
+  [ ] Validation error messages (i18n support)
+
+Error Handling
+  [ ] Global error boundary
+  [ ] API error handling middleware
+  [ ] graceful error fallbacks
+  [ ] Error logging service
+  [ ] User-friendly error messages
+  [ ] Retry mechanisms for failed requests
+  [ ] Toast notifications for errors
+
+Data Validation
+  [ ] Inventory quantity validation
+  [ ] Warehouse capacity validation
+  [ ] User input sanitization
+  [ ] Email format validation
+  [ ] Date range validation
+  [ ] Number range validation
+
+================================================================================
+                      INTERNATIONALIZATION (i18n)
+================================================================================
+
+Current Status: Partially implemented (next-intl exists)
+
+Missing Implementations
+  [ ] Complete translation files for all UI text
+  [ ] Admin panel translations
+  [ ] Email template translations
+  [ ] Error message translations
+  [ ] Form validation message translations
+  [ ] Dialog/modal translations
+  [ ] Table column header translations
+  [ ] Tooltip translations
+  [ ] Placeholder text translations
+  [ ] Select option translations
+  [ ] Accessibility (aria-labels) translations
+  [ ] Right-to-left (RTL) language support (if needed)
+
+Files Needed
+  [ ] src/i18n/locales/en.json - English
+  [ ] src/i18n/locales/es.json - Spanish
+  [ ] src/i18n/locales/fr.json - French
+  [ ] Additional languages as needed
+
+================================================================================
+                        UI/UX ENHANCEMENTS
+================================================================================
+
+Loading States
+  [ ] Loading skeletons for all data tables
+  [ ] Loading indicators for forms
+  [ ] Progress bars for multi-step forms
+  [ ] Skeleton components (skeleton.tsx exists, needs usage)
+
+Responsive Design
+  [ ] Mobile optimization for admin panel
+  [ ] Tablet optimization for forms
+  [ ] Touch-friendly buttons/inputs
+  [ ] Responsive data tables (partially exists)
+  [ ] Mobile navigation menu
+
+Accessibility (A11y)
+  [ ] ARIA labels for all interactive elements
+  [ ] Keyboard navigation support
+  [ ] Screen reader compatibility
+  [ ] Focus management
+  [ ] Color contrast compliance
+
+User Feedback
+  [ ] Toast notifications (react-hot-toast exists, needs setup)
+  [ ] Loading spinners
+  [ ] Success feedback
+  [ ] Empty state messaging
+  [ ] Not found page (404)
+  [ ] Error page (500)
+  [ ] Maintenance mode page
+
+Dark Mode
+  [ ] Complete dark mode support (theme-toggle exists)
+  [ ] Dark mode persistence
+  [ ] All components dark mode styling
+
+================================================================================
+                        TESTING & QUALITY ASSURANCE
+================================================================================
+
+Unit Tests
+  [ ] Service function tests
+  [ ] Hook functionality tests
+  [ ] Utility function tests
+  [ ] Validation logic tests
+
+Integration Tests
+  [ ] API endpoint tests
+  [ ] Form submission tests
+  [ ] User workflow tests
+  [ ] Data persistence tests
+
+E2E Tests
+  [ ] Authentication flow test
+  [ ] Admin user management flow
+  [ ] Inventory operations flow
+  [ ] Shipping workflow test
+
+Manual Testing Checklist
+  [ ] Cross-browser compatibility
+  [ ] Cross-device testing
+  [ ] Performance testing
+  [ ] Load testing
+  [ ] Security testing
+
+================================================================================
+                          DATABASE/BACKEND
+================================================================================
+
+Database Schema Enhancements
+  [ ] User roles and permissions table
+  [ ] Audit log table
+  [ ] Email template table
+  [ ] Application settings table
+  [ ] Recipient preferences table
+  [ ] Warehouse zones table
+  [ ] Supplier/vendor table (if needed)
+  [ ] Product/SKU management table
+  [ ] Price history table (if needed)
+
+Database Indexes
+  [ ] Index commonly searched fields
+  [ ] Index foreign keys
+  [ ] Index timestamp columns
+  [ ] Performance optimization indexes
+
+Database Migrations
+  [ ] Create migration system (if not exists)
+  [ ] Version control for schema changes
+  [ ] Rollback capability
+
+Stored Procedures (if applicable)
+  [ ] Inventory calculation procedures
+  [ ] Transaction summarization
+  [ ] Report generation procedures
+
+================================================================================
+                          INFRASTRUCTURE & DEVOPS
+================================================================================
+
+Configuration
+  [ ] Environment variable management
+  [ ] Feature flags system
+  [ ] Configuration management
+  [ ] Secrets management
+
+Monitoring & Logging
+  [ ] Application error logging
+  [ ] API request logging
+  [ ] Performance monitoring
+  [ ] User activity audit logging
+  [ ] Database query logging
+
+Deployment
+  [ ] CI/CD pipeline setup
+  [ ] Automated testing in pipeline
+  [ ] Docker containerization (optional)
+  [ ] Staging environment setup
+  [ ] Production deployment checklist
+  [ ] Database migration on deploy
+
+Performance
+  [ ] Page load time optimization
+  [ ] Image optimization
+  [ ] Code splitting
+  [ ] Lazy loading implementation
+  [ ] Caching strategy
+
+Security
+  [ ] CSRF protection (Next.js has built-in)
+  [ ] SQL injection prevention
+  [ ] XSS protection
+  [ ] Rate limiting for APIs
+  [ ] HTTPS enforcement
+  [ ] Content Security Policy
+  [ ] Secure headers configuration
+  [ ] Input sanitization
+
+================================================================================
+                          DOCUMENTATION
+================================================================================
+
+Code Documentation
+  [ ] API documentation (Swagger/OpenAPI)
+  [ ] Service function documentation
+  [ ] Hook documentation
+  [ ] Component documentation with props
+  [ ] Database schema documentation
+
+User Documentation
+  [ ] User guide
+  [ ] Admin guide
+  [ ] FAQ section
+  [ ] Video tutorials (optional)
+
+Developer Documentation
+  [ ] Setup instructions
+  [ ] Architecture overview
+  [ ] Coding standards/guidelines
+  [ ] Git workflow documentation
+  [ ] Development environment setup
+  [ ] Build and deployment guide
+
+================================================================================
+                        OPTIONAL/FUTURE ENHANCEMENTS
+================================================================================
+
+Advanced Features
+  [ ] Real-time notifications via WebSocket
+  [ ] Real-time inventory updates
+  [ ] Collaborative features (multiple users)
+  [ ] Advanced analytics dashboard
+  [ ] Machine learning for demand forecasting
+  [ ] Mobile app (React Native/Flutter)
+  [ ] API for third-party integrations
+  [ ] Webhook support
+  [ ] Integration with accounting software
+  [ ] Integration with shipping carriers
+  [ ] Email campaign management
+  [ ] Chatbot support
+
+Performance Optimizations
+  [ ] GraphQL API (as alternative to REST)
+  [ ] Caching layer (Redis)
+  [ ] Database query optimization
+  [ ] API response optimization
+
+================================================================================
+                              SUMMARY STATISTICS
+================================================================================
+
+Implemented Features:
+  ✓ Basic authentication (login)
+  ✓ User dashboard
+  ✓ Admin user management UI
+  ✓ Admin warehouse management UI
+  ✓ Admin recipient management UI
+  ✓ Inventory viewing
+  ✓ Stock management UI
+  ✓ Shipping UI
+  ✓ Transaction viewing
+  ✓ Email history viewing
+  ✓ Internationalization setup
+  ✓ Theme toggle (dark mode ready)
+  ✓ QR scanner component
+  ✓ Session/Auth hooks
+
+Missing Implementation (Est. Priority):
+  CRITICAL: ~25 API routes for basic CRUD operations
+  HIGH:     ~20 missing services for business logic
+  HIGH:     ~35 missing hooks for feature functionality
+  MEDIUM:   ~30 missing UI components/dialogs
+  MEDIUM:   ~15 validation and error handling features
+  LOW:      Documentation, tests, advanced features
+
+Total Estimated Work Items: 150+
+
+================================================================================

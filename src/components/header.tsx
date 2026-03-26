@@ -1,13 +1,7 @@
 "use client";
 
-import { ChevronDown, Home, LogOut, Menu, Package } from "lucide-react";
+import { Home, LogOut, Menu, Package } from "lucide-react";
 import { Button } from "./ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
 import { ThemeToggle } from "./theme-toggle";
 import { useTheme } from "next-themes";
 import { useAuth } from "@/features/auth/hooks/useAuth";
@@ -16,20 +10,17 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
-import LocaleSwitcher from "./localeSwitcher";
 import { useTranslations } from "next-intl";
-// import { deleteSession } from "@/actions/cookieHandler";
 import { Loader2 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
-import { LanguageIcon } from "@heroicons/react/24/solid";
 import { Switch } from "./ui/switch";
-import LocaleSwitcherSelect from "./localeSwitcherSelector";
+import LocaleSwitcher from "./localeSwitcher";
 import LocaleSwitcherDropdown from "./localeSwitcherDropdown";
 
 export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
-  const { user, loading } = useAuth(false);
+  const { loading } = useAuth(false);
   const { resolvedTheme, setTheme } = useTheme();
   const isMobile = useIsMobile();
   const t = useTranslations("Header");
@@ -232,6 +223,8 @@ export default function Header() {
             { href: "/admin", label: t("admin") },
             { href: "/dashboard", label: t("dashboard") },
             { href: "/inventory", label: t("inventory") },
+            { href: "/stock", label: t("stock") || "Stock" },
+            { href: "/shipping", label: t("shipping") || "Shipping" },
             { href: "/transactions", label: t("transaction") },
             { href: "/email-history", label: t("email-history") },
           ].map((link) => {

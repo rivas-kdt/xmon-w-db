@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,6 +22,9 @@ import {
 import { useTranslations } from "next-intl";
 import { EditUserDialogProps } from "@/types/users";
 import { useEditUserHooks } from "../hooks/editUserHooks";
+import { deleteUser } from "../services/deleteUser";
+import { Loader2, Trash2 } from "lucide-react";
+import toast from "react-hot-toast";
 
 export function EditUserDialog({
   user,
@@ -32,21 +35,38 @@ export function EditUserDialog({
 }: EditUserDialogProps) {
   const { formData, handleChange, handleEditUser, isLoading } =
     useEditUserHooks(user);
-
+  const [isDeleting, setIsDeleting] = useState(false);
   const t = useTranslations("editUser");
 
   const handleSubmit = async () => {
     const res = await handleEditUser();
     if (res?.success) {
+      toast.success("User updated successfully");
       onOpenChange(false);
       onSuccess?.();
     } else {
-      console.error("Error updating user:", res?.error);
+      toast.error(res?.error || "Failed to update user");
     }
   };
-  console.log("EditUserDialog warehouse:", locations);
-  console.log("EditUserDialog user:", user);
-  console.log("EditUserDialog formData:", formData);
+
+  const handleDelete = async () => {
+    if (!user) return;
+
+    if (!confirm("Are you sure you want to delete this user?")) return;
+
+    setIsDeleting(true);
+    try {
+      await deleteUser(user.id);
+      toast.success("User deleted successfully");
+      onOpenChange(false);
+      onSuccess?.();
+    } catch (error: any) {
+      toast.error(error.message || "Failed to delete user");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   if (!user) return null;
 
   return (
@@ -98,12 +118,12 @@ export function EditUserDialog({
             </Select>
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="role" className="text-right">
+            <Label htmlFor="location" className="text-right">
               Location
             </Label>
 
             <Select
-              value={formData.location ?? ""} // ✅ location is warehouse_id
+              value={formData.location ?? ""}
               onValueChange={(value) => handleChange("location", value)}
             >
               <SelectTrigger className="col-span-3" id="location">
@@ -120,14 +140,40 @@ export function EditUserDialog({
             </Select>
           </div>
         </div>
-        <DialogFooter>
+        <DialogFooter className="flex gap-2 justify-between">
+          <Button
+            type="button"
+            variant="destructive"
+            onClick={handleDelete}
+            disabled={isDeleting || isLoading}
+            size="sm"
+          >
+            {isDeleting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Deleting...
+              </>
+            ) : (
+              <>
+                <Trash2 className="mr-2 h-4 w-4" />
+                Delete
+              </>
+            )}
+          </Button>
           <Button
             type="submit"
             onClick={handleSubmit}
-            disabled={isLoading}
-            className="bg-amber-400 hover:bg-amber-400/75 text-black"
+            disabled={isLoading || isDeleting}
+            className="bg-blue-600 hover:bg-blue-700"
           >
-            {isLoading ? t("addingState") : t("button")}
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Updating...
+              </>
+            ) : (
+              "Update"
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -155,7 +155,7 @@ export default function Header() {
                         <div className="flex items-center gap-2">
                           <ThemeToggle />
                           <span className="text-sm capitalize">
-                            Theme: <strong>{resolvedTheme}</strong>
+                            {t("theme")}: <strong>{resolvedTheme}</strong>
                           </span>
                         </div>
                         <Switch

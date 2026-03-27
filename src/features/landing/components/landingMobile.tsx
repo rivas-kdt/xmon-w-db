@@ -238,7 +238,7 @@ const DashboardMobile = () => {
                   disabled={loadingWarehouses}
                 >
                   <SelectTrigger className="flex w-full h-[50px]">
-                    <SelectValue placeholder={t("select-1")} />
+                    <SelectValue placeholder={t("selectWarehouse")} />
                   </SelectTrigger>
                   <SelectContent>
                     {loadingWarehouses ? (

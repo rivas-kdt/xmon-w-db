@@ -75,7 +75,8 @@
     "transaction": "入出庫履歴",
     "email-history": "メール履歴",
     "logout": "ログアウト",
-    "home": "ホーム"
+    "home": "ホーム",
+    "theme": "テーマ"
   },
   "Table": {
     "partsInventory": "在庫部品",
@@ -99,7 +100,9 @@
     "recipients": "電子メールの受信者",
     "warehouses": "倉庫",
     "edit": "編集",
-    "image": "画像"
+    "image": "画像",
+    "inventory": "在庫",
+    "inventoryItems": "在庫品目"
   },
   "editInventory": {
     "title": "在庫編集",

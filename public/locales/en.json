@@ -73,7 +73,8 @@
     "transaction": "Transaction",
     "email-history": "Email History",
     "logout": "Logout",
-    "home": "Home"
+    "home": "Home",
+    "theme": "Theme"
   },
   "Table": {
     "partsInventory": "Parts Inventory",
@@ -97,7 +98,9 @@
     "recipients": "Email Recipients",
     "warehouses": "Warehouses",
     "edit": "Edit",
-    "image": "Image"
+    "image": "Image",
+    "inventory": "Inventory",
+    "inventoryItems": "Inventory Items"
   },
   "editInventory": {
     "title": "Edit Inventory Item",

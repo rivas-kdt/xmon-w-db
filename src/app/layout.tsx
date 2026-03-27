@@ -37,6 +37,7 @@ export default async function RootLayout({
         href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
         rel="stylesheet"
       /> */}
+      {/* </head> */}
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
           // className="antialiased bg-background font-sans"
@@ -48,7 +49,6 @@ export default async function RootLayout({
             </NextIntlClientProvider>
           </ThemeProvider>
         </body>
-      {/* </head> */}
     </html>
   );
 }

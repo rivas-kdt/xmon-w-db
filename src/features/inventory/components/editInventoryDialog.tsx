@@ -174,7 +174,7 @@ export function EditInventoryDialog({
             <Button
               onClick={() => handleUpdate(formData, t)}
               disabled={isLoading}
-              className="bg-blue-600 hover:bg-blue-700 gap-2"
+              className="bg-[#EAB308] text-[#f1f1f1] hover:bg-[#CA8A04]"
             >
               {isLoading ? (
                 <>

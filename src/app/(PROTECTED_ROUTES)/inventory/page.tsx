@@ -82,16 +82,16 @@ const InventoryPage = () => {
         const item = row.original;
         return (
           <Button
-            variant="outline"
-            size="sm"
+            // variant="outline"
+            // size="sm"
             onClick={() => {
               setSelectedItem(item);
               setEditOpen(true);
             }}
             className="gap-2"
           >
-            <Edit2 className="h-4 w-4" />
-            {t("edit")}
+            <Edit2 className="h-5" />
+            {/* {t("edit")} */}
           </Button>
         );
       },

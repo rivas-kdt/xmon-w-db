@@ -52,25 +52,13 @@ interface MonthlyData {
 }
 
 const DashboardDesktop = () => {
-  const { stockedThisMonth, stockedPercentageChange, stockedLoading } =
-    useStockHooks();
-  const { shippedThisMonth, shippedPercentageChange, shippedLoading } =
-    useShipHooks();
-  const {
-    transactionLoading,
-    monthly,
-    recentShipped,
-    recentStocked,
-    refetchRecentShipped,
-    refetchRecentStocked,
-    recentShippedError,
-  } = useTransactions();
+  const { stockedThisMonth, stockedPercentageChange } = useStockHooks();
+  const { shippedThisMonth, shippedPercentageChange } = useShipHooks();
+  const { transactionLoading, monthly, recentShipped, recentStocked } =
+    useTransactions();
   console.log(transactionLoading, monthly, recentShipped);
-  const { warehouseInventory, warehouseLoading } = useWarehouseHooks();
+  const { warehouseInventory } = useWarehouseHooks();
   const t = useTranslations("DashboardPage");
-  const isMobile = useIsMobile();
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
 
   const chartConfig = {
     stocked: {

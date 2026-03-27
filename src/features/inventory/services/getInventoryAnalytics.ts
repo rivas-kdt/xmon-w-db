@@ -9,7 +9,9 @@ export async function getInventoryAnalytics() {
     const client = await pool.connect();
 
     // Total items
-    const totalItems = await client.query("SELECT COUNT(*) as count FROM inventory");
+    const totalItems = await client.query(
+      "SELECT COUNT(*) as count FROM inventory"
+    );
 
     // Low stock items (threshold: 10)
     const lowStockItems = await client.query(
@@ -47,6 +49,8 @@ export async function getInventoryAnalytics() {
     };
   } catch (error: any) {
     console.error("Error fetching inventory analytics:", error);
-    throw new Error(error.message || t("fallbackError") || "Failed to fetch analytics");
+    throw new Error(
+      error.message || t("fallbackError") || "Failed to fetch analytics"
+    );
   }
 }

@@ -59,8 +59,7 @@ export function useAuth(requireAuth: boolean = true) {
         throw new Error("Login failed, no token received");
       }
       await create(response.token);
-      console.log("Login successful, token:", response.token);
-      router.push("/");
+      router.push("/dashboard");
     } catch (error: any) {
       setError(error.message || "Login failed");
     } finally {

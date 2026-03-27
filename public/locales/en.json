@@ -76,6 +76,7 @@
     "home": "Home"
   },
   "Table": {
+    "partsInventory": "Parts Inventory",
     "lotNo": "Lot No.",
     "prodCode": "Product Code",
     "stockNo": "Stock No.",
@@ -97,6 +98,34 @@
     "warehouses": "Warehouses",
     "edit": "Edit",
     "image": "Image"
+  },
+  "editInventory": {
+    "title": "Edit Inventory Item",
+    "lotNo": "Lot No.",
+    "prodCode": "Product Code",
+    "stockNo": "Stock No.",
+    "description": "Description",
+    "quantity": "Quantity",
+    "warehouse": "Warehouse",
+    "date": "Date",
+    "email": "Email",
+    "status": "Status",
+    "admin": "Admin",
+    "worker": "Worker",
+    "role": "Role",
+    "username": "Username",
+    "actions": "Actions",
+    "location": "Location",
+    "workersNo": "No. of Workers",
+    "users": "Users",
+    "recipients": "Email Recipients",
+    "warehouses": "Warehouses",
+    "edit": "Edit",
+    "image": "Image",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "update": "Update",
+    "updating": "Updating..."
   },
   "Tabs": {
     "warehouseMgt": "Warehouse Management",
@@ -214,6 +243,7 @@
     "searchby": "Search by Lot No..."
   },
   "email-history": {
+    "search": "Search...",
     "title": "Email History",
     "noHistory": "No history found",
     "noTransaction": "No transactions found",

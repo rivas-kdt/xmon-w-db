@@ -10,25 +10,27 @@ import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { EditInventoryDialog } from "@/features/inventory/components/editInventoryDialog";
 
-export type Inventory = {
-  lot_no: string;
-  product_code: string;
-  stock_no: string;
-  description: string;
-  warehouse: string;
-  created_at: string;
-  quantity: number;
-} | null;
+// export type Inventory = {
+//   lot_no: string;
+//   product_code: string;
+//   stock_no: string;
+//   description: string;
+//   warehouse: string;
+//   created_at: string;
+//   quantity: number;
+// } | null;
 
 const InventoryPage = () => {
   const t = useTranslations("Table");
 
   const { inventory, inventoryLoading, refetchinventory } = useInventoryHooks();
-  const [selectedItem, setSelectedItem] = useState<Inventory>(null);
+  const [selectedItem, setSelectedItem] = useState(null);
   const [editOpen, setEditOpen] = useState(false);
 
   const handleEdit = (item: Inventory) => {
-    setSelectedItem(item);
+    if (!item) return;
+
+    setSelectedItem({ ...item });
     setEditOpen(true);
   };
 
@@ -99,13 +101,13 @@ const InventoryPage = () => {
   return (
     <main className="p-4 gap-2 bg-gradient-to-b from-primary/10 to-background">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-4">{t("inventory") || "Inventory"}</h1>
+        <h1 className="text-2xl font-bold mb-4">{t("partsInventory")}</h1>
       </div>
 
       <div className="h-full w-full flex items-center">
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>{t("inventoryItems") || "Inventory Items"}</CardTitle>
+            {/* <CardTitle>{t("inventoryItems") || "Inventory Items"}</CardTitle> */}
           </CardHeader>
           <CardContent>
             <InventoryTable

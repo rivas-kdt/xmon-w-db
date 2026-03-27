@@ -78,6 +78,7 @@
     "home": "ホーム"
   },
   "Table": {
+    "partsInventory": "在庫部品",
     "lotNo": "ロット番号",
     "prodCode": "製品コード",
     "stockNo": "在庫番号",
@@ -99,6 +100,34 @@
     "warehouses": "倉庫",
     "edit": "編集",
     "image": "画像"
+  },
+  "editInventory": {
+    "title": "在庫編集",
+    "lotNo": "ロット番号",
+    "prodCode": "製品コード",
+    "stockNo": "在庫番号",
+    "description": "説明",
+    "quantity": "数量",
+    "warehouse": "倉庫",
+    "date": "日付",
+    "email": "メール",
+    "status": "ステータス",
+    "admin": "管理者",
+    "worker": "作業者",
+    "role": "役割",
+    "username": "ユーザー名",
+    "actions": "操作",
+    "location": "場所",
+    "workersNo": "作業者数",
+    "users": "ユーザー",
+    "recipients": "メール受信者",
+    "warehouses": "倉庫",
+    "edit": "編集",
+    "image": "画像",
+    "delete": "削除",
+    "cancel": "キャンセル",
+    "update": "更新",
+    "updating": "更新中..."
   },
   "Tabs": {
     "warehouseMgt": "倉庫管理",
@@ -216,10 +245,11 @@
     "searchby": "ロット番号で検索..."
   },
   "email-history": {
+    "search": "検索...",
     "title": "メール履歴",
     "noHistory": "履歴が見つかりません",
     "noTransaction": "取引が見つかりません",
-    "lotNo`": "ロット番号",
+    "lotNo": "ロット番号",
     "prodCode": "製品コード",
     "stockNo": "在庫番号",
     "desc": "説明",

@@ -112,11 +112,6 @@ export function InventoryTable<TData, TValue>({
   return (
     <div className=" h-full w-full">
       <Card className=" flex flex-col h-full p-2">
-        <CardHeader className="mb-0 w-full">
-          <div className="flex justify-between items-center">
-            <CardTitle className="text-primary pt-8">{t("partsInv")}</CardTitle>
-          </div>
-        </CardHeader>
         <CardContent className=" flex-1">
           <div className="flex flex-col sm:flex-row gap-4 mb-2">
             <div className="flex-1 flex gap-4">

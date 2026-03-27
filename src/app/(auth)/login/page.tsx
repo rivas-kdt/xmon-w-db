@@ -5,7 +5,7 @@ import LoginMobile from "./components/loginMobile";
 import LoginDesktop from "./components/loginDesktop";
 
 export default function LoginPage() {
-  const [loading, setLoading] = useState(true);
+  const [pageLoading, setLoading] = useState(true);
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function LoginPage() {
     }
   }, [isMobile]);
 
-  if (loading) {
+  if (pageLoading) {
     return (
       <div className="w-screen h-screen flex items-center justify-center">
         <div
@@ -29,4 +29,4 @@ export default function LoginPage() {
     );
   }
   return <>{isMobile ? <LoginMobile /> : <LoginDesktop />}</>;
-};
+}

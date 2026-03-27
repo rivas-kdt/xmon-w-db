@@ -14,7 +14,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import toast from "react-hot-toast";
+import { useEditInventory } from "../hooks/useEditInventory";
+import { useWarehouses } from "../hooks/useWarehouses";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface Inventory {
   lot_no: string;
@@ -26,23 +34,26 @@ interface Inventory {
   quantity: number;
 }
 
-interface EditInventoryDialogProps {
-  item: Inventory;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onSuccess?: () => void;
-}
-
 export function EditInventoryDialog({
   item,
   open,
   onOpenChange,
   onSuccess,
-}: EditInventoryDialogProps) {
+}: {
+  item: Inventory;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSuccess?: () => void;
+}) {
+  console.log("Editing item:", item);
   const [formData, setFormData] = useState<Inventory>(item);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
   const t = useTranslations("editInventory");
+
+  const { isLoading, handleUpdate } = useEditInventory(onSuccess, () =>
+    onOpenChange(false)
+  );
+
+  const { warehouses } = useWarehouses();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -50,54 +61,6 @@ export function EditInventoryDialog({
       ...prev,
       [name]: name === "quantity" ? parseInt(value) || 0 : value,
     }));
-  };
-
-  const handleSubmit = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch("/api/v2/inventory/update", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) throw new Error("Failed to update inventory");
-
-      toast.success(t("updated") || "Inventory updated successfully");
-      onOpenChange(false);
-      onSuccess?.();
-    } catch (error) {
-      console.error("Error updating inventory:", error);
-      toast.error((error as any).message || t("error") || "Failed to update");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleDelete = async () => {
-    if (!confirm(t("confirmDelete") || "Are you sure you want to delete this item?")) {
-      return;
-    }
-
-    setIsDeleting(true);
-    try {
-      const response = await fetch("/api/v2/inventory/delete", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ lot_no: item.lot_no }),
-      });
-
-      if (!response.ok) throw new Error("Failed to delete inventory");
-
-      toast.success(t("deleted") || "Inventory deleted successfully");
-      onOpenChange(false);
-      onSuccess?.();
-    } catch (error) {
-      console.error("Error deleting inventory:", error);
-      toast.error((error as any).message || t("error") || "Failed to delete");
-    } finally {
-      setIsDeleting(false);
-    }
   };
 
   return (
@@ -111,6 +74,7 @@ export function EditInventoryDialog({
         </DialogHeader>
 
         <div className="grid gap-4 py-4">
+          {/** SAME INPUTS — unchanged */}
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="lot_no" className="text-right">
               {t("lotNo")}
@@ -178,24 +142,40 @@ export function EditInventoryDialog({
           </div>
 
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="warehouse" className="text-right">
+            <Label htmlFor="warehouse_id" className="text-right">
               {t("warehouse")}
             </Label>
-            <Input
-              id="warehouse"
-              name="warehouse"
-              value={formData.warehouse}
-              onChange={handleChange}
-              className="col-span-3"
-            />
+
+            <div className="col-span-3">
+              <Select
+                value={formData.warehouse_id?.toString() || ""}
+                onValueChange={(value) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    warehouse_id: parseInt(value),
+                  }))
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select warehouse" />
+                </SelectTrigger>
+
+                <SelectContent>
+                  {warehouses.map((w) => (
+                    <SelectItem key={w.id} value={w.id.toString()}>
+                      {w.warehouse} ({w.location})
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
 
         <DialogFooter className="flex justify-between">
-          <Button
-            type="button"
+          {/* <Button
             variant="destructive"
-            onClick={handleDelete}
+            onClick={() => handleDelete(item.lot_no, t)}
             disabled={isLoading || isDeleting}
             className="gap-2"
           >
@@ -210,21 +190,20 @@ export function EditInventoryDialog({
                 {t("delete")}
               </>
             )}
-          </Button>
+          </Button> */}
 
           <div className="flex gap-2">
             <Button
-              type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              disabled={isLoading || isDeleting}
+              disabled={isLoading}
             >
               {t("cancel") || "Cancel"}
             </Button>
+
             <Button
-              type="button"
-              onClick={handleSubmit}
-              disabled={isLoading || isDeleting}
+              onClick={() => handleUpdate(formData, t)}
+              disabled={isLoading}
               className="bg-blue-600 hover:bg-blue-700 gap-2"
             >
               {isLoading ? (

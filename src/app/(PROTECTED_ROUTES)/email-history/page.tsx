@@ -35,7 +35,7 @@ function highlightText(text: unknown, query: string) {
     regex.test(part) ? (
       <mark
         key={`${part}-${index}`}
-        className="bg-yellow-200 text-black px-0.5 rounded"
+        className="bg-amber-300 text-[#010101] font-semibold px-0.5 py-1 rounded"
       >
         {part}
       </mark>

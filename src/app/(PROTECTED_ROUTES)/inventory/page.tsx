@@ -100,14 +100,16 @@ const InventoryPage = () => {
 
   return (
     <main className="p-4 gap-2 bg-gradient-to-b from-primary/10 to-background">
-      <div className="mb-6">
+      {/* <div className="mb-6">
         <h1 className="text-2xl font-bold mb-4">{t("partsInventory")}</h1>
-      </div>
+      </div> */}
 
       <div className="h-full w-full flex items-center">
-        <Card className="w-full">
-          <CardHeader>
-            {/* <CardTitle>{t("inventoryItems") || "Inventory Items"}</CardTitle> */}
+        <Card className=" flex flex-col w-full h-full p-2">
+          <CardHeader className="mb-0 w-full">
+            <div className="flex justify-between items-center">
+              <CardTitle className="text-primary pt-8">{t("partsInventory")}</CardTitle>
+            </div>
           </CardHeader>
           <CardContent>
             <InventoryTable

@@ -270,7 +270,9 @@
     "failedSend": "メールの送信に失敗しました: {{error}}",
     "unknownError": "不明なエラー",
     "emailSent": "メールが正常に送信されました",
-    "unexpectedError": "メール送信中に予期しないエラーが発生しました"
+    "unexpectedError": "メール送信中に予期しないエラーが発生しました",
+    "moreItems": "その他の項目",
+    "back": "戻る"
   },
   "confirm-email": {
     "mon": "Mon",

@@ -268,7 +268,9 @@
     "failedSend": "Failed to send email: {{error}}",
     "unknownError": "Unknown error",
     "emailSent": "Email sent successfully",
-    "unexpectedError": "An unexpected error occurred while sending the email"
+    "unexpectedError": "An unexpected error occurred while sending the email",
+    "moreItems": "more items",
+    "back": "Back"
   },
   "confirm-email": {
     "mon": "Mon",

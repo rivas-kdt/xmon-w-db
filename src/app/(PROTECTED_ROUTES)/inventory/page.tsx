@@ -10,29 +10,23 @@ import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { EditInventoryDialog } from "@/features/inventory/components/editInventoryDialog";
 
-// export type Inventory = {
-//   lot_no: string;
-//   product_code: string;
-//   stock_no: string;
-//   description: string;
-//   warehouse: string;
-//   created_at: string;
-//   quantity: number;
-// } | null;
+export type Inventory = {
+  lot_no: string;
+  product_code: string;
+  stock_no: string;
+  description: string;
+  warehouse: string;
+  created_at: string;
+  quantity: number;
+  warehouse_id: string;
+};
 
 const InventoryPage = () => {
   const t = useTranslations("Table");
 
   const { inventory, inventoryLoading, refetchinventory } = useInventoryHooks();
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState<Inventory | null>(null);
   const [editOpen, setEditOpen] = useState(false);
-
-  const handleEdit = (item: Inventory) => {
-    if (!item) return;
-
-    setSelectedItem({ ...item });
-    setEditOpen(true);
-  };
 
   const InventoryColumns: ColumnDef<Inventory>[] = [
     {
@@ -83,18 +77,24 @@ const InventoryPage = () => {
     },
     {
       id: "actions",
-      header: t("actions") || "Actions",
-      cell: ({ row }) => (
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => handleEdit(row.original)}
-          className="gap-2"
-        >
-          <Edit2 className="h-4 w-4" />
-          {t("edit")}
-        </Button>
-      ),
+      header: t("actions"),
+      cell: ({ row }) => {
+        const item = row.original;
+        return (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              setSelectedItem(item);
+              setEditOpen(true);
+            }}
+            className="gap-2"
+          >
+            <Edit2 className="h-4 w-4" />
+            {t("edit")}
+          </Button>
+        );
+      },
     },
   ];
 
@@ -119,17 +119,15 @@ const InventoryPage = () => {
         </Card>
       </div>
 
-      {selectedItem && (
-        <EditInventoryDialog
-          item={selectedItem as any}
-          open={editOpen}
-          onOpenChange={setEditOpen}
-          onSuccess={() => {
-            refetchinventory();
-            setSelectedItem(null);
-          }}
-        />
-      )}
+      <EditInventoryDialog
+        item={selectedItem}
+        open={editOpen}
+        onOpenChange={setEditOpen}
+        onSuccess={() => {
+          refetchinventory();
+          setSelectedItem(null); // reset after success
+        }}
+      />
     </main>
   );
 };

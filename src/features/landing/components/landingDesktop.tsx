@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import {
   Card,
   CardContent,
@@ -44,6 +44,7 @@ import { useStockHooks } from "../hooks/useStockHooks";
 import { useShipHooks } from "../hooks/useShipHooks";
 import { useIsMobile } from "@/hooks/useMobile";
 import { useWarehouseHooks } from "../hooks/useWarehouse";
+import { useInventoryHooks } from "../hooks/useInventoryHooks";
 
 interface MonthlyData {
   month_name: string;
@@ -56,7 +57,7 @@ const DashboardDesktop = () => {
   const { shippedThisMonth, shippedPercentageChange } = useShipHooks();
   const { transactionLoading, monthly, recentShipped, recentStocked } =
     useTransactions();
-  console.log(transactionLoading, monthly, recentShipped);
+  const { inventory } = useInventoryHooks();
   const { warehouseInventory } = useWarehouseHooks();
   const t = useTranslations("DashboardPage");
 
@@ -90,7 +91,7 @@ const DashboardDesktop = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className=" flex justify-between">
-            <div className=" text-4xl font-bold">{`25000`}</div>
+            <div className=" text-4xl font-bold">{inventory}</div>
             <Warehouse className="h-12 w-12 text-primary" />
           </CardContent>
         </Card>

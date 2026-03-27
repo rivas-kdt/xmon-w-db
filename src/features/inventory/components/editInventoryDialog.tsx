@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Trash2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEditInventory } from "../hooks/useEditInventory";
 import { useWarehouses } from "../hooks/useWarehouses";
@@ -32,6 +31,7 @@ interface Inventory {
   warehouse: string;
   created_at: string;
   quantity: number;
+  warehouse_id: string;
 }
 
 export function EditInventoryDialog({
@@ -40,28 +40,22 @@ export function EditInventoryDialog({
   onOpenChange,
   onSuccess,
 }: {
-  item: Inventory;
+  item: Inventory | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSuccess?: () => void;
 }) {
-  console.log("Editing item:", item);
-  const [formData, setFormData] = useState<Inventory>(item);
   const t = useTranslations("editInventory");
 
-  const { isLoading, handleUpdate } = useEditInventory(onSuccess, () =>
-    onOpenChange(false)
+  const { formData, isLoading, handleUpdate, handleChange } = useEditInventory(
+    onSuccess,
+    () => onOpenChange(false),
+    item
   );
 
   const { warehouses } = useWarehouses();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: name === "quantity" ? parseInt(value) || 0 : value,
-    }));
-  };
+  if (!item) return null;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -96,7 +90,7 @@ export function EditInventoryDialog({
               id="product_code"
               name="product_code"
               value={formData.product_code}
-              onChange={handleChange}
+              onChange={(e) => handleChange("product_code", e.target.value)}
               className="col-span-3"
             />
           </div>
@@ -109,7 +103,7 @@ export function EditInventoryDialog({
               id="stock_no"
               name="stock_no"
               value={formData.stock_no}
-              onChange={handleChange}
+              onChange={(e) => handleChange("stock_no", e.target.value)}
               className="col-span-3"
             />
           </div>
@@ -122,7 +116,7 @@ export function EditInventoryDialog({
               id="description"
               name="description"
               value={formData.description}
-              onChange={handleChange}
+              onChange={(e) => handleChange("description", e.target.value)}
               className="col-span-3"
             />
           </div>
@@ -136,7 +130,7 @@ export function EditInventoryDialog({
               name="quantity"
               type="number"
               value={formData.quantity}
-              onChange={handleChange}
+              onChange={(e) => handleChange("quantity", e.target.value)}
               className="col-span-3"
             />
           </div>
@@ -149,12 +143,7 @@ export function EditInventoryDialog({
             <div className="col-span-3">
               <Select
                 value={formData.warehouse_id?.toString() || ""}
-                onValueChange={(value) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    warehouse_id: parseInt(value),
-                  }))
-                }
+                onValueChange={(value) => handleChange("warehouse_id", value)}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select warehouse" />
@@ -173,25 +162,6 @@ export function EditInventoryDialog({
         </div>
 
         <DialogFooter className="flex justify-between">
-          {/* <Button
-            variant="destructive"
-            onClick={() => handleDelete(item.lot_no, t)}
-            disabled={isLoading || isDeleting}
-            className="gap-2"
-          >
-            {isDeleting ? (
-              <>
-                <Loader2 className="h-4 w-4 animate-spin" />
-                {t("deleting")}
-              </>
-            ) : (
-              <>
-                <Trash2 className="h-4 w-4" />
-                {t("delete")}
-              </>
-            )}
-          </Button> */}
-
           <div className="flex gap-2">
             <Button
               variant="outline"
